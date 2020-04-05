@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pravega-writer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pravega-writer
+  template:
+    metadata:
+      labels:
+        app: pravega-writer
+    spec:
+      containers:
+      - name: pravega-writer
+        image: dxd360/pravega-writer:v1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
