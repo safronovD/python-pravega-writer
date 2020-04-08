@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: pravega-writer
-        image: dxd360/pravega-writer:v1
-        imagePullPolicy: Always
+        image: pravega-writer
+        imagePullPolicy: Never
         ports:
         - containerPort: 80

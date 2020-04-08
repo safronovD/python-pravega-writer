@@ -1,7 +1,13 @@
+import time
 from NewsLoader import NewsLoader
 
-if __name__ == '__main__':
+def main():
     loader = NewsLoader()
-    loader.load()
-    loader.save_csv()
-    loader.save_json()
+    while True:
+        loader.load()
+        loader.save_csv()
+        loader.save_json()
+        time.sleep(1000)
+
+if __name__ == '__main__':
+    main()

@@ -14,7 +14,7 @@ To run the container:
  docker run -v {$Path_to_your_dir}:/usr/src/app/results/ pravega-writer
 ```
 
-To deploy in k8s:
+To deploy in k8s from local registry:
 
 ```bash
  kubectl install -f deployment.yaml
