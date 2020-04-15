@@ -3,3 +3,6 @@
 /__pycache__
 
 news_credentials.json
+*.xml
+.DS_Store
+*.iml
