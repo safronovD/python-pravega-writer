@@ -13,13 +13,13 @@ pipeline {
    stages {
        stage('Preparation') {
             steps {
-                sh 'pip install -r requirements.txt'
+                sh 'pip install robotframework'
             }
         }
     
        stage('Run Robot Tests') {
          steps {
-               sh 'mkdir -p reports'
+               sh 'mkdir -p results'
                sh 'python3 -m robot.run  --outputdir results .'
                }
         }
