@@ -13,14 +13,17 @@ pipeline {
    stages {
        stage('Preparation') {
             steps {
-                sh 'pip install robotframework'
+                sh 'pip install -r Connector/requirements.txt'
+                sh 'pip install -r Server/requirements.txt'
+                sh 'pip install -r Tests/requirements.txt'
             }
         }
     
        stage('Run Robot Tests') {
          steps {
                sh 'mkdir -p results'
-               sh 'python3 -m robot.run  --outputdir results .'
+               sh 'python3 -m coverage run -m robot.run  --outputdir results  .'
+               sh 'python3 -m coverage xml'
                }
         }
     }
