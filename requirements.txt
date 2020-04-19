@@ -1,3 +1,0 @@
-newsapi-python
-pandas
-robotframework
