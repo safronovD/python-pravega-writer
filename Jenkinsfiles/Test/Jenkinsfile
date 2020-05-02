@@ -1,0 +1,53 @@
+void setBuildStatus(String message, String state) {
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/safronovD/python-pravega-writer"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "Robot tests"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ]);
+}
+pipeline {
+   agent any
+   options {
+        timestamps()
+        }
+   stages {
+       stage('Preparation') {
+            steps {
+                sh 'echo Test'
+                // build 'Container'
+                // sh 'pip install -r Connector/requirements.txt'
+                // sh 'pip install -r Server/requirements.txt'
+                // sh 'pip install -r Tests/requirements.txt'
+            }
+        }
+    
+    }
+    post {
+          // always {
+          //   script {
+          //     step(
+          //         [
+          //           $class              : 'RobotPublisher',
+          //           outputPath          : 'results',
+          //           outputFileName      : 'output.xml',
+          //           reportFileName      : 'report.html',
+          //           logFileName         : 'log.html',
+          //           disableArchiveOutput: false,
+          //           passThreshold       : 60,
+          //           unstableThreshold   : 40,
+          //           otherFiles          : "**/*.png,**/*.jpg",
+          //         ]
+          //       )
+          //   }
+          // }  
+          success {
+            setBuildStatus("Tests succeeded", "SUCCESS");
+          }
+          failure {
+            setBuildStatus("Tests failed", "FAILURE");
+          }
+         
+	}
+}
