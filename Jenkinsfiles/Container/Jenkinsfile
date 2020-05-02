@@ -9,9 +9,9 @@ void setBuildStatus(String message, String state) {
 }
 pipeline {
    agent any
-   options {
-        timestamps()
-        }
+   // options {
+   //      timestamps()
+   //      }
    stages {
        stage('Container') {
             steps {
