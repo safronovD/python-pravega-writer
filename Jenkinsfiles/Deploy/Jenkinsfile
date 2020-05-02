@@ -21,6 +21,7 @@ pipeline {
             //     sh 'pip install -r Tests/requirements.txt'
             // }
         }
+      }
     
     }
     post { 
@@ -31,5 +32,5 @@ pipeline {
             setBuildStatus("Deploy failed", "FAILURE");
           }
          
-	}
+	  }
 }
