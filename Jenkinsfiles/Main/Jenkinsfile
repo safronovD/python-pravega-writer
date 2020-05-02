@@ -35,7 +35,7 @@ pipeline {
         stage('Container tests') {
          steps {
                 sh 'echo Container tests'
-                build 'Deploy'
+                build 'Container'
                // sh 'mkdir -p results'
                // sh 'python3 -m coverage run -m robot.run  --outputdir results  .'
                // sh 'python3 -m coverage xml'
@@ -44,6 +44,7 @@ pipeline {
         stage('Deploy') {
          steps {
                 sh 'echo Deploy'
+                build 'Deploy'
                // sh 'mkdir -p results'
                // sh 'python3 -m coverage run -m robot.run  --outputdir results  .'
                // sh 'python3 -m coverage xml'
