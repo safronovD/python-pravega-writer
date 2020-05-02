@@ -1,8 +1,8 @@
-void setBuildStatus(String message, String state) {
+void setBuildStatus(String context, String message, String state) {
   step([
       $class: "GitHubCommitStatusSetter",
       reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/safronovD/python-pravega-writer"],
-      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "Robot tests"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: context],
       errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
       statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
   ]);
@@ -43,10 +43,10 @@ pipeline {
           //   }
           // }  
           success {
-            setBuildStatus("Tests succeeded", "SUCCESS");
+            setBuildStatus("Tests succeeded", "Tests", "SUCCESS");
           }
           failure {
-            setBuildStatus("Tests failed", "FAILURE");
+            setBuildStatus("Tests failed", "Tests", "FAILURE");
           }
          
 	}
