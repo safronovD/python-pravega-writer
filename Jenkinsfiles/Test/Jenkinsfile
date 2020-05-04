@@ -8,18 +8,28 @@ void setBuildStatus(String context, String message, String state) {
   ]);
 }
 pipeline {
-   agent any
+    agent {
+        kubernetes {
+            label 'jenkins-pod'
+            yamlFile 'jenkinsPodTemplate.yaml'
+        }
+    }
    // options {
    //      timestamps()
    //      }
    stages {
        stage('Preparation') {
             steps {
-                sh 'echo Test'
-                // build 'Container'
-                // sh 'pip install -r Connector/requirements.txt'
-                // sh 'pip install -r Server/requirements.txt'
-                // sh 'pip install -r Tests/requirements.txt'
+                container('jnlp') {
+                    script {
+                        echo Test
+                        python --version
+                        // build 'Container'
+                        // sh 'pip install -r Connector/requirements.txt'
+                        // sh 'pip install -r Server/requirements.txt'
+                        // sh 'pip install -r Tests/requirements.txt'
+                    }
+                }
             }
         }
     
