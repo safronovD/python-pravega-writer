@@ -36,23 +36,23 @@ pipeline {
    stages {
 
        stage ('Helm test') {
+            steps {
+                sh 'echo Helm test'
 
-           sh 'echo Helm test'
+                // run helm chart linter
+                helmLint(chart_dir)
 
-           // run helm chart linter
-             helmLint(chart_dir)
+                // run dry-run helm chart installation
+                helmDeploy(
+                    dry_run       : true,
+                    name          : config.app.name,
+                    chart_dir     : chart_dir,
+                    replicas      : config.app.replicas
+                )
+            }
+        }
+    }
 
-           // run dry-run helm chart installation
-             helmDeploy(
-               dry_run       : true,
-               name          : config.app.name,
-               chart_dir     : chart_dir,
-               replicas      : config.app.replicas
-              )
-
-           }
-       }
-    
     post {
           success {
             setBuildStatus("Deploy succeeded", "Deploy", "SUCCESS");
