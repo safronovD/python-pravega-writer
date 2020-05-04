@@ -11,7 +11,6 @@ void setBuildStatus(String context, String message, String state) {
 void helmLint(String chart_dir) {
     // lint helm chart
     sh "/usr/local/bin/helm lint ${chart_dir}"
-
 }
 
 void helmDeploy(Map args) {
@@ -52,22 +51,8 @@ pipeline {
               )
 
            }
-
-           /*stage ('Helm deploy') {
-
-             // Deploy using Helm chart
-             helmDeploy(
-               dry_run       : false,
-               name          : config.app.name,
-               chart_dir     : chart_dir,
-               tag           : build_tag,
-               replicas      : config.app.replicas
-             )
-
-           }*/
-      }
+       }
     
-    }
     post {
           success {
             setBuildStatus("Deploy succeeded", "Deploy", "SUCCESS");
