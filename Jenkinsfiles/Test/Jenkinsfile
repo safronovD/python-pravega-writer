@@ -21,14 +21,12 @@ pipeline {
        stage('Preparation') {
             steps {
                 container('jnlp') {
-                    script {
-                        echo Test
-                        python --version
-                        // build 'Container'
-                        // sh 'pip install -r Connector/requirements.txt'
-                        // sh 'pip install -r Server/requirements.txt'
-                        // sh 'pip install -r Tests/requirements.txt'
-                    }
+                    sh 'echo Test'
+                    sh 'python --version'
+                    // build 'Container'
+                    // sh 'pip install -r Connector/requirements.txt'
+                    // sh 'pip install -r Server/requirements.txt'
+                    // sh 'pip install -r Tests/requirements.txt'
                 }
             }
         }
