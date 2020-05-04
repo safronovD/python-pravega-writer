@@ -20,7 +20,7 @@ pipeline {
    stages {
        stage('Preparation') {
             steps {
-                container('jnlp') {
+                container('python') {
                     sh 'echo Test'
                     sh 'python --version'
                     // build 'Container'
