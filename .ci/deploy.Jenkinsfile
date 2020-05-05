@@ -34,7 +34,7 @@ pipeline {
     agent {
         kubernetes {
             label 'jenkins-pod'
-            yamlFile 'jenkinsPodTemplate.yaml'
+            yamlFile '.ci/jenkinsPodTemplate.yaml'
         }
     }
 
