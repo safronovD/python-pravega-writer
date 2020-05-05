@@ -42,7 +42,7 @@ pipeline {
 
        stage ('Helm test') {
             steps {
-                container('python') {
+                container('helm') {
                     sh 'echo Helm test'
 
                     // run helm chart linter
