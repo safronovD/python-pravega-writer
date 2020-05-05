@@ -54,8 +54,8 @@ pipeline {
                         name          : config.app.name,
                         chart_dir     : chart_dir,
                         replicas      : config.app.replicas
-                    }
-                )
+                    )
+                }
             }
         }
     }
