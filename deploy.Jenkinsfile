@@ -31,23 +31,30 @@ void helmDeploy(Map args) {
 def chart_dir = "/home/k8s/k8s/my/ppw-chart"
 
 pipeline {
-   agent any
+    agent {
+        kubernetes {
+            label 'jenkins-pod'
+            yamlFile 'jenkinsPodTemplate.yaml'
+        }
+    }
 
    stages {
 
        stage ('Helm test') {
             steps {
-                sh 'echo Helm test'
+                container('python') {
+                    sh 'echo Helm test'
 
-                // run helm chart linter
-                helmLint(chart_dir)
+                    // run helm chart linter
+                    helmLint(chart_dir)
 
-                // run dry-run helm chart installation
-                helmDeploy(
-                    dry_run       : true,
-                    name          : config.app.name,
-                    chart_dir     : chart_dir,
-                    replicas      : config.app.replicas
+                    // run dry-run helm chart installation
+                    helmDeploy(
+                        dry_run       : true,
+                        name          : config.app.name,
+                        chart_dir     : chart_dir,
+                        replicas      : config.app.replicas
+                    }
                 )
             }
         }

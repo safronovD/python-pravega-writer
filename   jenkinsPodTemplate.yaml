@@ -1,0 +1,8 @@
+spec:
+  containers:
+  - name: helm
+    image: alpine/helm:2.14.0
+    imagePullPolicy: IfNotPresent
+    command:
+    - cat
+    tty: true
