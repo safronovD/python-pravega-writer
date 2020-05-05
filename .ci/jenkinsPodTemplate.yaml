@@ -1,7 +1,7 @@
 spec:
   containers:
   - name: helm
-    image: alpine/helm:2.14.0
+    image: lachlanevenson/k8s-helm
     imagePullPolicy: IfNotPresent
     command:
     - cat
