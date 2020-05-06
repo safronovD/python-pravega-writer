@@ -28,7 +28,7 @@ void helmDeploy(Map args) {
     }
 }
 
-def chart_dir = "/home/k8s/k8s/my/ppw-chart"
+def chart_dir = "${workspace}/ppw-chart"
 
 pipeline {
     agent {
