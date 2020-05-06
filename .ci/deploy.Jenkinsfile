@@ -30,8 +30,8 @@ void helmDeploy(Map args) {
 
 pipeline {
     environment {
-         CHART_DIR = "ppw-chart"
-         CONFIG = new groovy.json.JsonSlurperClassic().parseText(readFile('.ci/config.json'))
+         CHART = "ppw-chart"
+         //CONFIG = new groovy.json.JsonSlurperClassic().parseText(readFile(".ci/config.json"))
     }
 
     agent {
@@ -50,14 +50,14 @@ pipeline {
                     sh 'echo Helm test'
 
                     // run helm chart linter
-                    helmLint(CHART_DIR)
+                    helmLint(CHART)
 
                     // run dry-run helm chart installation
                     helmDeploy(
                         dry_run       : true,
-                        name          : CONFIG.app.name,
-                        chart_dir     : CHART_DIR,
-                        replicas      : CONFIG.app.replicas
+                        name          : CHART,
+                        chart_dir     : CHART,
+                        replicas      : 1
                     )
                 }
             }
