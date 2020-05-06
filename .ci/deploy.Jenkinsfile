@@ -10,7 +10,7 @@ void setBuildStatus(String context, String message, String state) {
 
 void helmLint(String chart_dir) {
     // lint helm chart
-    sh "helm lint ./${chart_dir}"
+    sh "helm lint ./${CHART_DIR}"
 }
 
 void helmDeploy(Map args) {
@@ -28,9 +28,12 @@ void helmDeploy(Map args) {
     }
 }
 
-def chart_dir = "ppw-chart"
-
 pipeline {
+    environment {
+         CHART_DIR = "ppw-chart"
+         CONFIG = new groovy.json.JsonSlurperClassic().parseText(readFile('.ci/config.json'))
+    }
+
     agent {
         kubernetes {
             label 'jenkins-pod'
@@ -43,22 +46,18 @@ pipeline {
        stage ('Helm test') {
             steps {
                 container('helm') {
-                    script{
-                        def inputFile = readFile('.ci/config.json')
-                        def config = new groovy.json.JsonSlurperClassic().parseText(inputFile)
-                    }
 
                     sh 'echo Helm test'
 
                     // run helm chart linter
-                    helmLint(chart_dir)
+                    helmLint(CHART_DIR)
 
                     // run dry-run helm chart installation
                     helmDeploy(
                         dry_run       : true,
-                        name          : config.app.name,
-                        chart_dir     : chart_dir,
-                        replicas      : config.app.replicas
+                        name          : CONFIG.app.name,
+                        chart_dir     : CHART_DIR,
+                        replicas      : CONFIG.app.replicas
                     )
                 }
             }
