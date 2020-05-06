@@ -29,8 +29,6 @@ void helmDeploy(Map args) {
 }
 
 def chart_dir = "ppw-chart"
-def inputFile = readFile ".ci/config.json"
-def config = new groovy.json.JsonSlurperClassic().parseText(inputFile)
 
 pipeline {
     agent {
@@ -45,6 +43,9 @@ pipeline {
        stage ('Helm test') {
             steps {
                 container('helm') {
+                    def inputFile = readFile('.ci/config.json')
+                    def config = new groovy.json.JsonSlurperClassic().parseText(inputFile)
+
                     sh 'echo Helm test'
 
                     // run helm chart linter
