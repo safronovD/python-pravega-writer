@@ -1,0 +1,9 @@
+# Service for deployment cats-server
+service:
+  type: NodePort
+  port: 666
+ 
+# Repository of images and pullPolicy for all deployments
+image:
+  repository: dxd360
+  pullPolicy: Always

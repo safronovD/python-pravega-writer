@@ -1,0 +1,1 @@
+The python-pravega-writer application has been started on your Kubernetes cluster.
