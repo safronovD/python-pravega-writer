@@ -19,10 +19,10 @@ void helmDeploy(Map args) {
     if (args.dry_run) {
         sh 'echo Running dry-run deployment'
 
-        sh "helm upgrade --dry-run --debug --install ${args.name} ./${args.chart_dir} --set Replicas=${args.replicas} --namespace=default"
+        sh "helm upgrade --dry-run --debug --install ${args.name} ./${args.chart_dir} --set Replicas=${args.replicas}"
     } else {
         sh 'echo Running deployment'
-        sh "helm upgrade --install ${args.name} ./${args.chart_dir} --set Replicas=${args.replicas} --namespace=default"
+        sh "helm upgrade --install ${args.name} ./${args.chart_dir} --set Replicas=${args.replicas}"
 
         sh 'echo Application ${args.name} successfully deployed. Use helm status ${args.name} to check'
     }
