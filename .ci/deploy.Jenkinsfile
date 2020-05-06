@@ -43,8 +43,10 @@ pipeline {
        stage ('Helm test') {
             steps {
                 container('helm') {
-                    def inputFile = readFile('.ci/config.json')
-                    def config = new groovy.json.JsonSlurperClassic().parseText(inputFile)
+                    script{
+                        def inputFile = readFile('.ci/config.json')
+                        def config = new groovy.json.JsonSlurperClassic().parseText(inputFile)
+                    }
 
                     sh 'echo Helm test'
 
