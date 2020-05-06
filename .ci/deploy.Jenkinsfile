@@ -10,7 +10,7 @@ void setBuildStatus(String context, String message, String state) {
 
 void helmLint(String chart_dir) {
     // lint helm chart
-    sh "helm lint ./${CHART_DIR}"
+    sh "helm lint ./${CHART}"
 }
 
 void helmDeploy(Map args) {
