@@ -17,18 +17,20 @@ void helmDeploy(Map args) {
     //configure helm client and confirm tiller process is installed
 
     if (args.dry_run) {
-        println "Running dry-run deployment"
+        sh 'echo Running dry-run deployment'
 
-        sh "/usr/local/bin/helm upgrade --dry-run --debug --install ${args.name} ${args.chart_dir} --set Replicas=${args.replicas} --namespace=default"
+        sh "helm upgrade --dry-run --debug --install ${args.name} ./${args.chart_dir} --set Replicas=${args.replicas} --namespace=default"
     } else {
-        println "Running deployment"
-        sh "/usr/local/bin/helm upgrade --install ${args.name} ${args.chart_dir} --set Replicas=${args.replicas} --namespace=default"
+        sh 'echo Running deployment'
+        sh "helm upgrade --install ${args.name} ./${args.chart_dir} --set Replicas=${args.replicas} --namespace=default"
 
-        echo "Application ${args.name} successfully deployed. Use helm status ${args.name} to check"
+        sh 'echo Application ${args.name} successfully deployed. Use helm status ${args.name} to check'
     }
 }
 
 def chart_dir = "ppw-chart"
+def inputFile = readFile('config.json')
+def config = new groovy.json.JsonSlurperClassic().parseText(inputFile)
 
 pipeline {
     agent {
