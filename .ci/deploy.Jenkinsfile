@@ -29,7 +29,7 @@ void helmDeploy(Map args) {
 }
 
 def chart_dir = "ppw-chart"
-def inputFile = readFile('config.json')
+def inputFile = readFile ".ci/config.json"
 def config = new groovy.json.JsonSlurperClassic().parseText(inputFile)
 
 pipeline {
