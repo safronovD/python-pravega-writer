@@ -1,13 +1,15 @@
-FROM python:3.7
+FROM python:3.8-alpine
 
 ENV ROOT=/usr/src/app
 
 WORKDIR ${ROOT}
 
-ADD requirements.txt ${ROOT}/requirements.txt
+COPY core ${ROOT}/core
+COPY config ${ROOT}/config
+ADD main.py ${ROOT}
+ADD requirements.txt ${ROOT}
 
 RUN pip install -r requirements.txt
+RUN mkdir data
 
-ADD . ${ROOT}
-
-CMD ["python", "main.py"]
+ENTRYPOINT ["python", "main.py"]
