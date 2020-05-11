@@ -1,8 +1,8 @@
-﻿/results
 /.vs
 /__pycache__
 
-news_credentials.json
+*.json
 *.xml
 .DS_Store
 *.iml
+
