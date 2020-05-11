@@ -8,29 +8,35 @@ void setBuildStatus(String context, String message, String state) {
   ]);
 }
 pipeline {
-   agent any
+    agent {
+        kubernetes {
+            label 'jenkins-pod'
+            yamlFile '.ci/pod-templates/pod-python.yaml'
+        }
+    }
    // options {
    //      timestamps()
    //      }
    stages {
-       stage('e2e tests') {
+       stage('Preparation') {
             steps {
-                  sh 'echo End-to-end tests'  
-            //     sh 'pip install -r Connector/requirements.txt'
-            //     sh 'pip install -r Server/requirements.txt'
-            //     sh 'pip install -r Tests/requirements.txt'
-            // }
-        }
-      }
-    
-    }
-    post { 
+                container('python') {
+                    sh 'echo End-to-end tests'
+                    sh 'python --version'
+                    // sh 'pip install -r Connector/requirements.txt'
+                    // sh 'pip install -r Server/requirements.txt'
+                    // sh 'pip install -r Tests/requirements.txt'
+                }
+            }
+       }
+   }
+    post {
           success {
-            setBuildStatus("e2e tests succeeded", "e2e tests", "SUCCESS");
+            setBuildStatus("Tests succeeded", "Tests", "SUCCESS");
           }
           failure {
-            setBuildStatus("e2e tests failed", "e2e tests", "FAILURE");
+            setBuildStatus("Tests failed", "Tests", "FAILURE");
           }
          
-	  }
+	}
 }
