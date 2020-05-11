@@ -1,4 +1,8 @@
-﻿/results
 /.vs
 /__pycache__
+
+*.json
+*.xml
+.DS_Store
+*.iml
 
