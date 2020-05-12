@@ -12,7 +12,7 @@ class NewsLoader():
        
         self.newsapi = NewsApiClient(creds['API_KEY'])
         self.articles = []
-        self.resultsDir = os.path.join(os.path.dirname(os.path.realpath('__file__')), 'results')
+        self.resultsDir = './results'#os.path.join(os.path.dirname(os.path.realpath('__file__')), 'results')
 
     def __check_correct_load(self):
         if not isinstance(self.articles, list):
@@ -36,6 +36,7 @@ class NewsLoader():
             print("Unexpected error:", sys.exc_info())
 
         self.__check_correct_load()
+        print(self.articles)
         print("{} articles loaded".format(len(self.articles)))
 
     def save_csv(self, fileName='news.csv'):
