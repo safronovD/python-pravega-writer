@@ -10,4 +10,6 @@ ADD requirements.txt ${ROOT}
 RUN pip install -r requirements.txt
 RUN mkdir data
 
+EXPOSE 666
+
 ENTRYPOINT ["python", "main.py"]
