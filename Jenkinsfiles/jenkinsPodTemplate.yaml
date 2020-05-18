@@ -1,8 +1,0 @@
-spec:
-  containers:
-  - name: python
-    image: python:3.7
-    imagePullPolicy: IfNotPresent
-    command:
-    - cat
-    tty: true
