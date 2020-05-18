@@ -1,5 +1,11 @@
 /.vs
 /__pycache__
+/.idea
+
+*.json
+*.xml
+.DS_Store
+*.iml
 
 *.json
 *.xml

@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cats-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cats-server
+  template:
+    metadata:
+      labels:
+        app: cats-server
+    spec:
+      volumes:
+      - name: results-volume
+        persistentVolumeClaim:
+          claimName: results-claim
+      containers:
+      - name: cats-server
+        image: {{ .Values.image.repository }}/results_server
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.service.port }}
+        volumeMounts:
+        - mountPath: /usr/src/app/results
+          name: results-volume
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pravega-writer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pravega-writer
+  template:
+    metadata:
+      labels:
+        app: pravega-writer
+    spec:
+      volumes:
+      - name: results-volume
+        persistentVolumeClaim:
+          claimName: results-claim
+      containers:
+      - name: pravega-writer
+        image: {{ .Values.image.repository }}/pravega-w
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        volumeMounts:
+        - mountPath: /usr/src/app/results
+          name: results-volume

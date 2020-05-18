@@ -39,7 +39,7 @@ spec:
         ports:
         - containerPort: 666
         volumeMounts:
-        - mountPath: /usr/src/app/results
+        - mountPath: /usr/src/app/data
           name: results-volume
 ---
 apiVersion: apps/v1
@@ -65,6 +65,6 @@ spec:
         image: dxd360/pravega-w
         imagePullPolicy: Always
         volumeMounts:
-        - mountPath: /usr/src/app/results
+        - mountPath: /usr/src/app/data
           name: results-volume
 
