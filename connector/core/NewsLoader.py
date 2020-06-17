@@ -7,13 +7,10 @@ import os
 
 class NewsLoader():
 
-    def __init__(self):
-        with open(os.path.join("config", "news_credentials.json")) as file:
-            creds = json.load(file)
-
-        self.newsapi = NewsApiClient(creds['API_KEY'])
+    def __init__(self, api_key, dir):
+        self.newsapi = NewsApiClient(api_key)
         self.articles = []
-        self.resultsDir = os.path.join(os.path.dirname(os.path.realpath('__file__')), 'data')
+        self.resultsDir = dir
 
     def _check_correct_load(self):
 
