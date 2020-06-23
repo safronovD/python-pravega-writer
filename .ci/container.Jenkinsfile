@@ -8,7 +8,11 @@ void setBuildStatus(String context, String message, String state) {
   ]);
 }
 pipeline {
-   agent any
+     agent {
+        kubernetes {
+            label 'jenkins-pod'
+            yamlFile 'Jenkinsfiles/jenkinsPodTemplate.yaml'
+        }
    // options {
    //      timestamps()
    //      }
@@ -19,7 +23,7 @@ pipeline {
             //     sh 'pip install -r Connector/requirements.txt'
             //     sh 'pip install -r Server/requirements.txt'
             //     sh 'pip install -r Tests/requirements.txt'
-            // }
+                   }
         }
 
       }
