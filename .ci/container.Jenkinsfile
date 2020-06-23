@@ -8,12 +8,7 @@ void setBuildStatus(String context, String message, String state) {
   ]);
 }
 pipeline {
-     agent {
-        kubernetes {
-            label 'jenkins-pod'
-            yamlFile 'Jenkinsfiles/jenkinsPodTemplate.yaml'
-     }
-       }
+     agent any
    // options {
    //      timestamps()
    //      }
