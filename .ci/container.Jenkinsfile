@@ -21,8 +21,10 @@ pipeline {
        stage('Container') {
             steps {
                   sh 'echo Container'
+                  sh 'cd ..'
+                  sh 'cd ./server/test'
                   sh 'mkdir -p reports'
-                  sh 'python3 -m robot.run  --outputdir reports  ../server/test/container_test.robot'
+                  sh 'python3 -m robot.run  --outputdir reports container_test.robot'
 
             }
         }

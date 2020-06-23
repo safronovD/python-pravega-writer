@@ -1,40 +1,45 @@
 import docker
 
 
-def build_image():
-    client = docker.from_env()
-    tag = "pravega-writer:latest"
-    client.images.build(path='../', tag=tag)
-    print("Image {} created".format(tag))
+class Setup():
+    def __init__(self, tag):
+        self.tag = 'ppw-server:{}'.format(tag)
 
+    def build_image(self):
+        client = docker.from_env()
+        # tag = '{}:{}'.format(name, tag)
+        client.images.build(path='../', tag=self.tag)
+        print("Image {} created".format(self.tag))
 
-def run_container():
-    client = docker.from_env()
-    if client.containers.list():
-        remove_container()
-    container = client.containers.run("pravega-writer:latest", detach=True, ports={'666': 666}, name='pravega-writer')
-    print("Container {} created".format(container.name))
+    def run_container(self):
+        client = docker.from_env()
+        # tag = '{}:{}'.format(name, tag)
+        if client.containers.list():
+            self.remove_container()
+        container = client.containers.run(self.tag, detach=True, ports={'666': 666}, name=self.tag[0:10])
+        print("Container {} created".format(container.name))
 
+    def remove_container(self):
+        client = docker.from_env()
+        container = client.containers.get(self.tag[0:10])
+        container.kill()
+        print("Container {} stopped".format(container.name))
+        client.containers.prune()
+        print("Container {} removed".format(container.name))
 
-def remove_container():
-    client = docker.from_env()
-    container = client.containers.get("pravega-writer")
-    container.kill()
-    print("Container {} stopped".format(container.name))
-    client.containers.prune()
-    print("Container {} removed".format(container.name))
-
-
-def remove_image():
-    client = docker.from_env()
-    image = client.images.get("pravega-writer:latest")
-    tag = image.tags[0]
-    client.images.remove(tag)
-    print("Image {} removed".format(tag))
+    def remove_image(self):
+        client = docker.from_env()
+        image = client.images.get(self.tag)
+        tag = image.tags[0]
+        client.images.remove(tag)
+        print("Image {} removed".format(tag))
 
 
 if __name__ == "__main__":
-    build_image()
-    run_container()
-    remove_container()
-    remove_image()
+    # remove_image()
+    obj = Docker(123)
+    obj.build_image()
+    obj.run_container()
+    obj.remove_container()
+    obj.remove_image()
+#
