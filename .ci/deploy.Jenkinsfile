@@ -14,7 +14,6 @@ void helmLint(String chart_dir) {
 }
 
 void helmDeploy(Map args) {
-    //configure helm client and confirm tiller process is installed
 
     if (args.dry_run) {
         sh 'echo Running dry-run deployment'
@@ -59,6 +58,23 @@ pipeline {
                         chart_dir     : CHART,
                         replicas      : 1
                     )
+                }
+            }
+        }
+
+        stage ('Deploy') {
+            steps {
+                container('helm') {
+
+                    sh 'echo Deploy'
+
+                    // deployment
+                    //helmDeploy(
+                    //    dry_run       : false,
+                    //    name          : CHART,
+                    //    chart_dir     : CHART,
+                    //    replicas      : 1
+                    //)
                 }
             }
         }
