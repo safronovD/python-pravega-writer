@@ -1,6 +1,6 @@
 *** Settings ***
 Library             RequestsLibrary
-Library             setup.Setup    ${tag}      WITH NAME    obj
+Library             server.test.setup.Setup    ${tag}      WITH NAME    obj
 Library             OperatingSystem
 
 Test Setup          Create connection
