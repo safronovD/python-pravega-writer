@@ -22,7 +22,7 @@ pipeline {
             steps {
                   sh 'echo Container'
                   sh 'mkdir -p reports'
-                  sh 'python3 -m robot.run  --outputdir reports  server/test/container_test.robot'
+                  sh 'python3 -m robot.run  --outputdir reports  ../server/test/container_test.robot'
 
             }
         }
