@@ -22,7 +22,22 @@ pipeline {
             steps {
                   sh 'echo Container'
                   sh 'mkdir -p reports'
-                  sh 'python3 -m robot.run  --outputdir reports container_test.robot'
+                  sh 'pip3 install -r ./server/requirements.txt'
+                  sh 'python3 -m robot.run  --outputdir reports ./server/test/container_test.robot'
+
+                  step(
+                  [
+                    $class              : 'RobotPublisher',
+                    outputPath          : 'reports',
+                    outputFileName      : 'output.xml',
+                    reportFileName      : 'report.html',
+                    logFileName         : 'log.html',
+                    disableArchiveOutput: false,
+                    passThreshold       : 60,
+                    unstableThreshold   : 40,
+                    otherFiles          : "**/*.png,**/*.jpg",
+                  ]
+                )
 
             }
         }
