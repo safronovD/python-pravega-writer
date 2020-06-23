@@ -8,34 +8,28 @@ void setBuildStatus(String context, String message, String state) {
   ]);
 }
 pipeline {
-    agent {
-        kubernetes {
-            label 'jenkins-pod'
-            yamlFile '.ci/pod-templates/pod-python.yaml'
-        }
-    }
+   agent any
    // options {
    //      timestamps()
    //      }
    stages {
-       stage('Preparation') {
+       stage('Container') {
             steps {
-                container('python') {
-                    sh 'echo End-to-end tests'
-                    sh 'python --version'
-                    // sh 'pip install -r Connector/requirements.txt'
-                    // sh 'pip install -r Server/requirements.txt'
-                    // sh 'pip install -r Tests/requirements.txt'
-                }
-            }
-       }
-   }
+                  sh 'echo Container'
+            //     sh 'pip install -r Connector/requirements.txt'
+            //     sh 'pip install -r Server/requirements.txt'
+            //     sh 'pip install -r Tests/requirements.txt'
+            // }
+        }
+    
+      }
+    }
     post {
           success {
-            setBuildStatus("Tests succeeded", "Tests", "SUCCESS");
+            setBuildStatus("Container succeeded", "Container", "SUCCESS");
           }
           failure {
-            setBuildStatus("Tests failed", "Tests", "FAILURE");
+            setBuildStatus("Container failed", "Container", "FAILURE");
           }
          
 	}

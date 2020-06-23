@@ -1,4 +1,11 @@
-﻿/results
+/venv
 /.vs
 /__pycache__
+/.idea
 
+*.json
+*.xml
+.DS_Store
+*.iml
+
+/ml-controller/data/

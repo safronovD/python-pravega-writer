@@ -1,0 +1,10 @@
+common_dir: data
+dataset:
+  file_name: dataset.csv
+  data_col: 5
+  label_col: 0
+model:
+  max_df: 0.8
+  min_count: 5
+  max_iter: 10000
+  model_file: pipe.zip
