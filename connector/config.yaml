@@ -1,0 +1,5 @@
+common_dir: data
+link: https://storage.googleapis.com/kaggle-data-sets/2477%2F4140%2Fbundle%2Farchive.zip?GoogleAccessId=gcp-kaggle-com@kaggle-161607.iam.gserviceaccount.com&Expires=1592574514&Signature=M0a73c51wXiRsXHCF5L3V%2BOmgoK%2B6oFjbNRzbRJF1ph21eD2IlfmHxGAAtqhP9HZiuLuw478kjWs3co93kPV%2BXNvySWWwyhF%2BP%2Bd8I9kEp55feN65YrRO%2FrzK5Fpo8joHRkms7EalGTOQAo04yRATHZAXtv%2BcZ678Nx6lZS6ZwNc6W%2FW%2BZVtIilSeJqQP1mTMr6XJOjBj%2BeKDz6yhfKEeUirOvwdghoFDWp5jOgI7T5Cdq8pN%2FDu8ya4d0bh1ADuBDsXCoIFnUUm3l1aQjcVvNOuK5CbW%2FZS7DIkhesc3BYKQ3e4cjG%2Baci1rePOeHwj82ZwlU%2FwjwDl5d3HaDebDQ%3D%3D
+dataset_file: dataset.csv
+news_credentials:
+  api_key:
