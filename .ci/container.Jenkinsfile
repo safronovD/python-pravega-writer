@@ -21,9 +21,9 @@ pipeline {
        stage('Container') {
             steps {
                   sh 'echo Container'
-            //     sh 'pip install -r Connector/requirements.txt'
-            //     sh 'pip install -r Server/requirements.txt'
-            //     sh 'pip install -r Tests/requirements.txt'
+                  sh 'mkdir -p reports'
+                  sh 'python3 -m robot.run  --outputdir reports  server/test/container_test.robot'
+
             }
         }
 
