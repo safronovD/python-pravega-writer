@@ -8,7 +8,7 @@ Test Teardown       Close connection
 
 *** Variables ***
 ${base_url}         http://localhost:666
-${tag}              %{BUILD_NUMBER}
+${tag}              123
 
 *** Test Cases ***
 Check connection to container

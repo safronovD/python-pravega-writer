@@ -8,7 +8,7 @@ class Setup():
     def build_image(self):
         client = docker.from_env()
         # tag = '{}:{}'.format(name, tag)
-        client.images.build(path='../', tag=self.tag)
+        client.images.build(path='./server/', tag=self.tag)
         print("Image {} created".format(self.tag))
 
     def run_container(self):
@@ -37,7 +37,7 @@ class Setup():
 
 if __name__ == "__main__":
     # remove_image()
-    obj = Docker(123)
+    obj = Setup(123)
     obj.build_image()
     obj.run_container()
     obj.remove_container()
