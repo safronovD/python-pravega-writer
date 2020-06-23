@@ -22,7 +22,7 @@ pipeline {
             steps {
                   sh 'echo Container'
                   sh 'mkdir -p reports'
-                  sh 'pip install -r ./server/requirements.txt'
+                  sh 'python3 -m pip install -r ./server/requirements.txt'
                   sh 'python3 -m robot.run  --outputdir reports ./server/test/container_test.robot'
 
                   step(
