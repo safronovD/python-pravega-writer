@@ -3,4 +3,4 @@ eli5
 pyyaml
 robotframework
 docker
-requests
+robotframework-requests
