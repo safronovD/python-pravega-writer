@@ -20,8 +20,6 @@ pipeline {
    stages {
        stage('Container') {
             steps {
-                      sh 'docker version'
-
                       container('docker'){
 
                       //sh 'apt-get update'
