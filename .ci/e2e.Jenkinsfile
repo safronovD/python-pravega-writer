@@ -34,7 +34,7 @@ pipeline {
                        container('python') {
                            script {
                                def commitId = sh(returnStdout: true, script: 'git rev-parse HEAD')
-                               echo ${commitId}
+                               echo "${commitId}"
                            }
                            sh "echo ${commitId}"
                        }
