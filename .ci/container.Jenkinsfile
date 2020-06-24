@@ -22,7 +22,7 @@ pipeline {
             steps {
                   container('docker'){
                       sh 'docker --version'
-                      sh 'apt-get update
+                      sh 'apt-get update'
                       sh 'apt-get install python3'
                       sh 'python3 --version'
                       //sh 'mkdir -p reports'
