@@ -22,23 +22,11 @@ pipeline {
             steps {
                   container('python'){
                       sh 'echo Container'
-                      sh 'mkdir -p reports'
-                      sh 'python3 -m pip install -r ./server/requirements.txt'
-                      sh 'python3 -m robot.run  --outputdir reports ./server/test/container_test.robot'
+                      //sh 'mkdir -p reports'
+                      //sh 'python3 -m pip install -r ./server/requirements.txt'
+                      //sh 'python3 -m robot.run  --outputdir reports ./server/test/container_test.robot'
+                      sh 'docker --version'
 
-                      step(
-                      [
-                        $class              : 'RobotPublisher',
-                        outputPath          : 'reports',
-                        outputFileName      : 'output.xml',
-                        reportFileName      : 'report.html',
-                        logFileName         : 'log.html',
-                        disableArchiveOutput: false,
-                        passThreshold       : 60,
-                        unstableThreshold   : 40,
-                        otherFiles          : "**/*.png,**/*.jpg",
-                      ]
-                    )
                   }
             }
         }
