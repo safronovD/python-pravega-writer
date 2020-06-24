@@ -32,7 +32,10 @@ pipeline {
        stage('End-to-End test') {
                    steps {
                        container('python') {
-                           commitId = sh(returnStdout: true, script: 'git rev-parse HEAD')
+                           script {
+                               def commitId = sh(returnStdout: true, script: 'git rev-parse HEAD')
+                               echo ${commitId}
+                           }
                            sh "echo ${commitId}"
                        }
                    }
