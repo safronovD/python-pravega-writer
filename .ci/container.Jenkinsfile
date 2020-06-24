@@ -20,7 +20,7 @@ pipeline {
    stages {
        stage('Container') {
             steps {
-                  container('python'){
+                  container('docker'){
                       sh 'echo Container'
                       //sh 'mkdir -p reports'
                       //sh 'python3 -m pip install -r ./server/requirements.txt'
