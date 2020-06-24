@@ -7,13 +7,11 @@ class Setup():
 
     def build_image(self):
         client = docker.from_env()
-        # tag = '{}:{}'.format(name, tag)
         client.images.build(path='./server/', tag=self.tag)
         print("Image {} created".format(self.tag))
 
     def run_container(self):
         client = docker.from_env()
-        # tag = '{}:{}'.format(name, tag)
         if client.containers.list():
             self.remove_container()
         container = client.containers.run(self.tag, detach=True, ports={'666': 666}, name=self.tag[0:10])
@@ -36,7 +34,6 @@ class Setup():
 
 
 if __name__ == "__main__":
-    # remove_image()
     obj = Setup(123)
     obj.build_image()
     obj.run_container()

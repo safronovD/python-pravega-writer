@@ -25,7 +25,7 @@ pipeline {
                       //sh 'apt-get update'
                       //sh 'apt-get install python3'
                       //sh 'python3 --version'
-                      sh 'docker --version'
+                      sh 'python --version'
                       sh 'docker version'
                       //sh 'mkdir -p reports'
                       //sh 'python3 -m pip install -r ./server/requirements.txt'
