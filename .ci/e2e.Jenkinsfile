@@ -33,10 +33,10 @@ pipeline {
                    steps {
                        container('python') {
                            script {
-                               def commitId = sh(returnStdout: true, script: 'git rev-parse HEAD')
-                               echo "${commitId}"
+                               def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD')
+                               def chart_id = commit_id[1..10] + "${currentBuild.number}"
+                               echo "${chart_id}"
                            }
-                           sh "echo ${commitId}"
                        }
                    }
               }
