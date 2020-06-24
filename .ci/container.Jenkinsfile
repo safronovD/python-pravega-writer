@@ -20,14 +20,16 @@ pipeline {
    stages {
        stage('Container') {
             steps {
-                  container('jnlp'){
-                      sh 'echo Container'
-
+                  container('docker'){
+                      sh 'docker --version'
+                      sh 'apt-get update
+                      sh 'apt-get install python3'
+                      sh 'python3 --version'
                       //sh 'mkdir -p reports'
                       //sh 'python3 -m pip install -r ./server/requirements.txt'
                       //sh 'python3 -m robot.run  --outputdir reports ./server/test/container_test.robot'
-                      sh 'docker --version'
-                      sh 'python --version'
+
+
 
                   }
             }
