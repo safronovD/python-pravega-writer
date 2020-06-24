@@ -29,6 +29,14 @@ pipeline {
                 }
             }
        }
+       stage('End-to-End test') {
+                   steps {
+                       container('python') {
+                           def someVar = "ar"
+                           sh 'echo someVar'
+                       }
+                   }
+              }
    }
     post {
           success {
