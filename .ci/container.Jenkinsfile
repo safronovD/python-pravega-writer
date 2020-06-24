@@ -21,8 +21,8 @@ pipeline {
        stage('Container') {
             steps {
                   container('docker'){
-                      sh 'docker --version'
-                      sh 'sudo apt-get update'
+                      sh 'su'
+                      sh 'apt-get update'
                       //sh 'apt-get update
                       //sh 'apt-get install python3'
                       //sh 'python3 --version'
