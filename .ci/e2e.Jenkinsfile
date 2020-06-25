@@ -35,8 +35,9 @@ pipeline {
                            script {
                                def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD')
                                def chart_id = commit_id[1..10] + "-${currentBuild.number}"
-                               python3 -m robot.run  --outputdir reports --variable chartId:chart_id ./e2e/e2e_test.robot
+                               //python3 -m robot.run --outputdir reports --variable chartId:${chart_id} ./e2e/e2e_test.robot
                            }
+                           sh 'python3 -m robot.run --outputdir reports --variable chartId:test1 ./e2e/e2e_test.robot'
                            step(
                           [
                             $class              : 'RobotPublisher',
