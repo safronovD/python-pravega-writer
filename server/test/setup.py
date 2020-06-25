@@ -13,7 +13,8 @@ class Setup():
     def run_container(self):
         client = docker.from_env()
         if client.containers.list():
-            self.remove_container()
+            print(client.containers.list())
+            # self.remove_container()
         container = client.containers.run(self.tag, detach=True, ports={'666': 666}, name=self.tag[0:10])
         print("Container {} created".format(container.name))
 
@@ -39,4 +40,3 @@ if __name__ == "__main__":
     obj.run_container()
     obj.remove_container()
     obj.remove_image()
-#
