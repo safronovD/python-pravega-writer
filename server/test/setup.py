@@ -3,24 +3,25 @@ import docker
 
 class Setup():
     def __init__(self, tag):
-        self.tag = 'ppw-server:{}'.format(tag)
+        self.name_for_image = 'ppw-server:{}'.format(tag)
+        self.name_for_container = 'ppw-server_{}'.format(tag)
 
     def build_image(self):
         client = docker.from_env()
-        client.images.build(path='./server/', tag=self.tag)
-        print("Image {} created".format(self.tag))
+        client.images.build(path='./server/', tag=self.name_for_image)
+        print("Image {} created".format(self.name_for_image))
 
     def run_container(self):
         client = docker.from_env()
-        if client.containers.list():
-            print(client.containers.list())
+        for c in client.containers.list():
+            print(c.name, end='')
             # self.remove_container()
-        container = client.containers.run(self.tag, detach=True, ports={'666': 666}, name=self.tag[0:10])
+        container = client.containers.run(self.name_for_image, detach=True, ports={'666': 666}, name=self.name_for_container)
         print("Container {} created".format(container.name))
 
     def remove_container(self):
         client = docker.from_env()
-        container = client.containers.get(self.tag[0:10])
+        container = client.containers.get(self.name_for_container)
         container.kill()
         print("Container {} stopped".format(container.name))
         client.containers.prune()
@@ -28,7 +29,7 @@ class Setup():
 
     def remove_image(self):
         client = docker.from_env()
-        image = client.images.get(self.tag)
+        image = client.images.get(self.name_for_image)
         tag = image.tags[0]
         client.images.remove(tag)
         print("Image {} removed".format(tag))
