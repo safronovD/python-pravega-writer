@@ -21,11 +21,11 @@ pipeline {
        stage('Preparation') {
             steps {
                 container('python') {
-                    sh 'echo End-to-end tests'
-                    sh 'python --version'
-                    // sh 'pip install -r Connector/requirements.txt'
-                    // sh 'pip install -r Server/requirements.txt'
-                    // sh 'pip install -r Tests/requirements.txt'
+                    sh '''
+                       echo End-to-end tests
+                       python --version
+                       python3 -m pip install -r ./e2e/requirements.txt
+                    '''
                 }
             }
        }
@@ -35,8 +35,21 @@ pipeline {
                            script {
                                def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD')
                                def chart_id = commit_id[1..10] + "-${currentBuild.number}"
-                               echo "${chart_id}"
+                               python3 -m robot.run  --outputdir reports --variable chartId:chart_id ./e2e/e2e_test.robot
                            }
+                           step(
+                          [
+                            $class              : 'RobotPublisher',
+                            outputPath          : 'reports',
+                            outputFileName      : 'output.xml',
+                            reportFileName      : 'report.html',
+                            logFileName         : 'log.html',
+                            disableArchiveOutput: false,
+                            passThreshold       : 60,
+                            unstableThreshold   : 40,
+                            otherFiles          : "**/*.png,**/*.jpg",
+                          ]
+                        )
                        }
                    }
               }
