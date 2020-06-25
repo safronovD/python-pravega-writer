@@ -37,7 +37,7 @@ pipeline {
                                def chart_id = commit_id[1..10] + "-${currentBuild.number}"
                                //python3 -m robot.run --outputdir reports --variable chartId:${chart_id} ./e2e/e2e_test.robot
                            }
-                           sh 'python3 -m robot.run --outputdir reports --variable chartId:test1 ./e2e/e2e_test.robot'
+                           sh 'python3 -m robot.run --outputdir reports --variable chartId:test1 ./e2e/e2e.robot'
                            step(
                           [
                             $class              : 'RobotPublisher',
