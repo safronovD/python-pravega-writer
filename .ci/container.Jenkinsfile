@@ -22,10 +22,11 @@ pipeline {
             steps {
                       container('docker'){
                          sh 'python3 --version'
-                         sh 'docker'
+                         sh 'docker --version'
                          sh 'mkdir -p reports'
                          sh 'python3 -m pip install -r ./server/test/requirements.txt'
                          sh 'python3 -m robot.run  --outputdir reports ./server/test/container_test.robot'
+
                       step(
                           [
                             $class              : 'RobotPublisher',
