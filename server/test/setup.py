@@ -1,6 +1,6 @@
 import docker
 
-
+# TODO: Спросить у Феди про имена контейнеров
 class Setup():
     def __init__(self, tag):
         self.name_for_image = 'ppw-server:{}'.format(tag)
@@ -14,7 +14,7 @@ class Setup():
     def run_container(self):
         client = docker.from_env()
         for c in client.containers.list():
-            print(c.name, end='')
+            print(c.name)
             # self.remove_container()
         container = client.containers.run(self.name_for_image, detach=True, ports={'666': 666}, name=self.name_for_container)
         print("Container {} created".format(container.name))
