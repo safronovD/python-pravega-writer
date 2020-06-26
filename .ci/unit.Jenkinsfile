@@ -26,6 +26,9 @@ pipeline {
                     sh 'pip3 install -r ./server/test/requirements.txt'
                     sh 'pip3 install -r ./ml-controller/test/requirements.txt'
                     sh 'mkdir -p reports'
+                    sh 'mkdir -p reports/connector'
+                    sh 'mkdir -p reports/server'
+                    sh 'mkdir -p reports/ml-controller'
                 }
             }
         }
@@ -47,9 +50,9 @@ pipeline {
                         [
                             $class              : 'RobotPublisher',
                             outputPath          : 'reports',
-                            outputFileName      : 'connector_output.xml',
-                            reportFileName      : 'connector_report.html',
-                            logFileName         : 'connector_log.html',
+                            outputFileName      : 'output.xml',
+                            reportFileName      : 'report.html',
+                            logFileName         : 'log.html',
                             disableArchiveOutput: false,
                             passThreshold       : 60,
                             unstableThreshold   : 40,
@@ -68,9 +71,9 @@ pipeline {
                         [
                             $class              : 'RobotPublisher',
                             outputPath          : 'reports',
-                            outputFileName      : 'ml-controller_output.xml',
-                            reportFileName      : 'ml-controller_report.html',
-                            logFileName         : 'ml-controller_log.html',
+                            outputFileName      : 'output.xml',
+                            reportFileName      : 'report.html',
+                            logFileName         : 'log.html',
                             disableArchiveOutput: false,
                             passThreshold       : 60,
                             unstableThreshold   : 40,
@@ -89,9 +92,9 @@ pipeline {
                         [
                             $class              : 'RobotPublisher',
                             outputPath          : 'reports',
-                            outputFileName      : 'server_output.xml',
-                            reportFileName      : 'server_report.html',
-                            logFileName         : 'server_log.html',
+                            outputFileName      : 'output.xml',
+                            reportFileName      : 'report.html',
+                            logFileName         : 'log.html',
                             disableArchiveOutput: false,
                             passThreshold       : 60,
                             unstableThreshold   : 40,
