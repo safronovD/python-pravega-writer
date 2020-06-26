@@ -38,6 +38,8 @@ class ModelTrainer:
         self.label_test = dataset_test.iloc[:, label_col]
 
     def train(self, common_dir, model_file, max_df=0.8, min_count=5, max_iter=10000):
+        """Train model."""
+
         sklearn_pipeline = Pipeline((('vec', TfidfVectorizer(max_df=max_df,
                                                              min_df=min_count)),
                                      ('cls', LogisticRegression(max_iter=max_iter))))

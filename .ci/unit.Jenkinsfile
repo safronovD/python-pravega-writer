@@ -48,7 +48,7 @@ pipeline {
         stage('connector unit') {
             steps {
                 container('python'){
-                    sh 'python3 -m robot.run  --outputdir reports ./connector/test/unit.robot'
+                    sh 'python3 -m robot.run  --outputdir reports/connector ./connector/test/unit.robot'
                     step(
                         [
                             $class              : 'RobotPublisher',
@@ -69,7 +69,7 @@ pipeline {
         stage('ml-controller unit') {
             steps {
                 container('python'){
-                    sh 'python3 -m robot.run  --outputdir reports ./ml-controller/test/unit.robot'
+                    sh 'python3 -m robot.run  --outputdir reports/ml-controller ./ml-controller/test/unit.robot'
                     step(
                         [
                             $class              : 'RobotPublisher',
@@ -90,7 +90,7 @@ pipeline {
         stage('server unit') {
             steps {
                 container('python'){
-                    sh 'python3 -m robot.run  --outputdir reports ./server/test/unit.robot'
+                    sh 'python3 -m robot.run  --outputdir reports/server ./server/test/unit.robot'
                     step(
                         [
                             $class              : 'RobotPublisher',
