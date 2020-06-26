@@ -22,6 +22,9 @@ pipeline {
                 container('python'){
                     sh 'pip3 install pylint'
                     sh 'pip3 install pycodestyle'
+                    sh 'pip3 install -r ./connector/requirements.txt'
+                    sh 'pip3 install -r ./server/requirements.txt'
+                    sh 'pip3 install -r ./ml-controller/requirements.txt'
                     sh 'pip3 install -r ./connector/test/requirements.txt'
                     sh 'pip3 install -r ./server/test/requirements.txt'
                     sh 'pip3 install -r ./ml-controller/test/requirements.txt'
@@ -36,7 +39,7 @@ pipeline {
         stage('Lint') {
             steps {
                 container('python') {
-                    sh 'pylint --rcfile=pylint.cfg --exit-zero server/ connector/ ml-controller/'
+                    sh 'pylint --rcfile=pylint.cfg --exit-zero server/ connector/ ml-controller/ --msg-template="{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}" > reports/pylint.log'
                     sh 'pycodestyle --max-line-length=100 ./ml-controller ./server ./connector > reports/pep8.log | exit 0'
                 }
             }
@@ -110,13 +113,11 @@ pipeline {
         always{
             recordIssues(
                 tool: pyLint(pattern: 'reports/pylint.log'),
-                unstableTotalAll: 150,
-                failedTotalAll: 200
+                unstableTotalAll: 25
             )
             recordIssues(
                 tool: pep8(pattern: 'reports/pep8.log'),
-                unstableTotalAll: 20,
-                failedTotalAll: 30
+                unstableTotalAll: 25
             )
         }
 
