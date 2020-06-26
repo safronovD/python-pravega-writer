@@ -41,6 +41,15 @@ pipeline {
                 container('python') {
                     sh 'pylint --rcfile=pylint.cfg --exit-zero server/ connector/ ml-controller/ --msg-template="{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}" > reports/pylint.log'
                     sh 'pycodestyle --max-line-length=100 ./ml-controller ./server ./connector > reports/pep8.log | exit 0'
+
+                    recordIssues(
+                        tool: pyLint(pattern: 'reports/pylint.log'),
+                        unstableTotalAll: 25
+                    )
+                    recordIssues(
+                        tool: pep8(pattern: 'reports/pep8.log'),
+                        unstableTotalAll: 25
+                    )
                 }
             }
         }
@@ -52,7 +61,7 @@ pipeline {
                     step(
                         [
                             $class              : 'RobotPublisher',
-                            outputPath          : 'reports',
+                            outputPath          : 'reports/connector',
                             outputFileName      : 'output.xml',
                             reportFileName      : 'report.html',
                             logFileName         : 'log.html',
@@ -73,7 +82,7 @@ pipeline {
                     step(
                         [
                             $class              : 'RobotPublisher',
-                            outputPath          : 'reports',
+                            outputPath          : 'reports/ml-controller',
                             outputFileName      : 'output.xml',
                             reportFileName      : 'report.html',
                             logFileName         : 'log.html',
@@ -94,7 +103,7 @@ pipeline {
                     step(
                         [
                             $class              : 'RobotPublisher',
-                            outputPath          : 'reports',
+                            outputPath          : 'reports/server',
                             outputFileName      : 'output.xml',
                             reportFileName      : 'report.html',
                             logFileName         : 'log.html',
@@ -110,17 +119,6 @@ pipeline {
     }
 
     post {
-        always{
-            recordIssues(
-                tool: pyLint(pattern: 'reports/pylint.log'),
-                unstableTotalAll: 25
-            )
-            recordIssues(
-                tool: pep8(pattern: 'reports/pep8.log'),
-                unstableTotalAll: 25
-            )
-        }
-
         success {
             setBuildStatus("Unit & Lint succeeded", "Unit & Lint", "SUCCESS");
         }
