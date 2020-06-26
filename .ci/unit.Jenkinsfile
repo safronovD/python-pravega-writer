@@ -34,7 +34,7 @@ pipeline {
             steps {
                 container('python') {
                     sh 'pylint --rcfile=pylint.cfg --exit-zero server/ connector/ ml-controller/ > reports/pylint.log'
-                    sh 'pycodestyle ./ml-controller ./server ./connector'
+                    sh 'pycodestyle ./ml-controller ./server ./connector > reports/pep8.log | exit 0'
                 }
             }
         }
