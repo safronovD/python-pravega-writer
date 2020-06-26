@@ -36,8 +36,8 @@ pipeline {
         stage('Lint') {
             steps {
                 container('python') {
-                    sh 'pylint --rcfile=pylint.cfg --exit-zero server/ connector/ ml-controller/ > reports/pylint.log'
-                    sh 'pycodestyle ./ml-controller ./server ./connector > reports/pep8.log | exit 0'
+                    sh 'pylint --rcfile=pylint.cfg --exit-zero server/ connector/ ml-controller/'
+                    sh 'pycodestyle --max-line-length=100 ./ml-controller ./server ./connector > reports/pep8.log | exit 0'
                 }
             }
         }
