@@ -18,9 +18,12 @@ pipeline {
 
    stages {
        stage('Lint') {
-          container('python'){
-          pip install pylint
-          }
+          steps {
+            container('python'){
+            pip install pylint
+            pylint --rcfile=pylint.cfg server/ connector/ ml-controller/ > pylint.log
+                }
+            }
        }
        
        stage('Unit') {
