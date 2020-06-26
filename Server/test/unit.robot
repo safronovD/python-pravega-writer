@@ -3,4 +3,4 @@ Documentation       Robot Framework tests.
 
 *** Test Cases ***
 Hello World
-    Log     connector test
+    Log     server unit test
