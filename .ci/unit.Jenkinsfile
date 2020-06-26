@@ -109,12 +109,12 @@ pipeline {
     post {
         always{
             recordIssues(
-                tool: pep8(pattern: 'reports/pylint.log'),
+                tool: pyLint(pattern: 'reports/pylint.log'),
                 unstableTotalAll: 150,
                 failedTotalAll: 200
             )
             recordIssues(
-                tool: pyLint(pattern: 'reports/pep8.log'),
+                tool: pep8(pattern: 'reports/pep8.log'),
                 unstableTotalAll: 20,
                 failedTotalAll: 30
             )
