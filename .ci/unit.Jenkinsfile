@@ -21,7 +21,7 @@ pipeline {
           steps {
             container('python'){
             sh 'pip install pylint'
-            sh 'pylint --rcfile=pylint.cfg server/ connector/ ml-controller/ > pylint.log'
+            sh 'pylint --rcfile=pylint.cfg --exit-zero server/ connector/ ml-controller/ > pylint.log'
                 }
             }
        }
