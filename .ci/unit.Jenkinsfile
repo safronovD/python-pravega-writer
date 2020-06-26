@@ -20,11 +20,12 @@ pipeline {
         stage('Preparation') {
             steps {
                 container('python'){
-                    sh 'pip install pylint'
-                    sh 'pip install pycodestyle'
-                    sh 'pip install -r ./connector/test/requirements.txt'
-                    sh 'pip install -r ./server/test/requirements.txt'
-                    sh 'pip install -r ./ml-controller/test/requirements.txt'
+                    sh 'pip3 install pylint'
+                    sh 'pip3 install pycodestyle'
+                    sh 'pip3 install -r ./connector/test/requirements.txt'
+                    sh 'pip3 install -r ./server/test/requirements.txt'
+                    sh 'pip3 install -r ./ml-controller/test/requirements.txt'
+                    sh 'mkdir -p reports'
                 }
             }
         }
