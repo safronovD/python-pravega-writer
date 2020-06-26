@@ -1,3 +1,5 @@
+"""Module for train and save ml-model."""
+
 import logging
 import yaml
 from core.ModelTrainer import ModelTrainer
@@ -6,6 +8,8 @@ CONFIG_FILE = 'config.yaml'
 
 
 def main():
+    """Load config. Start trainer."""
+
     with open(CONFIG_FILE) as file:
         config_data = yaml.load(file, Loader=yaml.FullLoader)
 
