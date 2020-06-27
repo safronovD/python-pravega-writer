@@ -25,9 +25,10 @@ pipeline {
                          sh 'python3 --version'
                          sh 'docker --version'
                          sh 'mkdir -p reports'
+                         echo'${BUILD_NUMBER}'
                          sh 'python3 -m pip install -r ./server/test/requirements.txt'
                          sh 'python3 ./server/test/setup.py'
-                         sh 'python3 -m robot.run  --outputdir reports ./server/test/container_test.robot'
+                         sh 'python3 -m robot.run  --outputdir reports --variable tag:${BUILD_NUMBER} ./server/test/container_test.robot'
                       step(
                           [
                             $class              : 'RobotPublisher',
