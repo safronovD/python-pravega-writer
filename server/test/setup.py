@@ -2,6 +2,7 @@ import docker
 from docker.errors import NotFound, APIError, ImageNotFound
 import time
 import requests
+import os
 # TODO: Спросить у Феди про имена контейнеров
 
 
@@ -31,7 +32,6 @@ class Setup():
             print(e)
         else:
             print("Container {} created".format(container.name))
-
 
     def remove_container(self):
         try:
@@ -69,6 +69,7 @@ if __name__ == "__main__":
     obj.run_container()
     time.sleep(20)
     print(requests.get('https://api.github.com').status_code)
+    os.system("docker ps")
     print(requests.get('http://localhost:666/v1').status_code)
     obj.remove_container()
     obj.remove_image()
