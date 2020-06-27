@@ -19,9 +19,10 @@ class Setup(object):
         os.system("helm install --namespace test " + name + " ./ppw-chart --set fullnameOverride=" + name)
         nodeIP = self.get_node_ip
         nodePort = self.get_node_port(name)
-        os.system("echo " + str(nodeIP))
-        os.system("echo " + str(nodePort))
-        #resp = requests.get("https://" + str(self.get_node_ip) + ":" + str(self.get_node_port(name)))
+        os.system("echo " + nodeIP)
+        os.system("echo " + nodePort)
+        resp = requests.get("https://" + nodeIP + ":" + nodePort)
+        os.system("echo " + resp.status_code)
         #print(resp.status_code)
         #print(resp.json())
 
