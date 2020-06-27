@@ -16,7 +16,6 @@ Check connection to NodePort by RequestsLibrary
     ${nodePort}         helm.get_node_port    ${chartId}
     Create Session      connection            http://${nodeIP}:${nodePort}
     ${resp}             Get request           connection         /
-    Log                 ${resp.status_code}
     Should be equal     ${resp.status_code}   ${200}
 
 *** Keywords ***
@@ -24,5 +23,4 @@ Install chart
     helm.install_helm_chart     ${chartId}
 
 Uninstall chart
-    #helm.delete_helm_chart      ${chartId}
-    Log                          ${chartId}
+    helm.delete_helm_chart      ${chartId}
