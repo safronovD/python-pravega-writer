@@ -12,18 +12,18 @@ ${tag}
 
 *** Test Cases ***
 Check connection to container
-#    ${response}     Get request     conn   /v1/
-#                    Should be equal     ${response.status_code}    ${200}
+    ${response}     Get request     conn   /v1/
+                    Should be equal     ${response.status_code}    ${200}
 
      Log            ${tag}
 
 *** Keywords ***
 Create connection
     obj.build_image
-#    obj.run_container
+    obj.run_container
     Create session     conn     ${base_url}    disable_warnings=1
 
 Close connection
     Delete all sessions
-#    obj.remove_container
+    obj.remove_container
     obj.remove_image
