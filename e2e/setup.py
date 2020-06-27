@@ -17,6 +17,7 @@ class Setup(object):
     def install_helm_chart(self, name: str):
         os.system("helm install --namespace test " + name + " ./ppw-chart --set fullnameOverride=" + name)
         os.system("curl -i $(kubectl get nodes --namespace test -o jsonpath={.items[0].status.addresses[0].address}):$(kubectl get --namespace test -o jsonpath={.spec.ports[0].nodePort} services " + name + ")")
+        os.system("curl -i $(kubectl get nodes --namespace default -o jsonpath={.items[0].status.addresses[0].address}):$(kubectl get --namespace default -o jsonpath={.spec.ports[0].nodePort} services pravega-writer)")
         
     def delete_helm_chart(self, name: str):
         os.system("helm delete --namespace test " + name)
