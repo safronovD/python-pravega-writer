@@ -10,8 +10,8 @@ void setBuildStatus(String context, String message, String state) {
 pipeline {
     agent {
         kubernetes {
-            label 'jenkins-pod'
-            yamlFile '.ci/pod-templates/pod-python.yaml'
+            label 'jenkins-pod-python'
+            yamlFile '.ci/pod-templates/python-kubectl-helm-pod.yaml'
         }
     }
    // options {
@@ -20,7 +20,7 @@ pipeline {
    stages {
        stage('Preparation') {
             steps {
-                container('python') {
+                container('common') {
                     sh '''
                        echo End-to-end tests
                        python --version
@@ -30,15 +30,15 @@ pipeline {
             }
        }
        stage('End-to-End test') {
-                   steps {
-                       container('python') {
-                           script {
-                               def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD')
-                               def chart_id = commit_id[1..10] + "-${currentBuild.number}"
-                               //python3 -m robot.run --outputdir reports --variable chartId:${chart_id} ./e2e/e2e_test.robot
-                           }
-                           sh 'python3 -m robot.run --outputdir reports --variable chartId:test1 ./e2e/e2e.robot'
-                           step(
+            steps {
+                container('common') {
+                    script {
+                        def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD')
+                        def chart_id = commit_id[1..10] + "-${currentBuild.number}"
+                        //python3 -m robot.run --outputdir reports --variable chartId:${chart_id} ./e2e/e2e_test.robot
+                    }
+                    sh 'python3 -m robot.run --outputdir reports --variable chartId:test1 ./e2e/e2e.robot'
+                    step(
                           [
                             $class              : 'RobotPublisher',
                             outputPath          : 'reports',
@@ -50,10 +50,10 @@ pipeline {
                             unstableThreshold   : 40,
                             otherFiles          : "**/*.png,**/*.jpg",
                           ]
-                        )
-                       }
-                   }
-              }
+                     )
+                  }
+             }
+        }
    }
     post {
           success {
