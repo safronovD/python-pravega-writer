@@ -16,7 +16,6 @@ pipeline {
      }
 
     options {
-        buildDiscarder(logRotator(numToKeepStr: '15', artifactNumToKeepStr: '15'))
         timestamps()
     }
    stages {
@@ -27,6 +26,7 @@ pipeline {
                          sh 'python3 --version'
                          sh 'docker --version'
                          sh 'mkdir -p reports'
+                         sh "printenv"
                          sh 'python3 -m pip install -r ./server/test/requirements.txt'
                       }
             }
