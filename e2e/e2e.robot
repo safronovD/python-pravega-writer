@@ -22,9 +22,9 @@ Check connection to NodePort by RequestsLibrary
 Check connection to NodePort by Process Library
     ${nodeIP}           helm.get_node_ip
     ${nodePort}         helm.get_node_port    ${chartId}
-    ${resp}             Run Process           curl -i ${nodeIP}:${nodePort}    shell=True
-    Log                 ${resp.stdout}
-    Should Contain      ${resp.stdout}        200 OK
+    ${Authenticate}             Run Process           curl -i ${nodeIP}:${nodePort}    shell=True
+    Log                 ${Authenticate.stdout}
+    Should Contain      ${Authenticate.stdout}        HTTP/1.1 200 OK
 
 *** Keywords ***
 Install chart
