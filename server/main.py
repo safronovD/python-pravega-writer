@@ -67,10 +67,11 @@ def get_result(message_id):
     else:
         for message, search_id in message_id_dict.items():
             if search_id == message_id:
-                id_expl_dict[message_id] = eli5.sklearn.explain_prediction_linear_regressor(model['cls'],
-                                                                                            message,
-                                                                                            model['vec'])
-                html_page = eli5.formatters.html.format_as_html(id_expl_dict[message_id])
+                if model is not None:
+                    id_expl_dict[message_id] = eli5.sklearn.explain_prediction_linear_regressor(model['cls'],
+                                                                                                message,
+                                                                                                model['vec'])
+                    html_page = eli5.formatters.html.format_as_html(id_expl_dict[message_id])
                 break
 
     if html_page is not None:
@@ -81,11 +82,14 @@ def get_result(message_id):
 
 def main():
     """Load config and run flask app."""
+
     global model
+
     with open(CONFIG_FILE) as file:
         config_data = yaml.load(file, Loader=yaml.FullLoader)
 
-    model = pickle.load(open(os.path.join(config_data['common_dir'], config_data['model_name']), 'rb'))
+    if os.path.exists(os.path.join(config_data['common_dir'], config_data['model_name'])):
+        model = pickle.load(open(os.path.join(config_data['common_dir'], config_data['model_name']), 'rb'))
 
     app.run(debug=True, host='0.0.0.0', port=config_data['port'])
 
