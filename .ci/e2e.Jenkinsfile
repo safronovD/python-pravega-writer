@@ -37,24 +37,29 @@ pipeline {
                     //    def chart_id = commit_id[1..10] + "-${currentBuild.number}"
                     //}
                     sh 'python3 -m robot.run --outputdir reports --variable chartId:test3 ./e2e/e2e.robot | exit 0'
-                    step(
-                          [
-                            $class              : 'RobotPublisher',
-                            outputPath          : 'reports',
-                            outputFileName      : 'output.xml',
-                            reportFileName      : 'report.html',
-                            logFileName         : 'log.html',
-                            disableArchiveOutput: false,
-                            passThreshold       : 60,
-                            unstableThreshold   : 40,
-                            otherFiles          : "**/*.png,**/*.jpg",
-                          ]
-                     )
                   }
              }
         }
    }
     post {
+          always {
+            script {
+              step(
+                  [
+                    $class              : 'RobotPublisher',
+                    outputPath          : 'reports',
+                    outputFileName      : 'output.xml',
+                    reportFileName      : 'report.html',
+                    logFileName         : 'log.html',
+                    disableArchiveOutput: false,
+                    passThreshold       : 60,
+                    unstableThreshold   : 40,
+                    otherFiles          : "**/*.png,**/*.jpg",
+                  ]
+                )
+            }
+          }  
+
           success {
             setBuildStatus("Tests succeeded", "Tests", "SUCCESS");
           }
