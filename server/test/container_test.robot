@@ -24,10 +24,12 @@ Create connection
     obj.build_image
     obj.show_all_containers
     obj.run_container
-    show_all_containers
+    obj.show_all_containers
     Create session     conn     ${base_url}
 
 Close connection
     Delete all sessions
+    obj.show_all_containers
     obj.remove_container
+    obj.show_all_containers
     obj.remove_image
