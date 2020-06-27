@@ -1,6 +1,7 @@
 import docker
 from docker.errors import NotFound, APIError, ImageNotFound
 import time
+import requests
 # TODO: Спросить у Феди про имена контейнеров
 
 
@@ -24,14 +25,13 @@ class Setup():
         print("Image {} created".format(self.image_name))
 
     def run_container(self):
-        self.show_all_containers()
         try:
             container = self.client.containers.run(self.image_name, detach=True, ports={'666': 666}, name=self.container_name)
         except ImageNotFound as e:
             print(e)
         else:
             print("Container {} created".format(container.name))
-            time.sleep(20)
+
 
     def remove_container(self):
         try:
@@ -67,5 +67,8 @@ if __name__ == "__main__":
     obj = Setup(123)
     obj.build_image()
     obj.run_container()
+    time.sleep(20)
+    print(requests.get('https://api.github.com').status_code)
+    print(requests.get('http://localhost:666/v1').status_code)
     obj.remove_container()
     obj.remove_image()
