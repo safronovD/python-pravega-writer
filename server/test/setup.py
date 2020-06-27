@@ -30,7 +30,7 @@ class Setup():
             print(e)
         else:
             print("Container {} created".format(container.name))
-        time.sleep(20)
+            time.sleep(20)
 
     def remove_container(self):
         try:
