@@ -35,7 +35,7 @@ pipeline {
        stage('Test') {
             steps {
                       container('docker'){
-                         sh 'python3 -m robot.run  --outputdir reports --variable tag:${BUILD_NUMBER} ./server/test/container_test.robot'
+                         sh 'python3 -m robot.run  --outputdir reports --variable tag:${BUILD_NUMBER}-${BUILD_NUMBER} ./server/test/container_test.robot'
                       }
             }
         }

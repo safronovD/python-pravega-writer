@@ -25,7 +25,7 @@ Create connection
     obj.show_all_containers
     obj.run_container
     show_all_containers
-    Create session     conn     ${base_url}     max_retries=10      timeout=5
+    Create session     conn     ${base_url}
 
 Close connection
     Delete all sessions
