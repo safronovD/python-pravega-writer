@@ -24,6 +24,7 @@ class Setup():
         print("Image {} created".format(self.image_name))
 
     def run_container(self):
+        self.show_all_containers()
         try:
             container = self.client.containers.run(self.image_name, detach=True, ports={'666': 666}, name=self.container_name)
         except ImageNotFound as e:
@@ -31,6 +32,7 @@ class Setup():
         else:
             print("Container {} created".format(container.name))
             time.sleep(20)
+            self.show_all_containers()
 
     def remove_container(self):
         try:
