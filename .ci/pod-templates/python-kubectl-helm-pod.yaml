@@ -1,0 +1,9 @@
+spec:
+  containers:
+  - name: common
+    image: dxd360/python-kubectl-helm
+    imagePullPolicy: IfNotPresent
+    command:
+    - cat
+    tty: true
+    
