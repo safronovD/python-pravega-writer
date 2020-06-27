@@ -30,6 +30,7 @@ void helmDeploy(Map args) {
 pipeline {
     environment {
          CHART = "ppw-chart"
+         NAME = "pravega-writer"
          //CONFIG = new groovy.json.JsonSlurperClassic().parseText(readFile(".ci/config.json"))
     }
 
@@ -54,7 +55,7 @@ pipeline {
                     // run dry-run helm chart installation
                     helmDeploy(
                         dry_run       : true,
-                        name          : CHART,
+                        name          : NAME,
                         chart_dir     : CHART,
                         replicas      : 1
                     )
@@ -71,7 +72,7 @@ pipeline {
                     // deployment
                     //helmDeploy(
                     //    dry_run       : false,
-                    //    name          : CHART,
+                    //    name          : NAME,
                     //    chart_dir     : CHART,
                     //    replicas      : 1
                     //)
