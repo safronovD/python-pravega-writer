@@ -6,26 +6,26 @@ from docker.errors import NotFound, APIError, ImageNotFound
 
 class Setup():
     def __init__(self, tag):
-        self.name_for_image = 'ppw-server:{}'.format(tag)
-        self.name_for_container = 'ppw-server_{}'.format(tag)
+        self.image_name = 'ppw-server:{}'.format(tag)
+        self.container_name = 'ppw-server_{}'.format(tag)
         self.client = docker.from_env()
 
     def build_image(self):
-        if self.client.images.list(name=self.name_for_image):
+        if self.client.images.list(name=self.image_name):
             try:
-                self.client.containers.get(self.name_for_container)
+                self.client.containers.get(self.container_name)
             except NotFound as e:
                 print(e)
             else:
                 self.remove_container()
             self.remove_image()
 
-        self.client.images.build(path='./server/', tag=self.name_for_image)
-        print("Image {} created".format(self.name_for_image))
+        self.client.images.build(path='./server/', tag=self.image_name)
+        print("Image {} created".format(self.image_name))
 
     def run_container(self):
         try:
-            container = self.client.containers.run(self.name_for_image, detach=True, ports={'666': 666}, name=self.name_for_container)
+            container = self.client.containers.run(self.image_name, detach=True, ports={'666': 666}, name=self.container_name)
         except ImageNotFound as e:
             print(e)
         else:
@@ -33,7 +33,7 @@ class Setup():
 
     def remove_container(self):
         try:
-            container = self.client.containers.get(self.name_for_container)
+            container = self.client.containers.get(self.container_name)
             container.remove(force=True)
         except NotFound as e:
             print(e)
@@ -42,9 +42,10 @@ class Setup():
 
     def remove_image(self):
         try:
-            image = self.client.images.get(self.name_for_image)
+            image = self.client.images.get(self.image_name)
             tag = image.tags[0]
             self.client.images.remove(tag)
+            self.client.containers.prune()
         except APIError as e:
 
             print(e)
