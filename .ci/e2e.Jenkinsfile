@@ -36,7 +36,7 @@ pipeline {
                     //    def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD')
                     //    def chart_id = commit_id[1..10] + "-${currentBuild.number}"
                     //}
-                    sh 'python3 -m robot.run --outputdir reports --variable chartId:test3 ./e2e/e2e.robot | exit 0'
+                    sh 'python3 -m robot.run --outputdir reports --variable chartId:test3 ./e2e/e2e.robot'
                   }
              }
         }
