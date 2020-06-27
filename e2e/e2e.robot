@@ -16,15 +16,15 @@ Check connection to NodePort by RequestsLibrary
     ${nodePort}         helm.get_node_port    ${chartId}
     Create Session      connection            http://${nodeIP}:${nodePort}
     ${resp}             Get request           connection         /
-    Should be equal     ${resp.status_code}   ${200}
     Log                 ${resp.status_code}
+    Should be equal     ${resp.status_code}   ${200}
 
 Check connection to NodePort by Process Library
     ${nodeIP}           helm.get_node_ip
     ${nodePort}         helm.get_node_port    ${chartId}
     ${resp}             Run Process           curl -i ${nodeIP}:${nodePort}    shell=True
-    Should Contain      ${resp.stdout}        200 OK
     Log                 ${resp.stdout}
+    Should Contain      ${resp.stdout}        200 OK
 
 *** Keywords ***
 Install chart
