@@ -23,7 +23,7 @@ Check connection to container
 Create connection
     obj.build_image
     obj.run_container
-    Create session     conn     ${base_url}     disable_warnings=1      max_retries=10
+    Create session     conn     ${base_url}     max_retries=10      timeout=5
 
 Close connection
     Delete all sessions
