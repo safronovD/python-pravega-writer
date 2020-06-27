@@ -19,16 +19,10 @@ Check connection to NodePort by RequestsLibrary
     Log                 ${resp.status_code}
     Should be equal     ${resp.status_code}   ${200}
 
-Check connection to NodePort by Process Library
-    ${nodeIP}           helm.get_node_ip
-    ${nodePort}         helm.get_node_port    ${chartId}
-    ${resp}             Run Process           curl -i ${nodeIP}:${nodePort}    shell=True
-    Log                 ${resp.stdout}
-    Should Contain      ${resp.stdout}        HTTP/1.1 200 OK
-
 *** Keywords ***
 Install chart
     helm.install_helm_chart     ${chartId}
 
 Uninstall chart
-    helm.delete_helm_chart      ${chartId}
+    #helm.delete_helm_chart      ${chartId}
+    Log                          ${chartId}
