@@ -16,7 +16,6 @@ Check connection to NodePort
     Create Session      connection            http://${nodeIP}:${nodePort}
     ${resp}             Get request           connection         /
     Should be equal     ${resp.status_code}   ${200}
-    Log     ${chartId}
 
 *** Keywords ***
 Install chart

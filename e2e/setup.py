@@ -9,7 +9,7 @@ class Setup(object):
         return nodePort
 
     def get_node_ip(self):
-        command = 'kubectl get nodes --namespace test -o jsonpath={.items[1].status.addresses[0].address}'
+        command = 'kubectl get nodes --namespace test -o jsonpath={.items[0].status.addresses[0].address}'
         stream = os.popen(command)
         nodeIP = stream.read()
         return nodeIP
