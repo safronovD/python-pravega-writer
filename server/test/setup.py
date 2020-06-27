@@ -32,7 +32,6 @@ class Setup():
         else:
             print("Container {} created".format(container.name))
             time.sleep(20)
-            self.show_all_containers()
 
     def remove_container(self):
         try:
