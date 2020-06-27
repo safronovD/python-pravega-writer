@@ -17,10 +17,12 @@ class Setup(object):
 
     def install_helm_chart(self, name: str):
         os.system("helm install --namespace test " + name + " ./ppw-chart --set fullnameOverride=" + name)
-        
-        resp = requests.get("https://" + str(self.get_node_ip) + ":" + str(self.get_node_port(name)))
-        print(resp.status_code)
-        print(resp.json())
+        nodeIP = self.get_node_ip
+        nodePort = self.get_node_port(name)
+        print(nodeIP, nodePort)
+        #resp = requests.get("https://" + str(self.get_node_ip) + ":" + str(self.get_node_port(name)))
+        #print(resp.status_code)
+        #print(resp.json())
 
     def delete_helm_chart(self, name: str):
         os.system("helm delete --namespace test " + name)
