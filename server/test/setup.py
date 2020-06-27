@@ -1,6 +1,6 @@
 import docker
 from docker.errors import NotFound, APIError, ImageNotFound
-
+import time
 # TODO: Спросить у Феди про имена контейнеров
 
 
@@ -30,6 +30,7 @@ class Setup():
             print(e)
         else:
             print("Container {} created".format(container.name))
+        time.sleep(20)
 
     def remove_container(self):
         try:
