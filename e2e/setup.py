@@ -16,7 +16,7 @@ class Setup(object):
 
     def install_helm_chart(self, name: str):
         os.system("helm install --namespace test " + name + " ./ppw-chart --set fullnameOverride=" + name)
-        os.system("kubectl get nodes --namespace test -o jsonpath={.items[0].status.addresses[-1].address}")
+        os.system("kubectl get nodes --namespace test -o jsonpath={.items[0].status.addresses[2].address}")
 
     def delete_helm_chart(self, name: str):
         os.system("helm delete --namespace test " + name)
