@@ -19,7 +19,7 @@ pipeline {
                          sh 'docker --version'
                          sh 'mkdir -p reports'
                          sh 'python3 -m pip install -r ./server/test/requirements.txt'
-//                         sh 'python3 ./server/test/setup.py'
+                         sh 'python3 ./server/test/setup.py'
                          sh 'printenv'
                          sh 'docker ps'
 
