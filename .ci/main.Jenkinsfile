@@ -1,12 +1,3 @@
-void setBuildStatus(String context, String message, String state) {
-  step([
-      $class: "GitHubCommitStatusSetter",
-      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/safronovD/python-pravega-writer"],
-      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: context],
-      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
-      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
-  ]);
-}
 pipeline {
    agent any
    // options {
@@ -26,7 +17,7 @@ pipeline {
        stage('Unit tests') {
          steps {
                 sh 'echo Unit tests'
-                build 'Tests'
+//                build 'Tests'
                // sh 'mkdir -p results'
                // sh 'python3 -m coverage run -m robot.run  --outputdir results  .'
                // sh 'python3 -m coverage xml'
@@ -44,7 +35,7 @@ pipeline {
         stage('Deploy') {
          steps {
                 sh 'echo Deploy'
-                build 'Deploy'
+//                build 'Deploy'
                // sh 'mkdir -p results'
                // sh 'python3 -m coverage run -m robot.run  --outputdir results  .'
                // sh 'python3 -m coverage xml'
@@ -52,7 +43,7 @@ pipeline {
         }
     }
     post {
-          // always {
+           always {
           //   script {
           //     step(
           //         [
@@ -68,13 +59,12 @@ pipeline {
           //         ]
           //       )
           //   }
-          // }  
-          success {
-            setBuildStatus("Build succeeded", "Build", "SUCCESS");
-          }
-          failure {
-            setBuildStatus("Build failed", "Build", "FAILURE");
-          }
+            script {
+                def externalMethod
+                externalMethod = load(".ci/publish_result.groovy")
+                externalMethod.setBuildStatus("Container test", currentBuild.result);
+           }
+
          
 	}
 }
