@@ -29,7 +29,7 @@ pipeline {
                     //    def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD')
                     //    def chart_id = commit_id[1..10] + "-${currentBuild.number}"
                     //}
-                    sh 'python3 -m robot.run --outputdir reports --variable chartId:test3 ./e2e/e2e.robot'
+                    sh 'python3 -m robot.run --outputdir reports/e2e --variable chartId:test3 ./e2e/e2e.robot'
                   }
              }
         }
@@ -38,7 +38,7 @@ pipeline {
         always {
             script {
                 def parse_robot_results = load(".ci/parse_robot_results.groovy")
-                parse_robot_results.parseRobotResults()
+                parse_robot_results.parseRobotResults('reports/e2e')
 
                 def publish_result = load(".ci/publish_result.groovy")
                 publish_result.setBuildStatus("Container test", currentBuild.result);
