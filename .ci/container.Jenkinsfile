@@ -17,7 +17,6 @@ pipeline {
 //                    sh 'python3 --version'
 //                    sh 'docker --version'
                     sh 'mkdir -p reports'
-                    sh 'mkdir -p container'
                     sh 'python3 -m pip install -r ./server/test/requirements.txt'
 //                    sh 'printenv'
 //                    sh 'python3 ./server/test/setup.py'
@@ -42,7 +41,7 @@ pipeline {
         always {
             script {
                 def parse_robot_results = load(".ci/parse_robot_results.groovy")
-                parse_robot_results.parseRobotResults('reports/container')
+                parse_robot_results.parseRobotResults('reports')
 
                 def publish_result = load(".ci/publish_result.groovy")
                 publish_result.setBuildStatus("Container test", currentBuild.result);
