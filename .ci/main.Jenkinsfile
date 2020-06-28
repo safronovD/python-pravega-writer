@@ -1,8 +1,9 @@
 pipeline {
    agent any
-   // options {
-   //      timestamps()
-   //      }
+    options {
+         buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
+         timestamps()
+         }
    stages {
        stage('Preparation') {
             steps {
@@ -62,7 +63,7 @@ pipeline {
             script {
                 def externalMethod
                 externalMethod = load(".ci/publish_result.groovy")
-                externalMethod.setBuildStatus("Container test", currentBuild.result);
+                externalMethod.setBuildStatus("Build", currentBuild.result);
            }
            }
 
