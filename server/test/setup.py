@@ -72,8 +72,13 @@ if __name__ == "__main__":
     # os.system("docker ps")
     for i in range(1, 7):
         try:
-            print(requests.get('192.168.70.21{}:666/v1'.format(i)).status_code)
+            print(requests.get('http://192.168.70.21{}:666/v1'.format(i)).status_code)
         except Exception as e:
             print('i = {} упало'.format(i))
+
+    try:
+        print(requests.get('http://192.168.70.211:31511/v1/scopes').status_code)
+    except Exception as e:
+        print('упало')
     obj.remove_container()
     obj.remove_image()
