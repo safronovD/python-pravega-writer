@@ -59,10 +59,10 @@ pipeline {
 
           success {
             script{
-                echo currentBuild.result
+//                echo currentBuild.result
                 def externalMethod
                 externalMethod = load(".ci/publish_result.groovy")
-                externalMethod.setBuildStatus("Container succeeded", "Container", "SUCCESS");
+                externalMethod.setBuildStatus("Container test", currentBuild.result);
             }
           }
           failure {
@@ -70,7 +70,7 @@ pipeline {
                 echo currentBuild.result
                 def externalMethod
                 externalMethod = load(".ci/publish_result.groovy")
-                externalMethod.setBuildStatus("Container failed", "Container", "FAILURE");
+                externalMethod.setBuildStatus("Container failed", "FAILURE");
             }
           }
 
