@@ -8,8 +8,8 @@ pipeline {
      }
      parameters {
          string(
-             name: 'BUILD_NUMBER',
-             defaultValue: ${env.BUILD_ID},
+             name: 'BUILD_ID',
+             defaultValue: "${env.BUILD_ID}",
              description:  'Build ID')
      }
 
@@ -37,7 +37,7 @@ pipeline {
                 container('docker') {
                     echo "${params.BUILD_ID}"
                     echo "${env.BUILD_ID}"
-                    sh 'python3 -m robot.run  --outputdir reports --variable tag:${BUILD_ID}-${GIT_COMMIT} ./server/test/container_test.robot'
+                    sh 'python3 -m robot.run  --outputdir reports --variable tag:${env.BUILD_ID}-${GIT_COMMIT} ./server/test/container_test.robot'
                 }
             }
         }
