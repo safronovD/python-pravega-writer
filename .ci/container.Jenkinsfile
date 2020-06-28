@@ -6,6 +6,9 @@ pipeline {
             yamlFile '.ci/pod-templates/pod-python.yaml'
         }
      }
+     parameters {
+        string(name: 'BUILD_NUMBER', defaultValue: ${BUILD_NUMBER} )
+     }
 
     options {
         timestamps()
@@ -29,7 +32,7 @@ pipeline {
        stage('Test') {
             steps {
                       container('docker'){
-                         sh 'python3 -m robot.run  --outputdir reports --variable tag:${BUILD_NUMBER}-${GIT_COMMIT} ./server/test/container_test.robot'
+                         sh 'python3 -m robot.run  --outputdir reports --variable tag:${params.BUILD_NUMBER}-${GIT_COMMIT} ./server/test/container_test.robot'
                       }
             }
         }
