@@ -7,7 +7,7 @@ Test Setup          Create connection
 Test Teardown       Close connection
 
 *** Variables ***
-${base_url}         http://http://192.168.70.216:666
+${base_url}         http://192.168.70.216:666
 ${tag}
 
 *** Test Cases ***
