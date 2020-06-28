@@ -54,24 +54,13 @@ pipeline {
                   ]
                 )
             }
-
-          }
-
-          success {
             script{
 //                echo currentBuild.result
                 def externalMethod
                 externalMethod = load(".ci/publish_result.groovy")
                 externalMethod.setBuildStatus("Container test", currentBuild.result);
             }
-          }
-          failure {
-            script{
-                echo currentBuild.result
-                def externalMethod
-                externalMethod = load(".ci/publish_result.groovy")
-                externalMethod.setBuildStatus("Container failed", "FAILURE");
-            }
+
           }
 
 	}
