@@ -52,8 +52,9 @@ pipeline {
                   ]
                 )
             }
+            externalMethod = load("publish_result.groovy")
           }
-          externalMethod = load("publish_result.groovy")
+
           success {
             externalMethod.setBuildStatus("Container succeeded", "Container", "SUCCESS");
           }
