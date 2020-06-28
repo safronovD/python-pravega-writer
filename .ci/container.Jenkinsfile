@@ -35,7 +35,7 @@ pipeline {
        stage('Test') {
             steps {
                 container('docker') {
-                    echo ${params.BUILD_ID}
+//                    echo ${params.BUILD_ID}
                     echo "${params.BUILD_ID}"
                     echo "${env.BUILD_ID}"
                     echo "tag:${params.BUILD_ID}-${GIT_COMMIT}"
