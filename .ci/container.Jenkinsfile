@@ -1,4 +1,4 @@
-def externalMethod
+
 pipeline {
      agent {
         kubernetes {
@@ -20,7 +20,7 @@ pipeline {
                          sh 'mkdir -p reports'
                          sh 'python3 -m pip install -r ./server/test/requirements.txt'
 //                         sh 'python3 ./server/test/setup.py'
-                         externalMethod = load("publish_result.groovy")
+
 
                       }
             }
@@ -39,6 +39,7 @@ pipeline {
     post {
           always {
             script {
+
               step(
                   [
                     $class              : 'RobotPublisher',
@@ -57,10 +58,18 @@ pipeline {
           }
 
           success {
-            externalMethod.setBuildStatus("Container succeeded", "Container", "SUCCESS");
+            script{
+                def externalMethod
+                externalMethod = load(".ci/publish_result.groovy")
+                externalMethod.setBuildStatus("Container succeeded", "Container", "SUCCESS");
+            }
           }
           failure {
-            externalMethod.setBuildStatus("Container failed", "Container", "FAILURE");
+            script{
+                def externalMethod
+                externalMethod = load("/ci/publish_result.groovy")
+                externalMethod.setBuildStatus("Container failed", "Container", "FAILURE");
+            }
           }
 
 	}

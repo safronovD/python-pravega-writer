@@ -7,5 +7,4 @@ void setBuildStatus(String context, String message, String state) {
       statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
   ]);
 }
-
-return this.&setBuildStatus
+return this
