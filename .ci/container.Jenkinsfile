@@ -1,12 +1,18 @@
 
 pipeline {
-     agent {
-         kubernetes {
-             label 'jenkins-pod'
-             yamlFile '.ci/pod-templates/pod-python.yaml'
-         }
+    agent {
+        kubernetes {
+            label 'jenkins-pod'
+            yamlFile '.ci/pod-templates/pod-python.yaml'
+        }
      }
-
+     parameters {
+         string(
+             name: 'BUILD_ID',
+             defaultValue: "${env.BUILD_ID}",
+             description:  'Build ID'
+             )
+     }
 
     options {
         timestamps()
