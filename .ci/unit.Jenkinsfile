@@ -48,11 +48,6 @@ pipeline {
             steps {
                 container('python'){
                     sh 'python3 -m robot.run  --outputdir reports/connector ./connector/test/unit.robot'
-
-                    script {
-                        def parse_robot_results = load(".ci/parse_robot_results.groovy")
-                        parse_robot_results.parseRobotResults('reports/connector')
-                    }
                 }
             }
         }
@@ -61,11 +56,6 @@ pipeline {
             steps {
                 container('python'){
                     sh 'python3 -m robot.run  --outputdir reports/ml-controller ./ml-controller/test/unit.robot'
-
-                    script {
-                        def parse_robot_results = load(".ci/parse_robot_results.groovy")
-                        parse_robot_results.parseRobotResults('reports/ml-controller')
-                    }
                 }
             }
         }
@@ -74,11 +64,6 @@ pipeline {
             steps {
                 container('python'){
                     sh 'python3 -m robot.run  --outputdir reports/server ./server/test/unit.robot'
-
-                    script {
-                        def parse_robot_results = load(".ci/parse_robot_results.groovy")
-                        parse_robot_results.parseRobotResults('reports/server')
-                    }
                 }
             }
         }
@@ -87,6 +72,12 @@ pipeline {
     post {
         always {
             script {
+                def parse_robot_results = load(".ci/parse_robot_results.groovy")
+
+                parse_robot_results.parseRobotResults('reports/connector')
+                parse_robot_results.parseRobotResults('reports/ml-controller')
+                parse_robot_results.parseRobotResults('reports/server')
+
                 def publish_result = load(".ci/publish_result.groovy")
                 publish_result.setBuildStatus("Container test", currentBuild.result);
             }

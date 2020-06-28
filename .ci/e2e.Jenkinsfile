@@ -15,6 +15,7 @@ pipeline {
             steps {
                 container('common') {
                     sh '''
+                       mkdir -p reports'
                        echo End-to-end tests
                        python --version
                        python3 -m pip install -r ./e2e/requirements.txt
