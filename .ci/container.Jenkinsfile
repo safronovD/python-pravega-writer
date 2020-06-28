@@ -37,7 +37,7 @@ pipeline {
                 container('docker') {
                     echo "${params.BUILD_ID}"
                     echo "${env.BUILD_ID}"
-                    sh 'python3 -m robot.run  --outputdir reports --variable tag:${params.BUILD_ID}-${GIT_COMMIT} ./server/test/container_test.robot'
+                    sh 'python3 -m robot.run  --outputdir reports --variable tag:\"${params.BUILD_ID}\"-${GIT_COMMIT} ./server/test/container_test.robot'
                 }
             }
         }
