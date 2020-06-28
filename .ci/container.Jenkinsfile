@@ -1,12 +1,4 @@
-void setBuildStatus(String context, String message, String state) {
-  step([
-      $class: "GitHubCommitStatusSetter",
-      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/safronovD/python-pravega-writer"],
-      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: context],
-      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
-      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
-  ]);
-}
+
 pipeline {
      agent {
         kubernetes {
@@ -28,7 +20,7 @@ pipeline {
                          sh 'mkdir -p reports'
 
                          sh 'python3 -m pip install -r ./server/test/requirements.txt'
-                         sh 'python3 ./server/test/setup.py'
+..                         sh 'python3 ./server/test/setup.py'
                       }
             }
 
@@ -61,12 +53,12 @@ pipeline {
                 )
             }
           }
-
+          def externalMethod = load("publish_result.groovy")
           success {
-            setBuildStatus("Container succeeded", "Container", "SUCCESS");
+            externalMethod.setBuildStatus("Container succeeded", "Container", "SUCCESS");
           }
           failure {
-            setBuildStatus("Container failed", "Container", "FAILURE");
+            externalMethod.setBuildStatus("Container failed", "Container", "FAILURE");
           }
 
 	}
