@@ -20,8 +20,7 @@ pipeline {
                          sh 'mkdir -p reports'
                          sh 'python3 -m pip install -r ./server/test/requirements.txt'
 //                         sh 'python3 ./server/test/setup.py'
-                         def externalMethod
-                         externalMethod = load("publish_result.groovy")
+
                       }
             }
 
@@ -57,9 +56,13 @@ pipeline {
           }
 
           success {
+            def externalMethod
+            externalMethod = load("publish_result.groovy")
             externalMethod.setBuildStatus("Container succeeded", "Container", "SUCCESS");
           }
           failure {
+            def externalMethod
+            externalMethod = load("publish_result.groovy")
             externalMethod.setBuildStatus("Container failed", "Container", "FAILURE");
           }
 
