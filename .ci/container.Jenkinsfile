@@ -40,23 +40,11 @@ pipeline {
     post {
         always {
             script {
-                step(
-                      [
-                        $class              : 'RobotPublisher',
-                        outputPath          : 'reports',
-                        outputFileName      : 'output.xml',
-                        reportFileName      : 'report.html',
-                        logFileName         : 'log.html',
-                        disableArchiveOutput: false,
-                        passThreshold       : 60,
-                        unstableThreshold   : 40,
-                        otherFiles          : "**/*.png,**/*.jpg",
-                      ]
-                    )
-            }
-            script {
-                def externalMethod = load(".ci/publish_result.groovy")
-                externalMethod.setBuildStatus("Container test", currentBuild.result);
+                def publish_result = load(".ci/parse_robot_results.groovy")
+                publish_result.parseRobotResults()
+
+                def publish_result = load(".ci/publish_result.groovy")
+                publish_result.setBuildStatus("Container test", currentBuild.result)
             }
 
         }
