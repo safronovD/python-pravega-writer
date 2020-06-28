@@ -7,11 +7,12 @@ pipeline {
         }
      }
      parameters {
-        string(name: 'BUILD_NUMBER', defaultValue: ${BUILD_NUMBER} )
+        string(name: 'BUILD_NUMBER', defaultValue: '123')
      }
 
     options {
         timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
     }
    stages {
        stage ('Preparation'){
