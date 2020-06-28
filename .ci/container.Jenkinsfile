@@ -20,7 +20,7 @@ pipeline {
                     sh 'docker --version'
                     sh 'mkdir -p reports'
                     sh 'python3 -m pip install -r ./server/test/requirements.txt'
-//                    sh 'printenv'
+                    sh 'printenv'
 //                    sh 'python3 ./server/test/setup.py'
 //                    sh 'docker ps'
                 }
@@ -30,7 +30,11 @@ pipeline {
        stage('Test') {
             steps {
                 container('docker') {
-                    sh 'python3 m robot.run  --outputdir reports --variable tag:${GIT_COMMIT} ./server/test/container_test.robot'
+//                    echo ${params.BUILD_ID}
+                    echo "${params.BUILD_ID}"
+                    echo "${env.BUILD_ID}"
+                    sh "tag=\"${params.BUILD_ID}-${GIT_COMMIT}\""
+                    sh 'python3 -m robot.run  --outputdir reports --variable tag:${tag} ./server/test/container_test.robot'
                 }
             }
         }
