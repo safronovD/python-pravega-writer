@@ -37,11 +37,11 @@ pipeline {
     post {
         always {
             script {
-                def publish_result = load(".ci/parse_robot_results.groovy")
-                publish_result.parseRobotResults()
+                def parse_robot_results = load(".ci/parse_robot_results.groovy")
+                parse_robot_results.parseRobotResults()
 
-                def externalMethod = load(".ci/publish_result.groovy")
-                externalMethod.setBuildStatus("Container test", currentBuild.result);
+                def publish_result = load(".ci/publish_result.groovy")
+                publish_result.setBuildStatus("Container test", currentBuild.result);
             }
         }
 	}
