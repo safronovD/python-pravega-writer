@@ -7,7 +7,10 @@ pipeline {
         }
      }
      parameters {
-        string(name: 'BUILD_NUMBER', defaultValue: '123')
+        string(
+            name: 'BUILD_NUMBER',
+            defaultValue: "${env.BUILD_NUMBER}",
+            description:  'Build Number')
      }
 
     options {
@@ -33,6 +36,7 @@ pipeline {
        stage('Test') {
             steps {
                       container('docker'){
+                         echo ${params.BUILD_NUMBER}
                          sh 'python3 -m robot.run  --outputdir reports --variable tag:${params.BUILD_NUMBER}-${GIT_COMMIT} ./server/test/container_test.robot'
                       }
             }
