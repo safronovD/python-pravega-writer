@@ -27,7 +27,7 @@ pipeline {
                          sh 'mkdir -p reports'
                          sh 'python3 -m pip install -r ./server/test/requirements.txt'
 //                         sh 'python3 ./server/test/setup.py'
-//                         sh 'printenv'
+                         sh 'printenv'
 //                         sh 'docker ps'
                       }
             }
@@ -37,6 +37,7 @@ pipeline {
             steps {
                       container('docker'){
                          echo "${params.BUILD_NUMBER}"
+                         echo "${env.BUILD_NUMBER}"
                          sh 'python3 -m robot.run  --outputdir reports --variable tag:${BUILD_NUMBER}-${GIT_COMMIT} ./server/test/container_test.robot'
                       }
             }
