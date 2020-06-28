@@ -1,8 +1,7 @@
-
 pipeline {
     agent {
         kubernetes {
-            label 'jenkins-pod'
+            label 'container-pod'
             yamlFile '.ci/pod-templates/pod-python.yaml'
         }
      }
@@ -15,11 +14,11 @@ pipeline {
         stage ('Preparation') {
             steps {
                 container('docker') {
-                    sh 'python3 --version'
-                    sh 'docker --version'
+//                    sh 'python3 --version'
+//                    sh 'docker --version'
                     sh 'mkdir -p reports'
                     sh 'python3 -m pip install -r ./server/test/requirements.txt'
-                    sh 'printenv'
+//                    sh 'printenv'
 //                    sh 'python3 ./server/test/setup.py'
 //                    sh 'docker ps'
                 }
@@ -29,9 +28,9 @@ pipeline {
        stage('Test') {
             steps {
                 container('docker') {
-                script{
-                    sh 'python3 -m robot.run  --outputdir reports --variable tag:${GIT_COMMIT} ./server/test/container_test.robot'
-                    }
+                    script{
+                        sh 'python3 -m robot.run  --outputdir reports --variable tag:${GIT_COMMIT} ./server/test/container_test.robot'
+                        }
                 }
             }
         }
@@ -56,8 +55,7 @@ pipeline {
                     )
             }
             script {
-                def externalMethod
-                externalMethod = load(".ci/publish_result.groovy")
+                def externalMethod = load(".ci/publish_result.groovy")
                 externalMethod.setBuildStatus("Container test", currentBuild.result);
             }
 

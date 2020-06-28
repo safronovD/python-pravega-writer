@@ -1,20 +1,9 @@
-void setBuildStatus(String context, String message, String state) {
-  step([
-      $class: "GitHubCommitStatusSetter",
-      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/safronovD/python-pravega-writer"],
-      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: context],
-      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
-      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
-  ]);
-}
-
 void helmLint(String chart_dir) {
     // lint helm chart
     sh "helm lint ./${CHART}"
 }
 
 void helmDeploy(Map args) {
-    //configure helm client and confirm tiller process is installed
 
     if (args.dry_run) {
         sh 'echo Running dry-run deployment'
@@ -31,19 +20,23 @@ void helmDeploy(Map args) {
 pipeline {
     environment {
          CHART = "ppw-chart"
+         NAME = "pravega-writer"
          //CONFIG = new groovy.json.JsonSlurperClassic().parseText(readFile(".ci/config.json"))
     }
 
     agent {
         kubernetes {
-            label 'jenkins-pod'
+            label 'jenkins-pod-helm'
             yamlFile '.ci/pod-templates/pod-helm.yaml'
         }
     }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
+        timestamps()
+    }
 
-   stages {
-
-       stage ('Helm test') {
+    stages {
+        stage ('Helm test') {
             steps {
                 container('helm') {
 
@@ -55,22 +48,39 @@ pipeline {
                     // run dry-run helm chart installation
                     helmDeploy(
                         dry_run       : true,
-                        name          : CHART,
+                        name          : NAME,
                         chart_dir     : CHART,
                         replicas      : 1
                     )
                 }
             }
         }
+
+        stage ('Deploy') {
+            steps {
+                container('helm') {
+
+                    sh 'echo Deploy'
+
+                    // deployment
+                    //helmDeploy(
+                    //    dry_run       : false,
+                    //    name          : NAME,
+                    //    chart_dir     : CHART,
+                    //    replicas      : 1
+                    //)
+                }
+            }
+        }
     }
 
     post {
-          success {
-            setBuildStatus("Deploy succeeded", "Deploy", "SUCCESS");
-          }
-          failure {
-            setBuildStatus("Deploy failed", "Deploy", "FAILURE");
-          }
-         
-	  }
+        always {
+            script {
+                def externalMethod = load(".ci/publish_result.groovy")
+                externalMethod.setBuildStatus("Build", currentBuild.result);
+            }
+        }
+
+	}
 }
