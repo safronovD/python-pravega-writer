@@ -64,6 +64,7 @@ pipeline {
                 externalMethod = load(".ci/publish_result.groovy")
                 externalMethod.setBuildStatus("Container test", currentBuild.result);
            }
+           }
 
          
 	}
