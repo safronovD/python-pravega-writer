@@ -38,8 +38,8 @@ pipeline {
 //                    echo ${params.BUILD_ID}
                     echo "${params.BUILD_ID}"
                     echo "${env.BUILD_ID}"
-                    echo "tag:${params.BUILD_ID}-${GIT_COMMIT}"
-                    sh 'python3 m robot.run  --outputdir reports --variable tag:${params.BUILD_ID}-${GIT_COMMIT} ./server/test/container_test.robot'
+                    tag="tag:${params.BUILD_ID}-${GIT_COMMIT}"
+                    sh 'python3 m robot.run  --outputdir reports --variable tag:${tag} ./server/test/container_test.robot'
                 }
             }
         }
