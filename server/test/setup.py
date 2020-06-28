@@ -68,8 +68,11 @@ if __name__ == "__main__":
     obj.build_image()
     obj.run_container()
     time.sleep(20)
-    print(requests.get('https://api.github.com').status_code)
+    # print(requests.get('https://api.github.com').status_code)
     os.system("docker ps")
-    print(requests.get('http://localhost:666/v1').status_code)
+    try:
+        print(requests.get('192.168.70.216:666/v1').status_code)
+    except Exception:
+        print('упало')
     obj.remove_container()
     obj.remove_image()
