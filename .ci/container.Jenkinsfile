@@ -67,7 +67,7 @@ pipeline {
           failure {
             script{
                 def externalMethod
-                externalMethod = load("/ci/publish_result.groovy")
+                externalMethod = load(".ci/publish_result.groovy")
                 externalMethod.setBuildStatus("Container failed", "Container", "FAILURE");
             }
           }
