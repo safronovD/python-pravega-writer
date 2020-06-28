@@ -6,12 +6,7 @@ pipeline {
              yamlFile '.ci/pod-templates/pod-python.yaml'
          }
      }
-     parameters {
-         string(
-             name: 'BUILD_ID',
-             defaultValue: "${env.BUILD_ID}",
-             description:  'Build ID')
-     }
+
 
     options {
         timestamps()
@@ -25,7 +20,7 @@ pipeline {
                     sh 'docker --version'
                     sh 'mkdir -p reports'
                     sh 'python3 -m pip install -r ./server/test/requirements.txt'
-                    sh 'printenv'
+//                    sh 'printenv'
 //                    sh 'python3 ./server/test/setup.py'
 //                    sh 'docker ps'
                 }
@@ -35,11 +30,7 @@ pipeline {
        stage('Test') {
             steps {
                 container('docker') {
-//                    echo ${params.BUILD_ID}
-                    echo "${params.BUILD_ID}"
-                    echo "${env.BUILD_ID}"
-                    sh "tag=\"${params.BUILD_ID}-${GIT_COMMIT}\""
-                    sh 'python3 m robot.run  --outputdir reports --variable tag:${tag} ./server/test/container_test.robot'
+                    sh 'python3 m robot.run  --outputdir reports --variable tag:${GIT_COMMIT} ./server/test/container_test.robot'
                 }
             }
         }
