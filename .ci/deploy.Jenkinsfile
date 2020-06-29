@@ -4,16 +4,9 @@ void helmLint(String chart_dir) {
 
 void helmDeploy(Map args) {
     if (args.dry_run) {
-        sh '''
-            echo Running dry-run deployment
-            helm upgrade --dry-run --debug --install ${args.name} ./${args.chart_dir} --set Replicas=${args.replicas}
-        '''
+        sh "helm upgrade --dry-run --debug --install ${args.name} ./${args.chart_dir} --set Replicas=${args.replicas}"
     } else {
-        sh '''
-            echo Running deployment
-            helm upgrade --install ${args.name} ./${args.chart_dir} --set Replicas=${args.replicas}
-            echo Application ${args.name} successfully deployed. Use helm status ${args.name} to check
-        '''
+        sh "helm upgrade --install ${args.name} ./${args.chart_dir} --set Replicas=${args.replicas}"
     }
 }
 
