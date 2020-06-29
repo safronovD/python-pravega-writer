@@ -1,6 +1,5 @@
 import os
 import time
-import requests
 
 class Setup(object):
     def get_node_port(self, name: str):

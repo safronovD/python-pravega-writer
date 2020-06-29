@@ -1,12 +1,3 @@
-void setBuildStatus(String context, String message, String state) {
-  step([
-      $class: "GitHubCommitStatusSetter",
-      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/safronovD/python-pravega-writer"],
-      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: context],
-      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
-      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
-  ]);
-}
 pipeline {
     agent {
         kubernetes {
@@ -14,14 +5,17 @@ pipeline {
             yamlFile '.ci/pod-templates/python-kubectl-helm-pod.yaml'
         }
     }
-   // options {
-   //      timestamps()
-   //      }
+    options {
+         timestamps()
+         buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
+
+    }
    stages {
        stage('Preparation') {
             steps {
                 container('common') {
                     sh '''
+                       mkdir -p reports'
                        echo End-to-end tests
                        python --version
                        python3 -m pip install -r ./e2e/requirements.txt
@@ -32,40 +26,20 @@ pipeline {
        stage('End-to-End test') {
             steps {
                 container('common') {
-                    //script {
-                    //    def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD')
-                    //    def chart_id = commit_id[1..10] + "-${currentBuild.number}"
-                    //}
-                    sh 'python3 -m robot.run --outputdir reports --variable chartId:test3 ./e2e/e2e.robot'
+                    sh 'python3 -m robot.run --outputdir reports/e2e --variable chartId:test-${GIT_COMMIT} ./e2e/e2e.robot'
                   }
              }
         }
    }
     post {
-          always {
+        always {
             script {
-              step(
-                  [
-                    $class              : 'RobotPublisher',
-                    outputPath          : 'reports',
-                    outputFileName      : 'output.xml',
-                    reportFileName      : 'report.html',
-                    logFileName         : 'log.html',
-                    disableArchiveOutput: false,
-                    passThreshold       : 60,
-                    unstableThreshold   : 40,
-                    otherFiles          : "**/*.png,**/*.jpg",
-                  ]
-                )
-            }
-          }  
+                def parse_robot_results = load(".ci/parse_robot_results.groovy")
+                parse_robot_results.parseRobotResults('reports')
 
-          success {
-            setBuildStatus("Tests succeeded", "Tests", "SUCCESS");
-          }
-          failure {
-            setBuildStatus("Tests failed", "Tests", "FAILURE");
-          }
-         
+                def publish_result = load(".ci/publish_result.groovy")
+                publish_result.setBuildStatus("E2E tests", currentBuild.result);
+            }
+        }
 	}
 }

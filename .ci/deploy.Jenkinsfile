@@ -1,13 +1,3 @@
-void setBuildStatus(String context, String message, String state) {
-  step([
-      $class: "GitHubCommitStatusSetter",
-      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/safronovD/python-pravega-writer"],
-      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: context],
-      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
-      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
-  ]);
-}
-
 void helmLint(String chart_dir) {
     // lint helm chart
     sh "helm lint ./${CHART}"
@@ -40,10 +30,13 @@ pipeline {
             yamlFile '.ci/pod-templates/pod-helm.yaml'
         }
     }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
+        timestamps()
+    }
 
-   stages {
-
-       stage ('Helm test') {
+    stages {
+        stage ('Helm test') {
             steps {
                 container('helm') {
 
@@ -82,12 +75,12 @@ pipeline {
     }
 
     post {
-          success {
-            setBuildStatus("Deploy succeeded", "Deploy", "SUCCESS");
-          }
-          failure {
-            setBuildStatus("Deploy failed", "Deploy", "FAILURE");
-          }
-         
-	  }
+        always {
+            script {
+                def publish_result = load(".ci/publish_result.groovy")
+                publish_result.setBuildStatus("Deploy", currentBuild.result);
+            }
+        }
+
+	}
 }
