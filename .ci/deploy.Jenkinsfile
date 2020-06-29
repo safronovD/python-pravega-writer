@@ -1,5 +1,5 @@
 void helmLint(String chart_dir) {
-    sh "helm lint ./${CHART}"
+    sh "helm lint ./${chart_dir}"
 }
 
 void helmDeploy(Map args) {
@@ -40,20 +40,14 @@ pipeline {
 
                     sh 'echo Helm test'
 
-                    //script {
-                    //    def config = readJSON file: '.ci/config.json'
-                    //    echo "${config}"
-                    //}
-                    sh "echo ${CONFIG}"
+                    helmLint(CONFIG.chart)
 
-                    //helmLint(CHART)
-
-                    //helmDeploy(
-                    //    dry_run       : true,
-                    //    name          : NAME,
-                    //    chart_dir     : CHART,
-                    //    replicas      : 1
-                    //)
+                    helmDeploy(
+                        dry_run       : true,
+                        name          : CONFIG.name,
+                        chart_dir     : CONFIG.chart,
+                        replicas      : CONFIG.replicas
+                    )
                 }
             }
         }
@@ -66,9 +60,9 @@ pipeline {
 
                     //helmDeploy(
                     //    dry_run       : false,
-                    //    name          : NAME,
-                    //    chart_dir     : CHART,
-                    //    replicas      : 1
+                    //    name          : CONFIG.name,
+                    //    chart_dir     : CONFIG.chart,
+                    //    replicas      : CONFIG.replicas
                     //)
                 }
             }
