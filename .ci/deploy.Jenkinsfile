@@ -37,7 +37,7 @@ pipeline {
                     sh 'echo Helm test'
 
                     script {
-                        config = readJSON file: './ci/config.json'
+                        def config = readJSON file: '.ci/config.json'
                     }
                     sh "echo ${config.name}"
 
