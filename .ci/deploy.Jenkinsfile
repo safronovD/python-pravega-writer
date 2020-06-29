@@ -29,33 +29,21 @@ pipeline {
         timestamps()
     }
 
-    environment {
-        CONFIG = readJSON file: '.ci/config.json'
-    }
-
     stages {
         stage ('Helm test') {
             steps {
                 container('helm') {
 
                     sh 'echo Helm test'
-                    sh "echo ${CONFIG}"
 
-                    script {
-                        conf = readJSON file: '.ci/config.json'
-                        echo "${conf.chart_name}"
-                    }
+                    helmLint('ppw-chart')
 
-                    sh "echo ${CONFIG.chart_name}"
-
-                    //helmLint(CONFIG.app.chart)
-
-                    //helmDeploy(
-                    //    dry_run       : true,
-                    //    name          : CONFIG.app.name,
-                    //    chart_dir     : CONFIG.app.chart,
-                    //    replicas      : CONFIG.app.replicas
-                    //)
+                    helmDeploy(
+                        dry_run       : true,
+                        name          : 'pravega-writer',
+                        chart_dir     : 'ppw-chart',
+                        replicas      : 1
+                    )
                 }
             }
         }
@@ -68,9 +56,9 @@ pipeline {
 
                     //helmDeploy(
                     //    dry_run       : false,
-                    //    name          : CONFIG.app.name,
-                    //    chart_dir     : CONFIG.app.chart,
-                    //    replicas      : CONFIG.app.replicas
+                    //    name          : 'pravega-writer',
+                    //    chart_dir     : 'ppw-chart',
+                    //    replicas      : 1
                     //)
                 }
             }
