@@ -37,8 +37,7 @@ pipeline {
                     sh 'echo Helm test'
 
                     script {
-                        //def config = readJSON file: ".ci/config.json"
-                        def config = new groovy.json.JsonSlurperClassic().parseText(readFile(".ci/config.json"))
+                        def config = readJSON file: 'config.json'
                     }
                     sh "echo ${config.name}"
 
