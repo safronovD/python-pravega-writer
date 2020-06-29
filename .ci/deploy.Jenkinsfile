@@ -40,6 +40,12 @@ pipeline {
 
                     sh 'echo Helm test'
                     sh "echo ${CONFIG}"
+
+                    script {
+                        conf = readJSON file: '.ci/config.json'
+                        echo "${conf.chart_name}"
+                    }
+
                     sh "echo ${CONFIG.chart_name}"
 
                     //helmLint(CONFIG.app.chart)
