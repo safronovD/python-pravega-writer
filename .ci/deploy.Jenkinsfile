@@ -39,8 +39,8 @@ pipeline {
                 container('helm') {
 
                     sh 'echo Helm test'
-                    sh 'echo ${CONFIG}'
-                    sh 'echo ${CONFIG.app.chart}'
+                    sh "echo ${CONFIG}"
+                    sh "echo ${CONFIG['chart_name']}"
 
                     //helmLint(CONFIG.app.chart)
 
