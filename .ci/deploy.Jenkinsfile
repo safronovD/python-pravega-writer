@@ -37,9 +37,10 @@ pipeline {
                     sh 'echo Helm test'
 
                     script {
-                        def config = readJSON file: 'config.json'
+                        def config = readJSON file: '.ci/config.json'
+                        echo "${config}"
                     }
-                    sh "echo ${config.name}"
+                    sh "echo ${config}"
 
                     //helmLint(CHART)
 
