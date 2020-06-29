@@ -35,7 +35,7 @@ pipeline {
         always {
             script {
                 def publish_result = load(".ci/publish_result.groovy")
-                publish_result.setBuildStatus("Container test", currentBuild.result);
+                publish_result.setBuildStatus("Build", currentBuild.result);
             }
         }
 	}
