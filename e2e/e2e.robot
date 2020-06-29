@@ -14,7 +14,7 @@ ${nodeIP}
 Check connection to NodePort by RequestsLibrary
     ${nodeIP}           helm.get_node_ip
     ${nodePort}         helm.get_node_port    ${chartId}
-    Create Session      connection            http://${nodeIP}:${nodePort}
+    Create Session      connection            http://${nodeIP}:${nodePort}      max_retries=10
     ${resp}             Get request           connection         /
     Should be equal     ${resp.status_code}   ${200}
 
