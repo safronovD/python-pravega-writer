@@ -44,9 +44,9 @@ pipeline {
 
                     helmDeploy(
                         dry_run       : true,
-                        name          : CONFIG.name,
-                        chart_dir     : CONFIG.chart,
-                        replicas      : CONFIG.replicas
+                        name          : CONFIG.app.name,
+                        chart_dir     : CONFIG.app.chart,
+                        replicas      : CONFIG.app.replicas
                     )
                 }
             }
@@ -60,9 +60,9 @@ pipeline {
 
                     //helmDeploy(
                     //    dry_run       : false,
-                    //    name          : CONFIG.name,
-                    //    chart_dir     : CONFIG.chart,
-                    //    replicas      : CONFIG.replicas
+                    //    name          : CONFIG.app.name,
+                    //    chart_dir     : CONFIG.app.chart,
+                    //    replicas      : CONFIG.app.replicas
                     //)
                 }
             }
