@@ -40,7 +40,7 @@ pipeline {
 
                     sh 'echo Helm test'
 
-                    helmLint(CONFIG.chart)
+                    helmLint(CONFIG.app.chart)
 
                     helmDeploy(
                         dry_run       : true,
