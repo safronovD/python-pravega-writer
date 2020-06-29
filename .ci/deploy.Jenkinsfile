@@ -40,7 +40,7 @@ pipeline {
 
                     sh 'echo Helm test'
                     sh "echo ${CONFIG}"
-                    sh "echo ${CONFIG['chart_name']}"
+                    sh "echo ${CONFIG.chart_name}"
 
                     //helmLint(CONFIG.app.chart)
 
