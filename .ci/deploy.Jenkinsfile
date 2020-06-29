@@ -40,14 +40,16 @@ pipeline {
 
                     sh 'echo Helm test'
 
-                    helmLint(CONFIG.app.chart)
+                    sh 'echo ${CONFIG.app.chart}'
 
-                    helmDeploy(
-                        dry_run       : true,
-                        name          : CONFIG.app.name,
-                        chart_dir     : CONFIG.app.chart,
-                        replicas      : CONFIG.app.replicas
-                    )
+                    //helmLint(CONFIG.app.chart)
+
+                    //helmDeploy(
+                    //    dry_run       : true,
+                    //    name          : CONFIG.app.name,
+                    //    chart_dir     : CONFIG.app.chart,
+                    //    replicas      : CONFIG.app.replicas
+                    //)
                 }
             }
         }
