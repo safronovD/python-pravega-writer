@@ -29,6 +29,10 @@ pipeline {
         timestamps()
     }
 
+    environment {
+        CONFIG = readJSON file: '.ci/config.json'
+    }
+
     stages {
         stage ('Helm test') {
             steps {
@@ -36,11 +40,11 @@ pipeline {
 
                     sh 'echo Helm test'
 
-                    script {
-                        def config = readJSON file: '.ci/config.json'
-                        echo "${config}"
-                    }
-                    sh "echo ${config}"
+                    //script {
+                    //    def config = readJSON file: '.ci/config.json'
+                    //    echo "${config}"
+                    //}
+                    sh "echo ${CONFIG}"
 
                     //helmLint(CHART)
 
