@@ -34,9 +34,13 @@ pipeline {
             steps {
                 container('helm') {
 
-                    sh 'echo Helm test'
+                    script {
+                        echo Helm test
+                        def config = readJSON file: './ci/config.json'
+                        helmLint(config.chart)
+                    }
 
-                    def config = readJSON file: './ci/config.json'
+                    //sh 'echo Helm test'
 
                     //helmLint(CHART)
 
