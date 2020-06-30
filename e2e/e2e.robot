@@ -1,6 +1,5 @@
 *** Settings ***
 Library             RequestsLibrary
-Library             Process
 Library             e2e.setup.Setup     WITH NAME   helm
 Test Setup          Install chart
 Test Teardown       Uninstall chart
@@ -13,10 +12,10 @@ ${nodeIP}
 *** Test Cases ***
 Check connection to NodePort by RequestsLibrary
     ${nodeIP}           helm.get_node_ip
-    ${nodePort}         helm.get_node_port    ${chartId}
-    Create Session      connection            http://${nodeIP}:${nodePort}      max_retries=10
-    ${resp}             Get request           connection         /
-    Should be equal     ${resp.status_code}   ${200}
+    ${nodePort}         helm.get_node_port      ${chartId}
+    Create Session      connection              http://${nodeIP}:${nodePort}      max_retries=10
+    ${resp}             Get request             connection         /
+    Should be equal     ${resp.status_code}     ${200}
 
 *** Keywords ***
 Install chart

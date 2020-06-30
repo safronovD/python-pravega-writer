@@ -1,5 +1,4 @@
 import os
-import time
 
 class Setup(object):
     def get_node_port(self, name: str):
