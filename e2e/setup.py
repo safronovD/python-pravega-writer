@@ -1,8 +1,11 @@
 import os
 
 class Setup(object):
-    def get_node_port(self, name: str):
-        command = "kubectl get --namespace test -o jsonpath={.spec.ports[0].nodePort} services " + name
+    def __init__(self, name):
+        self.chart_name = name
+
+    def get_node_port(self):
+        command = "kubectl get --namespace test -o jsonpath={.spec.ports[0].nodePort} services " + self.chart_name
         stream = os.popen(command)
         nodePort = stream.read()
         return nodePort
@@ -13,8 +16,8 @@ class Setup(object):
         nodeIP = stream.read()
         return nodeIP
 
-    def install_helm_chart(self, name: str):
-        os.system("helm install --namespace test " + name + " ./ppw-chart --set fullnameOverride=" + name)
+    def install_helm_chart(self):
+        os.system("helm install --namespace test " + self.chart_name + " ./ppw-chart --set fullnameOverride=" + self.chart_name)
 
-    def delete_helm_chart(self, name: str):
-        os.system("helm delete --namespace test " + name)
+    def delete_helm_chart(self):
+        os.system("helm delete --namespace test " + self.chart_name)
