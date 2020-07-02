@@ -19,7 +19,7 @@ pipeline {
                     sh 'mkdir -p reports'
                     sh 'python3 -m pip install -r ./server/test/requirements.txt'
 //                    sh 'printenv'
-//                    sh 'python3 ./server/test/setup.py'
+                    sh 'python3 ./server/test/setup.py'
 //                    sh 'docker ps'
                 }
             }
@@ -29,7 +29,7 @@ pipeline {
             steps {
                 container('docker') {
                     script{
-                        sh 'python3 -m robot.run  --outputdir reports --variable tag:${GIT_COMMIT} ./server/test/container_test.robot'
+//                        sh 'python3 -m robot.run  --outputdir reports --variable tag:${GIT_COMMIT} ./server/test/container_test.robot'
                         }
                 }
             }

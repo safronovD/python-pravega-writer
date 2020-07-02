@@ -3,48 +3,71 @@ from docker.errors import NotFound, APIError, ImageNotFound
 import time
 import requests
 import os
-# TODO: Спросить у Феди про имена контейнеров
 
 
 class Setup():
     def __init__(self, tag):
-        self.image_name = 'ppw-server:{}'.format(tag)
-        self.container_name = 'ppw-server_{}'.format(tag)
+
+        self.repo = '192.168.70.210:5000'
+        self.image_name_server = '{}/ppw-server:{}'.format(self.repo, tag)
+        self.container_name_server = '{}/ppw-server-{}'.format(self.repo, tag)
+
+        self.image_name_connector = '{}/ppw-connector:{}'.format(self.repo, tag)
+        self.container_name_connector = '{}/ppw-connector-{}'.format(self.repo, tag)
+
+        self.image_name_ml_controller = '{}/ppw-ml-controller:{}'.format(self.repo, tag)
+        self.container_name_ml_controller = '{}/ppw-ml-controller-{}'.format(self.repo, tag)
+
         self.client = docker.from_env()
 
-    def build_image(self):
-        if self.client.images.list(name=self.image_name):
+    def get_image_full_name(self, name):
+        return {
+            'server': self.image_name_server,
+            'connector': self.image_name_connector,
+            'ml-controller': self.image_name_ml_controller,
+        }.get(name, lambda: None)
+
+    def get_container_full_name(self, name):
+        return {
+            'server': self.container_name_server,
+            'connector': self.container_name_connector,
+            'ml-controller': self.container_name_ml_controller,
+        }.get(name, lambda: None)
+
+    def build_image(self, name):
+        image_name = self.get_image_full_name(name)
+        if self.client.images.list(name=image_name):
             try:
-                self.client.containers.get(self.container_name)
+                self.client.containers.get(self.get_container_full_name(name))
             except NotFound as e:
                 print(e)
             else:
-                self.remove_container()
-            self.remove_image()
+                self.remove_container(name)
+            self.remove_image(name)
 
-        self.client.images.build(path='./server/', tag=self.image_name)
-        print("Image {} created".format(self.image_name))
+        self.client.images.build(path='./server/', tag=image_name)
+        print("Image {} created".format(image_name))
 
-    def run_container(self):
+    def run_container(self, name):
         try:
-            container = self.client.containers.run(self.image_name, detach=True, ports={'666': 666}, name=self.container_name)
+            container = self.client.containers.run(self.get_image_full_name(name), detach=True, ports={'666': 666}, name=self.get_container_full_name(name))
         except ImageNotFound as e:
             print(e)
         else:
             print("Container {} created".format(container.name))
 
-    def remove_container(self):
+    def remove_container(self, name):
         try:
-            container = self.client.containers.get(self.container_name)
+            container = self.client.containers.get(self.get_container_full_name(name))
             container.remove(force=True)
         except NotFound as e:
             print(e)
         else:
             print("Container {} removed".format(container.name))
 
-    def remove_image(self):
+    def remove_image(self, name):
         try:
-            image = self.client.images.get(self.image_name)
+            image = self.client.images.get(self.get_image_full_name(name))
             tag = image.tags[0]
             self.client.images.remove(tag)
             self.client.containers.prune()
@@ -62,23 +85,45 @@ class Setup():
         else:
             print('The list of containers is empty')
 
+    def push_image(self, name):
+        try:
+            image_name = self.get_image_full_name(name)
+            # images = self.client.images.get(self.get_image_full_name(name))
+            for line in self.client.images.push('{}'.format(image_name),
+                                                auth_config={'username': 'k8s',
+                                                             'password': 'passwordk8'},
+                                                stream=True,
+                                                decode=True):
+                print(line)
+
+        except NotFound:
+            self.build_image(name)
+            self.push_image(name)
+
+        else:
+            print("Image {} pushed".format(image_name))
+
 
 if __name__ == "__main__":
-    obj = Setup(123)
-    obj.build_image()
-    obj.run_container()
-    time.sleep(120)
-    # print(requests.get('https://api.github.com').status_code)
-    # os.system("docker ps")
-    for i in range(1, 7):
-        try:
-            print(requests.get('http://192.168.70.21{}:666/v1'.format(i)).status_code)
-        except Exception as e:
-            print('i = {} упало'.format(i))
+    obj = Setup(1)
+    # print(obj.get_image_full_name('server'))
+    # print(obj.get_container_full_name('server'))
+    obj.build_image('server')
+    obj.push_image('server')
+    # obj.run_container('server')
+    # time.sleep(120)
+    # # print(requests.get('https://api.github.com').status_code)
+    # # os.system("docker ps")
+    # for i in range(1, 7):
+    #     try:
+    #         print(requests.get('http://192.168.70.21{}:666/v1'.format(i)).status_code)
+    #     except Exception as e:
+    #         print('i = {} упало'.format(i))
+    #
+    # try:
+    #     print(requests.get('http://192.168.70.211:31511/v1/scopes').status_code)
+    # except Exception as e:
+    #     print('упало')
+    # obj.remove_container('server')
+    obj.remove_image('server')
 
-    try:
-        print(requests.get('http://192.168.70.211:31511/v1/scopes').status_code)
-    except Exception as e:
-        print('упало')
-    obj.remove_container()
-    obj.remove_image()
