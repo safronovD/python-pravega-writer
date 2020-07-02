@@ -89,13 +89,7 @@ class Setup():
         try:
             image_name = self.get_image_full_name(name)
             # images = self.client.images.get(self.get_image_full_name(name))
-            for line in self.client.images.push('{}'.format(image_name),
-                                                auth_config={'username': 'k8s',
-                                                             'password': 'passwordk8'},
-                                                stream=True,
-                                                decode=True):
-                print(line)
-
+            self.client.images.push('{}'.format(image_name), auth_config={'username': 'k8s', 'password': 'passwordk8'})
         except NotFound:
             self.build_image(name)
             self.push_image(name)
