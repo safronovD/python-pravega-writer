@@ -55,7 +55,7 @@ class Setup():
 
     def run_container(self, name):
         try:
-            container = self.client.containers.run(self.get_image_full_name(name), detach=True, ports={'666': 666}, name=self.get_container_full_name(name))
+            container = self.client.containers.run(self.get_image_full_name(name), detach=True, ports={'666': 666}, name=self.get_container_full_name(name)[20:])
         except ImageNotFound as e:
             print(e)
         else:
@@ -63,7 +63,7 @@ class Setup():
 
     def remove_container(self, name):
         try:
-            container = self.client.containers.get(self.get_container_full_name(name))
+            container = self.client.containers.get(self.get_container_full_name(name)[20:])
             container.remove(force=True)
         except NotFound as e:
             print(e)
@@ -93,7 +93,6 @@ class Setup():
     def push_image(self, name):
         try:
             image_name = self.get_image_full_name(name)
-            images = self.client.images.get(self.get_image_full_name(name))
             self.client.images.push('{}'.format(image_name), auth_config={'username': self.username,
                                                                           'password': self.password})
         except NotFound as e:
