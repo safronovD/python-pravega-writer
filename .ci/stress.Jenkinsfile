@@ -17,7 +17,7 @@ pipeline {
                     sh '''
                        echo Stress tests
                        python --version
-                       python3 -m pip install -r ./stress/requirements.txt
+                       python3 -m pip install -r ./stress-test/requirements.txt
                     '''
                 }
             }
