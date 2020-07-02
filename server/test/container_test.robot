@@ -20,11 +20,11 @@ Check connection to container
 
 *** Keywords ***
 Create connection
-    obj.build_image
-    obj.run_container
+    obj.build_image     server
+    obj.run_container   server
     Create session     conn     ${base_url}     max_retries=10
 
 Close connection
     Delete all sessions
-    obj.remove_container
-    obj.remove_image
+    obj.remove_container        server
+    obj.remove_image            server
