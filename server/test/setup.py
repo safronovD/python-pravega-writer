@@ -108,12 +108,11 @@ class Setup():
 if __name__ == "__main__":
     username = sys.argv[1]
     password = sys.argv[2]
-    print(username, password)
     obj = Setup(1, username=username, password=password)
     # print(obj.get_image_full_name('server'))
     # print(obj.get_container_full_name('server'))
     obj.build_image('server')
-    # obj.push_image('server')
+    obj.push_image('server')
     # obj.run_container('server')
     # time.sleep(120)
     # # print(requests.get('https://api.github.com').status_code)
