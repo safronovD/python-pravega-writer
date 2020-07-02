@@ -103,7 +103,7 @@ if __name__ == "__main__":
     # print(obj.get_image_full_name('server'))
     # print(obj.get_container_full_name('server'))
     obj.build_image('server')
-    obj.push_image('server')
+    # obj.push_image('server')
     # obj.run_container('server')
     # time.sleep(120)
     # # print(requests.get('https://api.github.com').status_code)
@@ -119,5 +119,6 @@ if __name__ == "__main__":
     # except Exception as e:
     #     print('упало')
     # obj.remove_container('server')
+    print(os.environ["GIT_COMMIT"])
     obj.remove_image('server')
 
