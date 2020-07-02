@@ -55,7 +55,7 @@ pipeline {
         }
         success{
             container('docker') {
-                sh 'python3 ./server/test/setup.py' $DOCKER_REGISTRY_USR $DOCKER_REGISTRY_PSW
+                sh 'python3 ./server/test/setup.py $DOCKER_REGISTRY_USR $DOCKER_REGISTRY_PSW'
 
             }
         }
