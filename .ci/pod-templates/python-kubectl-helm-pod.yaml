@@ -1,7 +1,7 @@
 spec:
   containers:
   - name: common
-    image: dxd360/python-kubectl-helm:3.8
+    image: dxd360/python-helm-kubectl:3.8
     imagePullPolicy: IfNotPresent
     command:
     - cat
