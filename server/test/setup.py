@@ -3,10 +3,11 @@ from docker.errors import NotFound, APIError, ImageNotFound
 import time
 import requests
 import os
+import sys
 
 
 class Setup():
-    def __init__(self, tag):
+    def __init__(self, tag, **kwargs):
 
         self.repo = '192.168.70.210:5000'
         self.image_name_server = '{}/ppw-server:{}'.format(self.repo, tag)
@@ -19,6 +20,10 @@ class Setup():
         self.container_name_ml_controller = '{}/ppw-ml-controller-{}'.format(self.repo, tag)
 
         self.client = docker.from_env()
+
+        if kwargs:
+            self.username = kwargs['username']
+            self.password = kwargs['password']
 
     def get_image_full_name(self, name):
         return {
@@ -89,8 +94,10 @@ class Setup():
         try:
             image_name = self.get_image_full_name(name)
             # images = self.client.images.get(self.get_image_full_name(name))
-            self.client.images.push('{}'.format(image_name), auth_config={'username': 'k8s', 'password': 'passwordk8'})
-        except NotFound:
+            self.client.images.push('{}'.format(image_name), auth_config={'username': self.username,
+                                                                          'password': self.password})
+        except NotFound as e:
+            print(e)
             self.build_image(name)
             self.push_image(name)
 
@@ -99,7 +106,10 @@ class Setup():
 
 
 if __name__ == "__main__":
-    obj = Setup(1)
+    username = sys.argv[1]
+    password = sys.argv[2]
+    print(username, password)
+    obj = Setup(1, username=username, password=password)
     # print(obj.get_image_full_name('server'))
     # print(obj.get_container_full_name('server'))
     obj.build_image('server')
@@ -119,6 +129,6 @@ if __name__ == "__main__":
     # except Exception as e:
     #     print('упало')
     # obj.remove_container('server')
-    print(os.environ["GIT_COMMIT"])
+    # print(os.environ["GIT_COMMIT"])
     obj.remove_image('server')
 
