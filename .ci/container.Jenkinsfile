@@ -23,7 +23,6 @@ pipeline {
                     sh 'mkdir -p reports'
                     sh 'python3 -m pip install -r ./server/test/requirements.txt'
 //                    sh 'printenv'
-//                    sh 'python3 ./server/test/setup.py'
 //                    sh 'docker ps'
                 }
             }
@@ -33,8 +32,7 @@ pipeline {
             steps {
                 container('docker') {
                     script{
-                          echo '${DOCKER_REGISTRY_USR}'
-//                        sh 'python3 -m robot.run  --outputdir reports --variable tag:${GIT_COMMIT} ./server/test/container_test.robot'
+                        sh 'python3 -m robot.run  --outputdir reports --variable tag:${GIT_COMMIT} ./server/test/container_test.robot'
                     }
                 }
             }
@@ -45,8 +43,8 @@ pipeline {
     post {
         always {
             script {
-//                def parse_robot_results = load(".ci/parse_robot_results.groovy")
-//                parse_robot_results.parseRobotResults('reports')
+                def parse_robot_results = load(".ci/parse_robot_results.groovy")
+                parse_robot_results.parseRobotResults('reports')
 
                 def publish_result = load(".ci/publish_result.groovy")
                 publish_result.setBuildStatus("Container tests", currentBuild.result);
@@ -56,7 +54,6 @@ pipeline {
         success{
             container('docker') {
                 sh 'python3 ./server/test/setup.py $DOCKER_REGISTRY_USR $DOCKER_REGISTRY_PSW'
-
             }
         }
 

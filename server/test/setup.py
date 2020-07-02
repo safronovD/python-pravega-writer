@@ -50,7 +50,7 @@ class Setup():
                 self.remove_container(name)
             self.remove_image(name)
 
-        self.client.images.build(path='./server/', tag=image_name)
+        self.client.images.build(path='./{}/'.format(name), tag=image_name)
         print("Image {} created".format(image_name))
 
     def run_container(self, name):
@@ -93,7 +93,7 @@ class Setup():
     def push_image(self, name):
         try:
             image_name = self.get_image_full_name(name)
-            # images = self.client.images.get(self.get_image_full_name(name))
+            images = self.client.images.get(self.get_image_full_name(name))
             self.client.images.push('{}'.format(image_name), auth_config={'username': self.username,
                                                                           'password': self.password})
         except NotFound as e:
@@ -108,26 +108,17 @@ class Setup():
 if __name__ == "__main__":
     username = sys.argv[1]
     password = sys.argv[2]
-    obj = Setup(1, username=username, password=password)
-    # print(obj.get_image_full_name('server'))
-    # print(obj.get_container_full_name('server'))
+
+    obj = Setup(os.environ["GIT_COMMIT"], username=username, password=password)
+
     obj.build_image('server')
     obj.push_image('server')
-    # obj.run_container('server')
-    # time.sleep(120)
-    # # print(requests.get('https://api.github.com').status_code)
-    # # os.system("docker ps")
-    # for i in range(1, 7):
-    #     try:
-    #         print(requests.get('http://192.168.70.21{}:666/v1'.format(i)).status_code)
-    #     except Exception as e:
-    #         print('i = {} упало'.format(i))
-    #
-    # try:
-    #     print(requests.get('http://192.168.70.211:31511/v1/scopes').status_code)
-    # except Exception as e:
-    #     print('упало')
-    # obj.remove_container('server')
-    # print(os.environ["GIT_COMMIT"])
     obj.remove_image('server')
 
+    obj.build_image('connector')
+    obj.push_image('connector')
+    obj.remove_image('connector')
+
+    obj.build_image('ml-controller')
+    obj.push_image('ml-controller')
+    obj.remove_image('ml-controller')
