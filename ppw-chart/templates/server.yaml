@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ppw-chart.fullname" . }}-server
+spec:
+  replicas: {{ .Values.server.replicas }}
+  selector:
+    matchLabels:
+      app: {{ include "ppw-chart.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "ppw-chart.fullname" . }}
+    spec:
+      volumes:
+      - name: {{ .Values.volume.name }}
+        persistentVolumeClaim:
+          claimName: {{ include "ppw-chart.fullname" . }}
+      containers:
+      - name: {{ include "ppw-chart.fullname" . }}
+        image: {{ .Values.common.image_repository }}/{{ .Values.server.image_name }}
+        imagePullPolicy: {{ .Values.common.image_pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.service.port }}
+        volumeMounts:
+        - mountPath: {{ .Values.volume.mountPath }}
+          name: {{ .Values.volume.name }}

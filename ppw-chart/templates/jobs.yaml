@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "ppw-chart.fullname" . }}-connector-job
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      volumes:
+      - name: {{ .Values.volume.name }}
+        persistentVolumeClaim:
+          claimName: {{ include "ppw-chart.fullname" . }}
+      containers:
+      - name: {{ include "ppw-chart.fullname" . }}
+        image: {{ .Values.common.image_repository }}/{{ .Values.jobs.connector_image }}
+        volumeMounts:
+        - mountPath: {{ .Values.volume.mountPath }}
+          name: {{ .Values.volume.name }}
+      restartPolicy: Never
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "ppw-chart.fullname" . }}-ml-connector-job
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      volumes:
+      - name: {{ .Values.volume.name }}
+        persistentVolumeClaim:
+          claimName: {{ include "ppw-chart.fullname" . }}
+      containers:
+      - name: {{ include "ppw-chart.fullname" . }}
+        image: {{ .Values.common.image_repository }}/{{ .Values.jobs.ml-controller_image }}
+        volumeMounts:
+        - mountPath: {{ .Values.volume.mountPath }}
+          name: {{ .Values.volume.name }}
+      restartPolicy: Never
