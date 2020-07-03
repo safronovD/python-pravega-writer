@@ -16,8 +16,8 @@ pipeline {
                 container('common') {
                     sh '''
                        echo Stress tests
+                       python3 -m pip install -r ./stress-test/requirements.txt
                     '''
-                    //python3 -m pip install -r ./stress-test/requirements.txt
                 }
             }
        }
@@ -25,12 +25,11 @@ pipeline {
             steps {
                 container('common') {
                     script {
-                        //sh 'helm list'
-                        //helm install --namespace test test-${GIT_COMMIT} ./ppw-chart --set fullnameOverride=test-${GIT_COMMIT}
-                        //helm delete --namespace test test-${GIT_COMMIT}
-                        def node_ip = sh(script: 'kubectl get nodes -o jsonpath={.items[0].status.addresses[0].address}', returnStdout: true)
-                        //sh 'export NODE_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[0].address}")'                        
-                        echo "${node_ip}"
+                        //sh "helm install --namespace test test-${GIT_COMMIT} ./ppw-chart --set fullnameOverride=test-${GIT_COMMIT}"
+                        //sh "helm delete --namespace test test-${GIT_COMMIT}"
+                        //def node_ip = sh(script: 'kubectl get nodes -o jsonpath={.items[0].status.addresses[0].address}', returnStdout: true)
+                        //echo "${node_ip}"
+                        sh "locust -f stress_test.py --host=http://192.168.70.211:30798 --headless -u 1000 -r 100 --run-time 15s"
                     }
                   }
              }
