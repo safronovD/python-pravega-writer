@@ -32,7 +32,7 @@ spec:
           claimName: {{ include "ppw-chart.fullname" . }}
       containers:
       - name: {{ include "ppw-chart.fullname" . }}
-        image: {{ .Values.common.image_repository }}/{{ .Values.jobs.ml-controller_image }}
+        image: {{ .Values.common.image_repository }}/{{ .Values.jobs.ml_controller_image }}
         volumeMounts:
         - mountPath: {{ .Values.volume.mountPath }}
           name: {{ .Values.volume.name }}

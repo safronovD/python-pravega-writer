@@ -16,7 +16,7 @@ server:
 
 jobs:
   connector_image: ppw-connector
-  ml-controller_image: ppw-ml-controller
+  ml_controller_image: ppw-ml-controller
 
 claim:
   storageClassName: cephfs
