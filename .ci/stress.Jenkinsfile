@@ -30,7 +30,7 @@ pipeline {
                         //def node_ip = sh(script: 'kubectl get nodes -o jsonpath={.items[0].status.addresses[0].address}', returnStdout: true)
                         //echo "${node_ip}"
                         //sh "locust -f ./stress-test/setup.py --host=http://192.168.70.211:30798 --headless -u 1000 -r 100 --run-time 15s"
-                        sh 'bzt ./stress-test/stress-test.yml -report'
+                        sh 'bzt ./stress-test/stress-test.yml'
                     }
                   }
              }
