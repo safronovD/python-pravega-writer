@@ -15,7 +15,7 @@ pipeline {
             steps {
                 container('common') {
                     sh '''
-                       mkdir -p reports'
+                       mkdir -p reports
                        echo End-to-end tests
                        python --version
                        python3 -m pip install -r ./e2e/requirements.txt
@@ -26,11 +26,7 @@ pipeline {
        stage('End-to-End test') {
             steps {
                 container('common') {
-                    //script {
-                    //    def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD')
-                    //    def chart_id = commit_id[1..10] + "-${currentBuild.number}"
-                    //}
-                    sh 'python3 -m robot.run --outputdir reports/e2e --variable chartId:test3 ./e2e/e2e.robot'
+                    sh 'python3 -m robot.run --outputdir reports --variable chartId:test-${GIT_COMMIT} ./e2e/e2e.robot'
                   }
              }
         }
@@ -42,7 +38,7 @@ pipeline {
                 parse_robot_results.parseRobotResults('reports')
 
                 def publish_result = load(".ci/publish_result.groovy")
-                publish_result.setBuildStatus("E2e tests", currentBuild.result);
+                publish_result.setBuildStatus("E2E tests", currentBuild.result);
             }
         }
 	}

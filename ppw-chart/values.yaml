@@ -1,18 +1,17 @@
-# Service for deployment cats-server
+
+nameOverride: ""
+fullnameOverride: ""
+
+# Service for deployments
 service:
   type: NodePort
   port: 666
- 
-# Repository of images and pullPolicy for all deployments
+
+# Repository of images and pullPolicy
 image:
   repository: dxd360
   pullPolicy: Always
 
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name:
+volume:
+  mountPath: /usr/src/app/data
+  name: results-volume

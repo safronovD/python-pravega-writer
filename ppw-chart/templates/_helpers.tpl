@@ -30,34 +30,3 @@ Create chart name and version as used by the chart label.
 {{- define "ppw-chart.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
-
-{{/*
-Common labels
-*/}}
-{{- define "ppw-chart.labels" -}}
-helm.sh/chart: {{ include "ppw-chart.chart" . }}
-{{ include "ppw-chart.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end -}}
-
-{{/*
-Selector labels
-*/}}
-{{- define "ppw-chart.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "ppw-chart.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end -}}
-
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "ppw-chart.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create -}}
-    {{ default (include "ppw-chart.fullname" .) .Values.serviceAccount.name }}
-{{- else -}}
-    {{ default "default" .Values.serviceAccount.name }}
-{{- end -}}
-{{- end -}}

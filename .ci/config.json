@@ -1,6 +1,5 @@
 {
-  "app": {
-    "name": "ppw-chart",
-    "replicas": "1"
-  }
+  "chart_name": "pravega-writer",
+  "chart_dir": "ppw-chart",
+  "replicas": "1"
 }

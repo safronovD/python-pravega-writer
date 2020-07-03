@@ -1,53 +1,54 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cats-server
+  name: server-{{ include "ppw-chart.fullname" . }}
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: cats-server
+      app: {{ include "ppw-chart.fullname" . }}
   template:
     metadata:
       labels:
-        app: cats-server
+        app: {{ include "ppw-chart.fullname" . }}
     spec:
       volumes:
-      - name: results-volume
+      - name: {{ .Values.volume.name }}
         persistentVolumeClaim:
-          claimName: results-claim
+          claimName: {{ include "ppw-chart.fullname" . }}
       containers:
-      - name: cats-server
+      - name: {{ include "ppw-chart.fullname" . }}
         image: {{ .Values.image.repository }}/results_server
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - containerPort: {{ .Values.service.port }}
         volumeMounts:
-        - mountPath: /usr/src/app/results
-          name: results-volume
+        - mountPath: {{ .Values.volume.mountPath }}
+          name: {{ .Values.volume.name }}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pravega-writer
+  name: app-{{ include "ppw-chart.fullname" . }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pravega-writer
+      app: {{ include "ppw-chart.fullname" . }}
   template:
     metadata:
       labels:
-        app: pravega-writer
+        app: {{ include "ppw-chart.fullname" . }}
     spec:
       volumes:
-      - name: results-volume
+      - name: {{ .Values.volume.name }}
         persistentVolumeClaim:
-          claimName: results-claim
+          claimName: {{ include "ppw-chart.fullname" . }}
       containers:
-      - name: pravega-writer
+      - name: {{ include "ppw-chart.fullname" . }}
         image: {{ .Values.image.repository }}/pravega-w
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         volumeMounts:
-        - mountPath: /usr/src/app/results
-          name: results-volume
+        - mountPath: {{ .Values.volume.mountPath }}
+          name: {{ .Values.volume.name }}
+
