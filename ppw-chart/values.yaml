@@ -2,15 +2,25 @@
 nameOverride: ""
 fullnameOverride: ""
 
-# Service for deployments
 service:
   type: NodePort
   port: 666
 
-# Repository of images and pullPolicy
-image:
-  repository: dxd360
-  pullPolicy: Always
+common:
+  image_repository: dxd360
+  image_pullPolicy: Always
+
+server:
+  image_name: ppw-server
+  replicas: 2
+
+jobs:
+  connector_image: ppw-connector
+  ml_controller_image: ppw-ml-controller
+
+claim:
+  storageClassName: cephfs
+  storage: 2Gi
 
 volume:
   mountPath: /usr/src/app/data
