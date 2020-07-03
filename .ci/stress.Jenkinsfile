@@ -31,8 +31,8 @@ pipeline {
                         //helm delete --namespace test test-${GIT_COMMIT}
                         def NODEIP
                         def NODEPORT
-                        sh "export NODEIP=${kubectl get nodes -o jsonpath={.items[0].status.addresses[0].address}}"
-                        echo "${NODEIP}"
+                        sh 'export NODE_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[0].address}")'
+                        echo '${NODEIP}'
                     }
                   }
              }
