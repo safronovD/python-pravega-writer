@@ -32,7 +32,7 @@ pipeline {
                         def NODE_IP
                         def NODE_PORT
                         sh 'export NODE_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[0].address}")'
-                        echo '${NODE_IP}'
+                        echo "${NODE_IP}"
                     }
                   }
              }
