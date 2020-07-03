@@ -81,7 +81,6 @@ pipeline {
                 def publish_result = load(".ci/publish_result.groovy")
                 publish_result.setBuildStatus("Unit tests", currentBuild.result);
             }
-
         }
     }
 }

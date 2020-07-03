@@ -28,3 +28,4 @@ Close connection
     Delete all sessions
     obj.remove_container        server
     obj.remove_image            server
+    
