@@ -1,7 +1,7 @@
 from locust import HttpUser, TaskSet, task, between
 
 def index(self):
-    self.client.get("/")
+    self.client.get("/v1")
 
 class UserTasks(TaskSet):
     tasks = [index]

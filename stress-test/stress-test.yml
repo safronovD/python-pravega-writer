@@ -6,5 +6,5 @@ execution:
   scenario: example
 scenarios:
   example:
-    default-address: http://192.168.70.211:30798/
+    default-address: http://192.168.70.211:30841
     script: setup.py
