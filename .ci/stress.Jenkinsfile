@@ -25,14 +25,11 @@ pipeline {
             steps {
                 container('common') {
                     script {
-                        sh 'helm list'
+                        //sh 'helm list'
                         //helm install --namespace test test-${GIT_COMMIT} ./ppw-chart --set fullnameOverride=test-${GIT_COMMIT}
                         //helm delete --namespace test test-${GIT_COMMIT}
-                        def node_ip
-                        def node_port
-                        //sh 'export NODE_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[0].address}")' > node_ip
-                        //echo "&{kubectl get nodes -o jsonpath='{.items[0].status.addresses[0].address}'}" > node_ip
-                        echo "5" > node_ip
+                        def node_ip = sh(script: 'kubectl get nodes -o jsonpath={.items[0].status.addresses[0].address}', returnStdout: true)
+                        //sh 'export NODE_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[0].address}")'                        
                         echo "${node_ip}"
                     }
                   }
