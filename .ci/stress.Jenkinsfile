@@ -24,7 +24,7 @@ pipeline {
        stage('Stress test') {
             steps {
                 container('common') {
-                    bzt "./stress-test/stress-test.yml"
+                    bzt ./stress-test/stress-test.yml
                     //script {
                         //sh "helm install --namespace test test-${GIT_COMMIT} ./ppw-chart --set fullnameOverride=test-${GIT_COMMIT}"
                         //sh "helm delete --namespace test test-${GIT_COMMIT}"
