@@ -29,8 +29,10 @@ pipeline {
                         sh 'helm list'
                         //helm install --namespace test test-${GIT_COMMIT} ./ppw-chart --set fullnameOverride=test-${GIT_COMMIT}
                         //helm delete --namespace test test-${GIT_COMMIT}
-                        def test = sh "kubectl get nodes -o jsonpath={.items[0].status.addresses[0].address}"
-                        echo "${test}"
+                        def NODEIP
+                        def NODEPORT
+                        sh "export NODEIP=$(kubectl get nodes -o jsonpath={.items[0].status.addresses[0].address})"
+                        echo "${NODEIP}"
                     }
                   }
              }
