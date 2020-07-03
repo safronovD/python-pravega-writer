@@ -16,9 +16,8 @@ pipeline {
                 container('common') {
                     sh '''
                        echo Stress tests
-                       python --version
-                       python3 -m pip install -r ./stress-test/requirements.txt
                     '''
+                    //python3 -m pip install -r ./stress-test/requirements.txt
                 }
             }
        }
@@ -29,10 +28,12 @@ pipeline {
                         sh 'helm list'
                         //helm install --namespace test test-${GIT_COMMIT} ./ppw-chart --set fullnameOverride=test-${GIT_COMMIT}
                         //helm delete --namespace test test-${GIT_COMMIT}
-                        def NODE_IP
-                        def NODE_PORT
-                        sh 'export NODE_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[0].address}")'
-                        echo "${NODE_IP}"
+                        def node_ip
+                        def node_port
+                        //sh 'export NODE_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[0].address}")' > node_ip
+                        //echo "&{kubectl get nodes -o jsonpath='{.items[0].status.addresses[0].address}'}" > node_ip
+                        echo "5" > node_ip
+                        echo "${node_ip}"
                     }
                   }
              }
