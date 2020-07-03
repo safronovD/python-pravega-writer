@@ -9,6 +9,7 @@ import eli5
 import yaml
 
 CONFIG_FILE = 'config.yaml'
+config_data = None
 app = Flask(__name__)
 model = None
 message_id_dict = {}
@@ -60,6 +61,14 @@ def add_message():
 @app.route('/v1/p/<message_id>', methods=["GET"])
 def get_result(message_id):
     """Create HTML page with ML-model result."""
+
+    # Until no operator
+    global model
+
+    if model is None:
+        if os.path.exists(os.path.join(config_data['common_dir'], config_data['model_name'])):
+            model = pickle.load(open(os.path.join(config_data['common_dir'], config_data['model_name']), 'rb'))
+
     html_page = None
 
     if message_id in id_expl_dict:
@@ -84,6 +93,7 @@ def main():
     """Load config and run flask app."""
 
     global model
+    global config_data
 
     with open(CONFIG_FILE) as file:
         config_data = yaml.load(file, Loader=yaml.FullLoader)

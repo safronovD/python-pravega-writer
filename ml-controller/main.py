@@ -2,6 +2,8 @@
 
 import logging
 import yaml
+import os
+import time
 from core.ModelTrainer import ModelTrainer
 
 CONFIG_FILE = 'config.yaml'
@@ -12,6 +14,11 @@ def main():
 
     with open(CONFIG_FILE) as file:
         config_data = yaml.load(file, Loader=yaml.FullLoader)
+
+    while True:
+        if os.path.exists(os.path.join(config_data['common_dir'], config_data['dataset']['file_name'])):
+            break
+        time.sleep(30)
 
     trainer = ModelTrainer()
     trainer.get_data_set(config_data['common_dir'],
