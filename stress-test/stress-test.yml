@@ -1,11 +1,10 @@
 execution:
-- concurrency: 100
-  hold-for: 10m
-  ramp-up: 120s
-  scenario: Thread Group
+- executor: locust
+  concurrency: 10
+  ramp-up: 1m
+  iterations: 1000
+  scenario: example
 scenarios:
-  Thread Group:
-    requests:
-    - label: pravega-writer
-      method: GET
-      url: http://192.168.70.211:30798/
+  example:
+    default-address: http://192.168.70.211:30798/
+    script: setup.py
