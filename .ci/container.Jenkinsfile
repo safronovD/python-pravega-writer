@@ -1,36 +1,61 @@
-void setBuildStatus(String context, String message, String state) {
-  step([
-      $class: "GitHubCommitStatusSetter",
-      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/safronovD/python-pravega-writer"],
-      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: context],
-      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
-      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
-  ]);
-}
 pipeline {
-   agent any
-   // options {
-   //      timestamps()
-   //      }
-   stages {
-       stage('Container') {
-            steps {
-                  sh 'echo Container'
-            //     sh 'pip install -r Connector/requirements.txt'
-            //     sh 'pip install -r Server/requirements.txt'
-            //     sh 'pip install -r Tests/requirements.txt'
-            // }
+    agent {
+        kubernetes {
+            label 'container-pod'
+            yamlFile '.ci/pod-templates/pod-python.yaml'
         }
-    
-      }
+     }
+
+    options {
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
     }
+
+    environment {
+        DOCKER_REGISTRY = credentials('Jenkins-docker-registry')
+    }
+    stages {
+        stage ('Preparation') {
+            steps {
+                container('docker') {
+//                    sh 'python3 --version'
+//                    sh 'docker --version'
+                    sh 'mkdir -p reports'
+                    sh 'python3 -m pip install -r ./server/test/requirements.txt'
+//                    sh 'printenv'
+//                    sh 'docker ps'
+                }
+            }
+
+       }
+       stage('Test') {
+            steps {
+                container('docker') {
+                    script{
+                        sh 'python3 -m robot.run  --outputdir reports --variable tag:${GIT_COMMIT} ./server/test/container_test.robot'
+                    }
+                }
+            }
+        }
+
+   }
+
     post {
-          success {
-            setBuildStatus("Container succeeded", "Container", "SUCCESS");
-          }
-          failure {
-            setBuildStatus("Container failed", "Container", "FAILURE");
-          }
-         
+        always {
+            script {
+                def parse_robot_results = load(".ci/parse_robot_results.groovy")
+                parse_robot_results.parseRobotResults('reports')
+
+                def publish_result = load(".ci/publish_result.groovy")
+                publish_result.setBuildStatus("Container tests", currentBuild.result);
+            }
+
+        }
+        success{
+            container('docker') {
+                sh 'python3 ./server/test/setup.py $DOCKER_REGISTRY_USR $DOCKER_REGISTRY_PSW'
+            }
+        }
+
 	}
 }

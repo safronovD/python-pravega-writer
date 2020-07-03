@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ppw-server
+  labels:
+    app: ppw-server
+spec:
+  type: NodePort
+  ports:
+  - port: 666
+    targetPort: 666
+    protocol: TCP
+    name: http
+  selector:
+    app: ppw-server

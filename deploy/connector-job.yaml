@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ppw-connector-job
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: data-claim
+      containers:
+      - name: ppw-connector
+        image: dxd360/ppw-connector
+        volumeMounts:
+        - mountPath: /usr/src/app/data
+          name: data-volume
+      restartPolicy: Never
