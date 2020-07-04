@@ -17,7 +17,7 @@ class Setup(object):
         return nodeIP
 
     def install_helm_chart(self):
-        os.system("helm install --namespace test " + self.chart_name + " ./ppw-chart --set fullnameOverride=" + self.chart_name)
+        os.system("helm install --namespace test " + self.chart_name + " ./ppw-chart --set fullnameOverride=" + self.chart_name + " --wait")
 
     def delete_helm_chart(self):
         os.system("helm delete --namespace test " + self.chart_name)
