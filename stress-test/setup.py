@@ -1,4 +1,7 @@
 import os
+import sys
+sys.path.append(".")
+
 from e2e.setup import Setup
 
 if __name__ == "__main__":
