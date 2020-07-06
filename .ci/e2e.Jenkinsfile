@@ -16,9 +16,8 @@ pipeline {
                 container('common') {
                     sh '''
                        echo End-to-end tests
-                       mkdir -p reports
                        echo ${WORKSPACE}
-                       echo ${JENKINS_HOME}
+                       mkdir -p reports
                        python3 -m pip install -r ./e2e/requirements.txt
                     '''
                 }
