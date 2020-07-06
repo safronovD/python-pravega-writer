@@ -16,7 +16,7 @@ pipeline {
                 container('common') {
                     sh '''
                        echo End-to-end tests
-                       export PYTHONPATH=$WORKSPACE:$PYTHONPATH 
+                       export PYTHONPATH=/home/jenkins/agent/workspace
                        echo ${PYTHONPATH}
                        mkdir -p reports
                        python3 -m pip install -r ./e2e/requirements.txt
@@ -28,8 +28,7 @@ pipeline {
             steps {
                 container('common') {
                     //sh 'python3 -m robot.run --outputdir reports --variable chartId:test-${GIT_COMMIT} ./e2e/e2e.robot'
-                    //sh 'python3 ./e2e/setup_helm.py'
-                    sh 'echo test'
+                    sh 'python3 ./e2e/setup_helm.py'
                   }
              }
         }
