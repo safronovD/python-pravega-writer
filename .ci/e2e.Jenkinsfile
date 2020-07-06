@@ -26,7 +26,8 @@ pipeline {
        stage('End-to-End test') {
             steps {
                 container('common') {
-                    sh 'python3 -m robot.run --outputdir reports --variable chartId:test-${GIT_COMMIT} ./e2e/e2e.robot'
+                    //sh 'python3 -m robot.run --outputdir reports --variable chartId:test-${GIT_COMMIT} ./e2e/e2e.robot'
+                    sh 'python3 ./e2e/setup-helm.py'
                   }
              }
         }
