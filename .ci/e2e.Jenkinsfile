@@ -15,9 +15,9 @@ pipeline {
             steps {
                 container('common') {
                     sh '''
-                       mkdir -p reports
                        echo End-to-end tests
-                       python --version
+                       mkdir -p reports
+                       echo ${WORKSPACE}
                        python3 -m pip install -r ./e2e/requirements.txt
                     '''
                 }
@@ -27,7 +27,8 @@ pipeline {
             steps {
                 container('common') {
                     //sh 'python3 -m robot.run --outputdir reports --variable chartId:test-${GIT_COMMIT} ./e2e/e2e.robot'
-                    sh 'python3 ./e2e/setup-helm.py'
+                    //sh 'python3 ./e2e/setup_helm.py'
+                    sh 'echo test'
                   }
              }
         }

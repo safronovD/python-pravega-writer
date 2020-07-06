@@ -1,8 +1,6 @@
 import os
-import sys
-sys.path.append(".")
 
-from e2e.setup import Setup
+from e2e.setup_helm import Setup
 
 if __name__ == "__main__":
     #chartName = sys.argv[1]
