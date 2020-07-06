@@ -17,6 +17,8 @@ pipeline {
                     sh '''
                        echo End-to-end tests
                        echo ${WORKSPACE}
+                       echo ${PYTHONPATH}
+                       echo ${JENKINS_AGENT_WORKDIR}
                        mkdir -p reports
                        python3 -m pip install -r ./e2e/requirements.txt
                     '''
