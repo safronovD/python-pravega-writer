@@ -1,6 +1,7 @@
 import os
 import re
-from log.logger import init_logger
+import sys
+#from log.logger import init_logger
 
 # TODO проверить ответ через регулярки?
 # TODO добавит логи в случае фейла
@@ -90,8 +91,9 @@ class Setup:
 
 
 if __name__ == "__main__":
-    obj = Setup('test')
-    obj.install_helm_chart()
-    obj.get_node_ip()
-    obj.get_node_port()
-    obj.delete_helm_chart()
+    os.system("echo ${PYTHONPATH}")
+    #obj = Setup('test')
+    #obj.install_helm_chart()
+    #obj.get_node_ip()
+    #obj.get_node_port()
+    #obj.delete_helm_chart()
