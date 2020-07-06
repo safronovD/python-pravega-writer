@@ -16,9 +16,8 @@ pipeline {
                 container('common') {
                     sh '''
                        echo End-to-end tests
-                       echo ${WORKSPACE}
+                       export PYTHONPATH=$WORKSPACE:$PYTHONPATH 
                        echo ${PYTHONPATH}
-                       echo ${JENKINS_AGENT_WORKDIR}
                        mkdir -p reports
                        python3 -m pip install -r ./e2e/requirements.txt
                     '''
