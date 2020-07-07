@@ -10,14 +10,17 @@ pipeline {
          buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
 
     }
+    environment {
+        PYTHONPATH = "${WORKSPACE}"
+    }
    stages {
        stage('Preparation') {
             steps {
                 container('common') {
                     sh '''
                        echo End-to-end tests
-                       export PYTHONPATH=${WORKSPACE}
                        mkdir -p reports
+                       echo ${PYTHONPATH}
                        python3 -m pip install -r ./e2e/requirements.txt
                     '''
                 }
