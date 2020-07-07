@@ -91,9 +91,8 @@ class Setup:
 
 
 if __name__ == "__main__":
-    print(sys.path)
-    #obj = Setup('test')
-    #obj.install_helm_chart()
-    #obj.get_node_ip()
-    #obj.get_node_port()
-    #obj.delete_helm_chart()
+    obj = Setup('test')
+    obj.install_helm_chart()
+    obj.get_node_ip()
+    obj.get_node_port()
+    obj.delete_helm_chart()

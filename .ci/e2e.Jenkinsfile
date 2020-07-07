@@ -20,7 +20,6 @@ pipeline {
                     sh '''
                        echo End-to-end tests
                        mkdir -p reports
-                       echo ${PYTHONPATH}
                        python3 -m pip install -r ./e2e/requirements.txt
                     '''
                 }
