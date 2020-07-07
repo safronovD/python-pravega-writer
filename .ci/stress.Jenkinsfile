@@ -10,6 +10,9 @@ pipeline {
          buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
 
     }
+    environment {
+        PYTHONPATH = "${WORKSPACE}"
+    }
    stages {
        stage('Preparation') {
             steps {
