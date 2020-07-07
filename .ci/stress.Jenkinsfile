@@ -38,7 +38,7 @@ pipeline {
     post {
         always {
             script {
-                perfReport 'reports/result_stats_history.csv'
+                perfReport 'reports/result_stats.csv'
 
                 def publish_result = load(".ci/publish_result.groovy")
                 publish_result.setBuildStatus("Stress tests", currentBuild.result);
