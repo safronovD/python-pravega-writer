@@ -19,6 +19,7 @@ class Setup:
         command = "kubectl get --namespace test -o jsonpath={} services {}".format(json_path, self.chart_name)
         answer = os.popen(command).read()
         # answer = '2222'
+        print(answer)
         if re.search(r'Error from server \(NotFound\): services \"(.*)\" not found', answer):
             self.logger.error('Service {} not found'.format(self.chart_name))
             self.delete_helm_chart()
@@ -32,6 +33,7 @@ class Setup:
         json_path = '{.items[0].status.addresses[0].address}'
         command = "kubectl get nodes --namespace test -o jsonpath={}".format(json_path)
         answer = os.popen(command).read()
+        print(answer)
         # answer = '92.168.70.216'
         if re.search(r'\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}', answer):
             self.logger.warning('Node ip {} is received'.format(answer))
@@ -83,6 +85,7 @@ class Setup:
         self.logger.info('Attempt to delete helm chart')
         command = "helm delete --namespace test {}".format(self.chart_name)
         answer = os.popen(command).read()
+        print(answer)
         # answer = 'Error: uninstall: Release not loaded: test: release: not found'
 
         if re.search(r'Error: uninstall: Release not loaded: (.*): release: not found', answer):
@@ -92,7 +95,7 @@ class Setup:
 
 
 if __name__ == "__main__":
-    obj = Setup('test')
+    obj = Setup(sys.argv[1])
     obj.install_helm_chart()
     obj.get_node_ip()
     obj.get_node_port()
