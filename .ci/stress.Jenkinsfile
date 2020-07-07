@@ -30,7 +30,7 @@ pipeline {
                 container('common') {
                     script {
 
-                        sh 'python3 ./stress-test/setup_stress.py test-${GIT_COMMIT}'
+                        sh 'python3 ./stress-test/setup_stress.py stress-test-${GIT_COMMIT}'
 
                         //sh "helm install --namespace test test-${GIT_COMMIT} ./ppw-chart --set fullnameOverride=test-${GIT_COMMIT} --wait"
                         
