@@ -41,7 +41,7 @@ class Setup:
 
     def install_helm_chart(self):
         self.logger.info('Attempt to install helm chart')
-        command = "helm install --namespace test {0} ./ppw-chart --set fullnameOverride={0}".format(self.chart_name)
+        command = "helm install --namespace test {0} ./ppw-chart --set fullnameOverride={0} --wait".format(self.chart_name)
         answer = os.popen(command).read()
         print(answer)
         #
