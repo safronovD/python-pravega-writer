@@ -1,6 +1,6 @@
 *** Settings ***
 Library             RequestsLibrary
-Library             server.test.setup.Setup    ${tag}      WITH NAME    obj
+Library             server.test.container_setup.Setup    ${tag}      WITH NAME    obj
 Library             OperatingSystem
 
 Test Setup          Create connection
@@ -22,7 +22,7 @@ Check connection to container
 Create connection
     obj.build_image     server
     obj.run_container   server
-    Create session     conn     ${base_url}     max_retries=10
+    Create session      conn     ${base_url}     max_retries=10
 
 Close connection
     Delete all sessions

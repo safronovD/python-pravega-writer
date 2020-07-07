@@ -1,6 +1,6 @@
 *** Settings ***
 Library             RequestsLibrary
-Library             e2e.setup.Setup     ${chartId}      WITH NAME   helm
+Library             e2e.helm_setup.HelmSetup     ${chartId}      WITH NAME   helm
 Test Setup          Install chart
 Test Teardown       Uninstall chart
 
