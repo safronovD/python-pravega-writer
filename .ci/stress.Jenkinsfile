@@ -38,7 +38,13 @@ pipeline {
     post {
         always {
             script {
-                perfReport 'reports/result_stats.csv'
+                perfReport filterRegex: '', 
+                           relativeFailedThresholdNegative: 1.2, 
+                           relativeFailedThresholdPositive: 1.89, 
+                           relativeUnstableThresholdNegative: 1.8, 
+                           relativeUnstableThresholdPositive: 1.5, 
+                           sourceDataFiles: 'reports/result_stats.csv'
+                //perfReport 'reports/result_stats.csv'
 
                 def publish_result = load(".ci/publish_result.groovy")
                 publish_result.setBuildStatus("Stress tests", currentBuild.result);
