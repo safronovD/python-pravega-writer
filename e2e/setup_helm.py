@@ -41,6 +41,7 @@ class Setup:
         self.logger.info('Attempt to install helm chart')
         command = "helm install --namespace test {0} ./ppw-chart --set fullnameOverride={0}".format(self.chart_name)
         answer = os.popen(command).read
+        print(answer)
         #
         # answer = r'Error: rendered manifests contain a resource that already exists. Unable to continue with ' \
         #                  r'install: Service "test-chart" in namespace "test" exists and cannot be imported into the ' \
