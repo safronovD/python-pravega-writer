@@ -1,9 +1,5 @@
 import docker
 from docker.errors import NotFound, APIError, ImageNotFound
-import sys
-import os
-
-sys.path.append(os.getcwd())
 from log.logger import init_logger
 
 
