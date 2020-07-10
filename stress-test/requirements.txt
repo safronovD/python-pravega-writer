@@ -1,2 +1,3 @@
-bzt
 locust
+bzt
+--upgrade bzt
