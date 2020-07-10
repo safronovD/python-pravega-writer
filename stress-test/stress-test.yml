@@ -1,7 +1,7 @@
 execution:
 - executor: locust
-  concurrency: 1
-  ramp-up: 1m
+  concurrency: 100
+  hold-for: 1m
   iterations: 1000
   scenario: perfomance
 
