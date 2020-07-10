@@ -20,6 +20,7 @@ pipeline {
                     sh '''
                        echo Stress tests
                        mkdir -p reports
+                       curl https://gettaurus.org/builds/bzt-1.14.2.13904-py2.py3-none-any.whl -o bzt.whl
                        python3 -m pip install -r ./stress-test/requirements.txt
                     '''
                 }

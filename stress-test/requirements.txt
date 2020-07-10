@@ -1,3 +1,2 @@
 locust
-bzt
---upgrade bzt
+bzt.whl
