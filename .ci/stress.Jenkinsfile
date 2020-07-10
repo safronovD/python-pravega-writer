@@ -29,7 +29,8 @@ pipeline {
             steps {
                 container('common') {
                     script {
-                        sh 'python3 ./stress-test/setup_stress.py st-${GIT_COMMIT}'
+                        //sh 'python3 ./stress-test/setup_stress.py st-${GIT_COMMIT}'
+                        sh 'bzt ./stress-test/stress-test.yml'
                     }
                   }
              }
