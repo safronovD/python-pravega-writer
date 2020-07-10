@@ -13,8 +13,4 @@ scenarios:
 reporting:
 - module: console
 - module: final-stats
-  summary: true
-  percentiles: true
-  failed-labels: false   
-  test-duration: true
-  dump-csv: result.csv
+  dump-csv: result.xml
