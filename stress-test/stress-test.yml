@@ -1,12 +1,20 @@
 execution:
 - executor: locust
-  workers: 100
-  concurrency: 10
+  concurrency: 1
   ramp-up: 1m
   iterations: 1000
-  scenario: example
-  
+  scenario: perfomance
+
 scenarios:
-  example:
+  perfomance:
     default-address: http://192.168.70.211:30841
     script: request.py
+
+reporting:
+- module: console
+- module: final-stats
+  summary: true
+  percentiles: true
+  failed-labels: false   
+  test-duration: true
+  dump-csv: result.csv
