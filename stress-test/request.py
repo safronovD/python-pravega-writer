@@ -7,5 +7,5 @@ class UserTasks(TaskSet):
     tasks = [index]
 
 class ServerUser(HttpUser):
-    wait_time = between(2, 5)
+    wait_time = between(0.1, 0.5)
     tasks = [UserTasks]
