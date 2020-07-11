@@ -43,11 +43,11 @@ pipeline {
                         Analysis: {
                             sleep 60
                         })
-                    }
-                  }
-             }
-        }
-   }
+                }
+            }
+         }
+    }
+
     post {
         always {
             script {
