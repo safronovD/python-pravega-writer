@@ -1,7 +1,6 @@
 *** Settings ***
 Library             RequestsLibrary
 Library             server.test.container_setup.ContainerSetup    ${tag}      WITH NAME    obj
-Library             OperatingSystem
 
 Test Setup          Create connection
 Test Teardown       Close connection

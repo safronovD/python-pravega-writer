@@ -5,7 +5,8 @@ from log.logger import init_logger
 
 class ContainerSetup:
     def __init__(self, tag, **kwargs):
-        self.logger = init_logger()
+
+        self.logger = init_logger('dev')
 
         self.logger.info('Object initialization is started')
 
@@ -106,14 +107,6 @@ class ContainerSetup:
         else:
             self.logger.warning("Image {} is removed".format(tag))
 
-    def show_all_containers(self):
-
-        if self.client.containers.list():
-            for c in self.client.containers.list():
-                print(c.name)
-        else:
-            print('The list of containers is empty')
-
     def push_image(self, name):
         image_name = self.get_image_full_name(name)
         try:
@@ -140,16 +133,16 @@ if __name__ == "__main__":
     obj = ContainerSetup(123)
     obj.build_image('server')
     # obj.push_image('server')
-    # obj.run_container('server')
-    # obj.remove_container('server')
+    obj.run_container('server')
+    obj.remove_container('server')
     obj.remove_image('server')
-
-    obj.build_image('connector')
-    # obj.push_image('connector')
-    obj.remove_image('connector')
-
-    obj.build_image('ml-controller')
-    obj.run_container('ml-controller')
-
-    # obj.push_image('ml-controller')
-    obj.remove_image('ml-controller')
+    #
+    # obj.build_image('connector')
+    # # obj.push_image('connector')
+    # obj.remove_image('connector')
+    #
+    # obj.build_image('ml-controller')
+    # obj.run_container('ml-controller')
+    #
+    # # obj.push_image('ml-controller')
+    # obj.remove_image('ml-controller')

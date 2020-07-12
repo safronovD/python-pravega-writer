@@ -10,8 +10,8 @@ pipeline {
          buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
 
     }
-   stages {
-       stage('Preparation') {
+    stages {
+        stage('Preparation') {
             steps {
                 container('common') {
                     sh '''
@@ -20,8 +20,8 @@ pipeline {
                     '''
                 }
             }
-       }
-       stage('Stress test') {
+        }
+        stage('Stress test') {
             steps {
                 container('common') {
                     script {
@@ -35,7 +35,7 @@ pipeline {
                   }
              }
         }
-   }
+    }
     post {
         always {
             script {
