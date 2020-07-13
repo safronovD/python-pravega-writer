@@ -37,8 +37,6 @@ pipeline {
     post {
         always {
             script {
-                sh'cat log/logging.log'
-
                 def parse_robot_results = load(".ci/parse_robot_results.groovy")
                 parse_robot_results.parseRobotResults('reports')
 
