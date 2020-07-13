@@ -33,7 +33,7 @@ pipeline {
             steps {
                 container('docker') {
                     script{
-                        sh 'python3 -m robot.run  --outputdir reports --variable tag:${GIT_COMMIT} ./server/test/container_test.robot'
+                        // sh 'python3 -m robot.run  --outputdir reports --variable tag:${GIT_COMMIT} ./server/test/container_test.robot'
                     }
                 }
             }
