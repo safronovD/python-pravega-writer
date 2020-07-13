@@ -13,6 +13,7 @@ pipeline {
 
     environment {
         DOCKER_REGISTRY = credentials('Jenkins-docker-registry')
+        PYTHONPATH = "${WORKSPACE}"
     }
     stages {
         stage ('Preparation') {

@@ -6,15 +6,16 @@ pipeline {
         }
     }
     options {
-         timestamps()
-         buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
 
     }
     environment {
         PYTHONPATH = "${WORKSPACE}"
     }
-   stages {
-       stage('Preparation') {
+
+    stages {
+        stage('Preparation') {
             steps {
                 container('common') {
                     sh '''
@@ -24,15 +25,15 @@ pipeline {
                     '''
                 }
             }
-       }
-       stage('End-to-End test') {
+        }
+        stage('End-to-End test') {
             steps {
                 container('common') {
                     sh 'python3 -m robot.run --outputdir reports --variable chartId:et-${GIT_COMMIT} ./e2e/e2e.robot'
                   }
              }
         }
-   }
+    }
     post {
         always {
             script {

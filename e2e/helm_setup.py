@@ -1,16 +1,12 @@
 import os
 import re
-import sys
-
-sys.path.append(os.getcwd())
-
 from log.logger import init_logger
 
 
 class HelmSetup:
     def __init__(self, name):
         self.chart_name = name
-        self.logger = init_logger()
+        self.logger = init_logger('dev')
 
     def get_node_port(self):
         self.logger.info('Attempt to get node port')
@@ -32,7 +28,6 @@ class HelmSetup:
         json_path = '{.items[0].status.addresses[0].address}'
         command = "kubectl get nodes --namespace test -o jsonpath={}".format(json_path)
         answer = os.popen(command).read()
-        # answer = '192.168.70.216'
         if re.search(r'\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}', answer):
             self.logger.warning('Node ip {} is received'.format(answer))
             return answer
@@ -40,12 +35,7 @@ class HelmSetup:
     def install_helm_chart(self):
         self.logger.info('Attempt to install helm chart')
         command = "helm install --namespace test {0} ./ppw-chart --set fullnameOverride={0}".format(self.chart_name)
-        answer = os.popen(command).read
-        #
-        # answer = r'Error: rendered manifests contain a resource that already exists. Unable to continue with ' \
-        #                  r'install: Service "test-chart" in namespace "test" exists and cannot be imported into the ' \
-        #                  r'current release: invalid ownership metadata; annotation validation error: key ' \
-        #                  r'"meta.helm.sh/release-name" must equal "test1": current value is "test-chart" '
+        answer = os.popen(command).read()
 
         if re.search('Error: cannot re-use a name that is still in use', answer):
             self.logger.error('Chart {} already exists'.format(self.chart_name))
@@ -67,14 +57,12 @@ class HelmSetup:
 
             command = 'kubectl delete {} {} --namespace {}'.format(resource, resource_name, namespace)
             answer = os.popen(command).read()
-            #     answer = 'service "test-chart" deleted'
 
             if re.search('{} {} deleted'.format(resource.lower(), resource_name), answer):
                 self.logger.warning('{} {} deleted'.format(resource, resource_name))
                 self.install_helm_chart()
             else:
                 self.logger.error('{} {} is not deleted'.format(resource, resource_name))
-            # print(command)
 
         elif answer.startswith('NAME:'):
             self.logger.warning('Chart {} is installed'.format(self.chart_name))
@@ -83,7 +71,6 @@ class HelmSetup:
         self.logger.info('Attempt to delete helm chart')
         command = "helm delete --namespace test {}".format(self.chart_name)
         answer = os.popen(command).read()
-        # answer = 'Error: uninstall: Release not loaded: test: release: not found'
 
         if re.search(r'Error: uninstall: Release not loaded: (.*): release: not found', answer):
             self.logger.error('Chart {} doesn\'t exist'.format(self.chart_name))

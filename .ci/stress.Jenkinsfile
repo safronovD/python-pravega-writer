@@ -5,14 +5,16 @@ pipeline {
             yamlFile '.ci/pod-templates/python-kubectl-helm-pod.yaml'
         }
     }
+    
     options {
          timestamps()
          buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
-
     }
+    
     environment {
         PYTHONPATH = "${WORKSPACE}"
     }
+    
    stages {
        stage('Preparation') {
             steps {
@@ -25,8 +27,8 @@ pipeline {
                     //curl https://gettaurus.org/builds/bzt-1.14.2.13904-py2.py3-none-any.whl -o bzt-1.14.2.13904-py2.py3-none-any.whl
                 }
             }
-       }
-       stage('Stress test') {
+        }
+        stage('Stress test') {
             steps {
                 container('common') {
                     script {
@@ -36,7 +38,7 @@ pipeline {
                   }
              }
         }
-   }
+    }
     post {
         always {
             script {

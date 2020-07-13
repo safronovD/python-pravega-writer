@@ -6,16 +6,11 @@ pipeline {
          timestamps()
     }
     stages {
-        stage('Preparation') {
-            steps {
-                echo 'Preparations are running...'
-            }
-        }
-    
+
        stage('Unit tests') {
            steps {
                echo 'Unit tests are running...'
-//               build 'Tests'
+//               build 'Unit'
            }
         }
        stage('Container tests') {
@@ -24,6 +19,20 @@ pipeline {
                build 'Container'
            }
         }
+       stage('E2E tests') {
+            steps {
+                echo 'E2E is running...'
+//                build 'e2e'
+            }
+        }
+
+        stage('Perfomance tests') {
+            steps {
+                echo 'Perfomance tests are running...'
+//                build 'Stress'
+            }
+        }
+
         stage('Deploy') {
             steps {
                 echo 'Deploy is running...'
@@ -31,12 +40,12 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            script {
-                def publish_result = load(".ci/publish_result.groovy")
-                publish_result.setBuildStatus("Build", currentBuild.result);
-            }
-        }
-	}
+//    post {
+//        always {
+//            script {
+//                def publish_result = load(".ci/publish_result.groovy")
+//                publish_result.setBuildStatus("Build", currentBuild.result);
+//            }
+//        }
+//	}
 }
