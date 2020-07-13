@@ -6,7 +6,7 @@ from log.logger import init_logger
 class HelmSetup:
     def __init__(self, tag):
         self.tag = tag
-        self.chart_name = ''.join('et-', tag)
+        self.chart_name = ''.join(['et-', tag])
         self.logger = init_logger('dev')
 
     def get_node_port(self):
