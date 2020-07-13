@@ -13,14 +13,14 @@ pipeline {
     environment {
         PYTHONPATH = "${WORKSPACE}"
     }
+
     stages {
         stage('Preparation') {
             steps {
                 container('common') {
                     sh '''
-                       mkdir -p reports
                        echo End-to-end tests
-                       python --version
+                       mkdir -p reports
                        python3 -m pip install -r ./e2e/requirements.txt
                     '''
                 }
@@ -29,7 +29,7 @@ pipeline {
         stage('End-to-End test') {
             steps {
                 container('common') {
-                    sh 'python3 -m robot.run --outputdir reports --variable chartId:test-${GIT_COMMIT} ./e2e/e2e.robot'
+                    sh 'python3 -m robot.run --outputdir reports --variable chartId:et-${GIT_COMMIT} ./e2e/e2e.robot'
                   }
              }
         }

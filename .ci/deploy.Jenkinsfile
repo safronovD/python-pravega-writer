@@ -33,7 +33,7 @@ pipeline {
 
                     helmDeploy(
                         dry_run       : true,
-                        name          : 'pravega-writer',
+                        name          : 'ppw',
                         chart_dir     : 'ppw-chart',
                         replicas      : 1
                     )
@@ -49,7 +49,7 @@ pipeline {
 
                     //helmDeploy(
                     //    dry_run       : false,
-                    //    name          : 'pravega-writer',
+                    //    name          : 'ppw',
                     //    chart_dir     : 'ppw-chart',
                     //    replicas      : 1
                     //)
