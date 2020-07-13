@@ -25,3 +25,6 @@ spec:
         volumeMounts:
         - mountPath: {{ .Values.volume.mountPath }}
           name: {{ .Values.volume.name }}
+      imagePullSecrets:
+        - name: {{ .Values.common.image_pullSecretName }}
+
