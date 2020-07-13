@@ -29,7 +29,7 @@ pipeline {
         stage('End-to-End test') {
             steps {
                 container('common') {
-                    sh 'python3 -m robot.run --outputdir reports --variable chartId:et-${GIT_COMMIT} ./e2e/e2e.robot'
+                    sh 'python3 -m robot.run --outputdir reports --variable tag:${GIT_COMMIT} ./e2e/e2e.robot'
                   }
              }
         }
