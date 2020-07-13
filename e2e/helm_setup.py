@@ -4,8 +4,9 @@ from log.logger import init_logger
 
 
 class HelmSetup:
-    def __init__(self, name):
-        self.chart_name = name
+    def __init__(self, tag):
+        self.tag = tag
+        self.chart_name = ''.join('et-', tag)
         self.logger = init_logger('dev')
 
     def get_node_port(self):
@@ -34,7 +35,17 @@ class HelmSetup:
 
     def install_helm_chart(self):
         self.logger.info('Attempt to install helm chart')
-        command = "helm install --namespace test {0} ./ppw-chart --set fullnameOverride={0}".format(self.chart_name)
+        registry = '192.168.70.210:5000'
+        secret = 'regcred'
+        server_image = 'ppw-server:{}'.format(self.tag)
+        connector_image = 'ppw-connector:{}'.format(self.tag)
+        ml_controller_image = 'ppw-ml-controller:{}'.format(self.tag)
+        command = "helm install --namespace test {0} ./ppw-chart --set fullnameOverride={0}" \
+                  " --set common.image_repository={1} " \
+                  "--set common.image_pullSecretName={2} " \
+                  "--set server.image_name={3} " \
+                  "--set jobs.connector_image={4} " \
+                  "--set jobs.ml_controller_image={5}".format(self.chart_name, registry, secret, server_image, connector_image, ml_controller_image)
         answer = os.popen(command).read()
 
         if re.search('Error: cannot re-use a name that is still in use', answer):
