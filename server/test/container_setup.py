@@ -151,38 +151,50 @@ class ContainerSetup:
     def get_pod_ip(self, name):
         command = 'kubectl describe pod {}'.format(self.get_container_full_name(name))
         self.logger.warning(command)
-        answer = os.popen(command).read()
 
-        self.logger.warning(answer)
-        # with open('./server/test/answer.txt', 'r') as f:
-        #     answer = f.read()
-            # print(answer)
-        match = re.findall(r'IP:\s+(\d{2,3}.\d{2,3}.\d{2,3}.\d{2,3})', answer)
-        if match:
-            self.logger.warning(match[0])
-            return match[0]
+        if self.wait_readyness('pod', self.get_container_full_name(name)):
+            answer = os.popen(command).read()
+
+            self.logger.warning(answer)
+            match = re.findall(r'IP:\s+(\d{2,3}.\d{2,3}.\d{2,3}.\d{2,3})', answer)
+            if match:
+                self.logger.warning(match[0])
+                return match[0]
 
     def get_pod(self, name):
         command = 'kubectl get pod {}'.format(self.get_container_full_name(name))
         self.logger.warning(os.popen(command).read())
 
-    def wait(self):
-        for _ in range(20):
-            self.get_pod('server')
-            time.sleep(2)
+    def wait_readyness(self, resource_type, resource_name):
+        def get_status(answer):
+            template = r'Status:\s+(\w+)'
+            match = re.findall(template, answer)
+            if len(match) > 1:
+                return match[0][0]
+            return match[0]
+        # with open('./server/test/answer.txt', 'r') as file:
+        #     answer = file.read()
+        command = 'kubectl describe {} {}'.format(resource_type, resource_name)
+        for _ in range(1000000):
+            self.logger.warning('Checking status № {}'.format(_ + 1))
+            answer = os.popen(command).read()
+            if get_status(answer) == 'Running':
+                self.logger.warning('{} {} is ready'.format(resource_type, resource_name))
+                return True
+            self.logger.warning('{} {} is not ready'.format(resource_type, resource_name))
+        return False
+
 
 if __name__ == "__main__":
-
     obj = ContainerSetup(os.environ["GIT_COMMIT"])
+    # obj = ContainerSetup(123)
     # obj.build_image('server')
     # obj.push_image('server')
     # obj.run_container('server')
     # obj.remove_container('server')
     obj.run_pod('server')
-    for _ in range(10):
-        obj.get_pod('server')
-        time.sleep(2)
-    time.sleep(20)
+    # obj.wait_readyness('pod', 'podik')
+    # time.sleep(20)
     obj.get_pod_ip('server')
     obj.delete_pod('server')
     # obj.remove_image('server')
