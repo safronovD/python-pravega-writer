@@ -29,6 +29,7 @@ pipeline {
                 container('docker') {
                     sh 'python3 --version'
                     sh 'docker --version'
+                    sh 'python3 -m pip install -r ./server/test/requirements.txt'
                     sh 'python3 ./server/test/push_containers.py $DOCKER_REGISTRY_USR $DOCKER_REGISTRY_PSW'
 
                 }
