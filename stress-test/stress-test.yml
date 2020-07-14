@@ -13,4 +13,4 @@ scenarios:
 reporting:
 - module: console
 - module: final-stats
-  dump-csv: result.csv
+  dump-xml: result.xml
