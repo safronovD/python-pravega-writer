@@ -40,8 +40,8 @@ pipeline {
             steps {
                 container('kube') {
                     script {
-//                        sh 'python3 -m robot.run  --outputdir reports --variable tag:${GIT_COMMIT} ./server/test/container_test.robot'
-                        sh 'python3 ./server/test/container_setup.py'
+                        sh 'python3 -m robot.run  --outputdir reports --variable tag:${GIT_COMMIT} ./server/test/container_test.robot'
+//                        sh 'python3 ./server/test/container_setup.py'
                     }
                 }
             }

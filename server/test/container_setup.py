@@ -135,7 +135,7 @@ class ContainerSetup:
     def run_pod(self, name):
         pod_name = self.get_container_full_name(name)
         image_name = self.get_image_full_name(name)
-        command = 'kubectl run {} --image={} --port=666 --wait=true'.format(pod_name, image_name)
+        command = 'kubectl run {} --image={} --port=666 --hostport=666 --wait=true'.format(pod_name, image_name)
         self.logger.warning(command)
 
         answer = os.popen(command).read()
@@ -166,6 +166,10 @@ class ContainerSetup:
         command = 'kubectl get pod {}'.format(self.get_container_full_name(name))
         self.logger.warning(os.popen(command).read())
 
+    def wait(self):
+        for _ in range(20):
+            obj.get_pod('server')
+            time.sleep(2)
 
 if __name__ == "__main__":
 
