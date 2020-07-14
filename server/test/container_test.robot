@@ -19,7 +19,7 @@ Check connection to pod
 Create connection
     ${pod_ip}           obj.get_pod_ip
     obj.run_pod         server
-    Create session      conn     ${pod_ip}     max_retries=10
+    Create session      conn     http://${pod_ip}:666     max_retries=10
 
 Close connection
     Delete all sessions
