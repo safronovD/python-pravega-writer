@@ -166,10 +166,10 @@ class ContainerSetup:
         command = 'kubectl get pod {}'.format(self.get_container_full_name(name))
         self.logger.warning(os.popen(command).read())
 
-        
+
 if __name__ == "__main__":
 
-    obj = ContainerSetup(123)
+    obj = ContainerSetup(os.environ["GIT_COMMIT"])
     # obj.build_image('server')
     # obj.push_image('server')
     # obj.run_container('server')
