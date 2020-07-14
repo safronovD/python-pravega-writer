@@ -134,19 +134,19 @@ class ContainerSetup:
     def run_pod(self, name):
         pod_name = self.get_container_full_name(name)
         image_name = self.get_image_full_name(name)
-        command = 'kubectl run {} --image={} --port=666 --namespace=test-container'.format(pod_name, image_name)
+        command = 'kubectl run {} --image={} --port=666'.format(pod_name, image_name)
 
         answer = os.popen(command).read()
         self.logger.warning(answer)
         self.logger.warning('Pod {} is created')
 
     def delete_pod(self, name):
-        command = 'kubectl -n test-container delete pod {}'.format(self.get_container_full_name(name))
+        command = 'kubectl delete pod {}'.format(self.get_container_full_name(name))
         answer = os.popen(command).read()
         self.logger.warning(answer)
 
     def get_pod_ip(self, name):
-        command = 'kubectl describe -n test-container pod {}'.format(self.get_container_full_name(name))
+        command = 'kubectl describe pod {}'.format(self.get_container_full_name(name))
         answer = os.popen(command).read()
 
         self.logger.warning(answer)
@@ -154,9 +154,9 @@ class ContainerSetup:
         #     answer = f.read()
             # print(answer)
         match = re.findall(r'IP:\s+(\d{2,3}.\d{2,3}.\d{2,3}.\d{2,3})', answer)
-        self.logger.warning(match[0])
-
-        return match[0]
+        if match:
+            self.logger.warning(match[0])
+            return match[0]
 
 
 if __name__ == "__main__":
