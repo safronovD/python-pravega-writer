@@ -4,6 +4,10 @@ pipeline {
             label 'container-pod'
             yamlFile '.ci/pod-templates/pod-python.yaml'
         }
+        kubernetes {
+            label 'k8s-pod'
+            yamlFile '.ci/pod-templates/python-kubectl-helm-pod.yaml'
+        }
      }
 
     options {
@@ -18,21 +22,27 @@ pipeline {
     stages {
         stage ('Preparation') {
             steps {
-                container('docker') {
-//                    sh 'python3 --version'
-//                    sh 'docker --version'
+                container('common') {
+                    sh 'python3 --version'
                     sh 'mkdir -p reports'
                     sh 'python3 -m pip install -r ./server/test/requirements.txt'
 //                    sh 'printenv'
 //                    sh 'docker ps'
+                }
+
+                container('docker') {
+                    sh 'python3 --version'
+                    sh 'docker --version'
+                    sh 'python3 ./server/test/push_containers.py $DOCKER_REGISTRY_USR $DOCKER_REGISTRY_PSW'
+
                 }
             }
 
        }
        stage('Test') {
             steps {
-                container('docker') {
-                    script{
+                container('common') {
+                    script {
                         sh 'python3 -m robot.run  --outputdir reports --variable tag:${GIT_COMMIT} ./server/test/container_test.robot'
                     }
                 }
@@ -52,11 +62,11 @@ pipeline {
             }
 
         }
-        success{
-            container('docker') {
-                sh 'python3 ./server/test/push_containers.py $DOCKER_REGISTRY_USR $DOCKER_REGISTRY_PSW'
-            }
-        }
+//        success{
+//            container('docker') {
+//                sh 'python3 ./server/test/push_containers.py $DOCKER_REGISTRY_USR $DOCKER_REGISTRY_PSW'
+//            }
+//        }
 
 	}
 }

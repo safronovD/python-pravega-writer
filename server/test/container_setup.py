@@ -1,6 +1,8 @@
 import docker
 from docker.errors import NotFound, APIError, ImageNotFound
 from log.logger import init_logger
+import os
+import re
 
 
 class ContainerSetup:
@@ -65,6 +67,8 @@ class ContainerSetup:
             self.logger.exception('Image {} is not created'.format(image_name))
         else:
             self.logger.warning('Image {} is created'.format(image_name))
+        #     return 1
+        # return 0
 
     def run_container(self, name):
         container_name = self.get_container_full_name(name)
@@ -127,15 +131,44 @@ class ContainerSetup:
         else:
             self.logger.warning("Image {} is pushed".format(image_name))
 
+    def run_pod(self, name):
+        pod_name = self.get_container_full_name(name)
+        image_name = self.get_image_full_name(name)
+        command = 'kubectl run {} --image={} --port=666 --namespace=test-container'.format(pod_name, image_name)
+
+        answer = os.popen(command).read()
+        self.logger.warning(answer)
+        self.logger.warning('Pod {} is created')
+
+    def delete_pod(self, name):
+        command = 'kubectl -n test-container delete pod {}'.format(self.get_container_full_name(name))
+        answer = os.popen(command).read()
+        self.logger.warning(answer)
+
+    def get_pod_ip(self, name):
+        command = 'kubectl describe -n test-container pod {}'.format(self.get_container_full_name(name))
+        answer = os.popen(command).read()
+
+        self.logger.warning(answer)
+        # with open('./server/test/answer.txt', 'r') as f:
+        #     answer = f.read()
+            # print(answer)
+        match = re.findall(r'IP:\s+(\d{2,3}.\d{2,3}.\d{2,3}.\d{2,3})', answer)
+        self.logger.warning(match[0])
+
+        return match[0]
+
 
 if __name__ == "__main__":
 
     obj = ContainerSetup(123)
     obj.build_image('server')
-    # obj.push_image('server')
-    obj.run_container('server')
-    obj.remove_container('server')
-    obj.remove_image('server')
+    obj.push_image('server')
+    # obj.run_container('server')
+    # obj.remove_container('server')
+    obj.run_pod('server')
+    obj.get_pod_ip('server')
+    # obj.remove_image('server')
     #
     # obj.build_image('connector')
     # # obj.push_image('connector')

@@ -11,10 +11,10 @@ if __name__ == "__main__":
     obj.push_image('server')
     obj.remove_image('server')
 
-    obj.build_image('connector')
-    obj.push_image('connector')
-    obj.remove_image('connector')
-
-    obj.build_image('ml-controller')
-    obj.push_image('ml-controller')
-    obj.remove_image('ml-controller')
+    # obj.build_image('connector')
+    # obj.push_image('connector')
+    # obj.remove_image('connector')
+    #
+    # obj.build_image('ml-controller')
+    # obj.push_image('ml-controller')
+    # obj.remove_image('ml-controller')

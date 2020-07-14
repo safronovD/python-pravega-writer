@@ -6,12 +6,10 @@ Test Setup          Create connection
 Test Teardown       Close connection
 
 *** Variables ***
-${base_url}         http://192.168.70.216:666
 ${tag}
 
 *** Test Cases ***
-Check connection to container
-
+Check connection to pod
     ${response}     Get request     conn    /v1
                     Should be equal     ${response.status_code}    ${200}
 
@@ -19,12 +17,11 @@ Check connection to container
 
 *** Keywords ***
 Create connection
-    obj.build_image     server
-    obj.run_container   server
-    Create session      conn     ${base_url}     max_retries=10
+    ${pod_ip}           obj.get_pod_ip
+    obj.run_pod         server
+    Create session      conn     ${pod_ip}     max_retries=10
 
 Close connection
     Delete all sessions
-    obj.remove_container        server
-    obj.remove_image            server
+    obj.delete_pod      server
     

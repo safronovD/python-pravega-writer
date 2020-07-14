@@ -10,7 +10,6 @@ class HelmSetup:
 
     def get_node_port(self):
         self.logger.info('Attempt to get node port')
-
         json_path = '{.spec.ports[0].nodePort}'
         command = "kubectl get --namespace test -o jsonpath={} services {}".format(json_path, self.chart_name)
         answer = os.popen(command).read()
@@ -64,7 +63,7 @@ class HelmSetup:
             else:
                 self.logger.error('{} {} is not deleted'.format(resource, resource_name))
 
-        elif answer.startswith('NAME:'):
+        elif re.search('NAME:', answer):
             self.logger.warning('Chart {} is installed'.format(self.chart_name))
 
     def delete_helm_chart(self):
