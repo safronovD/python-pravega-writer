@@ -2,7 +2,7 @@ pipeline {
     agent {
         kubernetes {
             label 'container-pod'
-            yamlFile '.ci/pod-python-docker-kubectl-helm.yaml'
+            yamlFile '.ci/pod-templates/pod-python-docker-kubectl-helm.yaml'
         }
      }
 
