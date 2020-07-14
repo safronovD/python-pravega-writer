@@ -10,6 +10,6 @@ if __name__ == "__main__":
     nodeIP = obj.get_node_ip()
     nodePort = obj.get_node_port()
 
-    os.system('locust -f ./stress-test/request.py --csv=reports/result --host=http://{}:{} --headless -u 1000 -r 100 --run-time 1m'.format(nodeIP, nodePort))
+    os.system('bzt ./stress-test/stress-test.yml -o scenarios.performance.default-address=http://{}:{} -report'.format(nodeIP, nodePort))
 
     obj.delete_helm_chart()

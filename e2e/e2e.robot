@@ -8,7 +8,7 @@ Test Teardown       Uninstall chart
 ${chartId}
 
 *** Test Cases ***
-Check connection to NodePort by RequestsLibrary
+Check connection to NodePort
     ${nodeIP}           helm.get_node_ip
     ${nodePort}         helm.get_node_port
     Create Session      connection              http://${nodeIP}:${nodePort}       max_retries=15

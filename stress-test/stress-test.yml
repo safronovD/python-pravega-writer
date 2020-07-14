@@ -7,7 +7,7 @@ execution:
 
 scenarios:
   performance:
-    default-address: http://192.168.70.211:30841
+    default-address: #http://192.168.70.211:30841
     script: request.py
 
 reporting:
