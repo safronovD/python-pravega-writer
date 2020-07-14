@@ -3,6 +3,7 @@ from docker.errors import NotFound, APIError, ImageNotFound
 from log.logger import init_logger
 import os
 import re
+import time
 
 
 class ContainerSetup:
@@ -161,7 +162,11 @@ class ContainerSetup:
             self.logger.warning(match[0])
             return match[0]
 
+    def get_pod(self, name):
+        command = 'kubectl get pod {}'.format(self.get_container_full_name(name))
+        self.logger.warning(os.popen(command).read())
 
+        
 if __name__ == "__main__":
 
     obj = ContainerSetup(123)
@@ -170,6 +175,10 @@ if __name__ == "__main__":
     # obj.run_container('server')
     # obj.remove_container('server')
     obj.run_pod('server')
+    for _ in range(10):
+        obj.get_pod('server')
+        time.sleep(2)
+    time.sleep(20)
     obj.get_pod_ip('server')
     obj.delete_pod('server')
     # obj.remove_image('server')
