@@ -1,14 +1,5 @@
 pipeline {
-    agent {
-        kubernetes {
-            label 'container-pod'
-            yamlFile '.ci/pod-templates/pod-python.yaml'
-        }
-        kubernetes {
-            label 'k8s-pod'
-            yamlFile '.ci/pod-templates/python-kubectl-helm-pod.yaml'
-        }
-     }
+    agent none
 
     options {
         timestamps()
@@ -22,14 +13,12 @@ pipeline {
     stages {
         stage ('Preparation') {
             steps {
-                container('common') {
-                    sh 'python3 --version'
-                    sh 'mkdir -p reports'
-                    sh 'python3 -m pip install -r ./server/test/requirements.txt'
-//                    sh 'printenv'
-//                    sh 'docker ps'
+                agent {
+                    kubernetes {
+                        label 'container-pod'
+                        yamlFile '.ci/pod-templates/pod-python.yaml'
+                    }
                 }
-
                 container('docker') {
                     sh 'python3 --version'
                     sh 'docker --version'
@@ -40,7 +29,21 @@ pipeline {
 
        }
        stage('Test') {
+            agent {
+                    kubernetes {
+                        label 'k8s-pod'
+                        yamlFile '.ci/pod-templates/python-kubectl-helm-pod.yaml'
+                    }
+                }
             steps {
+                container('common') {
+                    sh 'python3 --version'
+                    sh 'mkdir -p reports'
+                    sh 'python3 -m pip install -r ./server/test/requirements.txt'
+//                    sh 'printenv'
+//                    sh 'docker ps'
+                }
+
                 container('common') {
                     script {
                         sh 'python3 -m robot.run  --outputdir reports --variable tag:${GIT_COMMIT} ./server/test/container_test.robot'
