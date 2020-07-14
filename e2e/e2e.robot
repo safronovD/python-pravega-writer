@@ -1,6 +1,6 @@
 *** Settings ***
 Library             RequestsLibrary
-Library             e2e.helm_setup.HelmSetup     ${chartId}      WITH NAME   helm
+Library             e2e.setup_helm.Setup     ${chartId}      WITH NAME   helm
 Test Setup          Install chart
 Test Teardown       Uninstall chart
 
@@ -11,8 +11,8 @@ ${chartId}
 Check connection to NodePort by RequestsLibrary
     ${nodeIP}           helm.get_node_ip
     ${nodePort}         helm.get_node_port
-    Create Session      connection              http://${nodeIP}:${nodePort}      max_retries=10
-    ${resp}             Get request             connection         /
+    Create Session      connection              http://${nodeIP}:${nodePort}       max_retries=15
+    ${resp}             Get request             connection         /v1
     Should be equal     ${resp.status_code}     ${200}
 
 *** Keywords ***

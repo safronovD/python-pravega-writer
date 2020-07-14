@@ -1,10 +1,16 @@
 execution:
 - executor: locust
-  concurrency: 10
-  ramp-up: 1m
-  iterations: 1000
-  scenario: example
+  concurrency: 100
+  rump-up: 20s
+  hold-for: 2m
+  scenario: performance
+
 scenarios:
-  example:
-    default-address: http://192.168.70.211:30798/
-    script: container_setup.py
+  performance:
+    default-address: http://192.168.70.211:30841
+    script: request.py
+
+reporting:
+- module: console
+- module: final-stats
+  dump-csv: result.csv
