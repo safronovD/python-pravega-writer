@@ -1,8 +1,8 @@
 execution:
 - executor: locust
-  concurrency: 100
-  rump-up: 20s
-  hold-for: 2m
+  concurrency: 1000
+  ramp-up: 20s
+  hold-for: 1m
   scenario: performance
 
 scenarios:
