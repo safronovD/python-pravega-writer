@@ -134,7 +134,7 @@ class ContainerSetup:
     def run_pod(self, name):
         pod_name = self.get_container_full_name(name)
         image_name = self.get_image_full_name(name)
-        command = 'kubectl run {} --image={} --port=666'.format(pod_name, image_name)
+        command = 'kubectl run {} --image={} --port=666 --wait=true'.format(pod_name, image_name)
         self.logger.warning(command)
 
         answer = os.popen(command).read()
