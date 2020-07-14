@@ -135,6 +135,7 @@ class ContainerSetup:
         pod_name = self.get_container_full_name(name)
         image_name = self.get_image_full_name(name)
         command = 'kubectl run {} --image={} --port=666'.format(pod_name, image_name)
+        self.logger.warning(command)
 
         answer = os.popen(command).read()
         self.logger.warning(answer)
@@ -142,11 +143,13 @@ class ContainerSetup:
 
     def delete_pod(self, name):
         command = 'kubectl delete pod {}'.format(self.get_container_full_name(name))
+        self.logger.warning(command)
         answer = os.popen(command).read()
         self.logger.warning(answer)
 
     def get_pod_ip(self, name):
         command = 'kubectl describe pod {}'.format(self.get_container_full_name(name))
+        self.logger.warning(command)
         answer = os.popen(command).read()
 
         self.logger.warning(answer)
@@ -162,12 +165,13 @@ class ContainerSetup:
 if __name__ == "__main__":
 
     obj = ContainerSetup(123)
-    obj.build_image('server')
-    obj.push_image('server')
+    # obj.build_image('server')
+    # obj.push_image('server')
     # obj.run_container('server')
     # obj.remove_container('server')
     obj.run_pod('server')
     obj.get_pod_ip('server')
+    obj.delete_pod('server')
     # obj.remove_image('server')
     #
     # obj.build_image('connector')
