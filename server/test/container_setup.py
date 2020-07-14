@@ -168,7 +168,7 @@ class ContainerSetup:
 
     def wait(self):
         for _ in range(20):
-            obj.get_pod('server')
+            self.get_pod('server')
             time.sleep(2)
 
 if __name__ == "__main__":
