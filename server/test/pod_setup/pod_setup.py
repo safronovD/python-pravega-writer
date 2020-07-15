@@ -7,7 +7,7 @@ import time
 class PodSetup:
     def __init__(self):
         self.logger = init_logger('dev')
-        self.logger.info()
+        self.logger.info('\n')
         self.logger.info('Object initialization is started')
 
         tag = os.environ["GIT_COMMIT"]
@@ -43,7 +43,7 @@ class PodSetup:
         if answer:
             self.logger.info('Answer from cluster received')
             self.logger.info(answer)
-            if re.search(r'pod "{} deleted'.format(self.pod_name), answer):
+            if re.search(r'pod "{}" deleted'.format(self.pod_name), answer):
                 self.logger.warning('Pod {} is deleted')
             else:
                 self.logger.error('Something went wrong. Pod {} is not deleted'.format(self.pod_name))
