@@ -7,7 +7,7 @@ import time
 class PodSetup:
     def __init__(self):
         self.logger = init_logger('dev')
-
+        self.logger.info()
         self.logger.info('Object initialization is started')
 
         tag = os.environ["GIT_COMMIT"]
