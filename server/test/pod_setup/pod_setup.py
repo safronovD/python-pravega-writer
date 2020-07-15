@@ -27,11 +27,11 @@ class PodSetup:
         answer = os.popen(command).read()
         if answer:
             self.logger.info('Answer from cluster received')
-            self.logger.info(answer)
+            # self.logger.info(answer)
             if re.search(r'\w*/{} created'.format(self.pod_name), answer):
-                self.logger.warning('Pod {} is created')
+                self.logger.warning('Pod {} is created'.format(self.pod_name))
             else:
-                self.logger.error('Something went wrong. Pod {} is not created'.format(pod_name))
+                self.logger.error('Something went wrong. Pod {} is not created'.format(self.pod_name))
 
     def delete_pod(self):
         command = 'kubectl delete pod {}'.format(self.pod_name)
@@ -42,9 +42,9 @@ class PodSetup:
         answer = os.popen(command).read()
         if answer:
             self.logger.info('Answer from cluster received')
-            self.logger.info(answer)
+            # self.logger.info(answer)
             if re.search(r'pod "{}" deleted'.format(self.pod_name), answer):
-                self.logger.warning('Pod {} is deleted')
+                self.logger.warning('Pod {} is deleted'.format(self.pod_name))
             else:
                 self.logger.error('Something went wrong. Pod {} is not deleted'.format(self.pod_name))
 
@@ -56,8 +56,8 @@ class PodSetup:
         self.logger.info('Waiting pod {}'.format(self.pod_name))
         if self.wait_readyness('pod', self.pod_name):
             answer = os.popen(command).read()
-
-            self.logger.info(answer)
+            self.logger.info('Answer from cluster received')
+            # self.logger.info(answer)
             match = re.findall(r'IP:\s+(\d{2,3}.\d{2,3}.\d{2,3}.\d{2,3})', answer)
             if match:
                 self.logger.warning('Ip address found: {}'.format(match[0]))
