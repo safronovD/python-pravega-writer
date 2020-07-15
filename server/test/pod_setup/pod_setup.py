@@ -22,12 +22,13 @@ class PodSetup:
         command = 'kubectl run {} --image={} --port=666 --hostport=666 --wait=true'.format(self.pod_name, self.image_name)
 
         self.logger.info('Attempt to create pod {}'.format(self.pod_name))
-        self.logger.debug(command)
+        self.logger.info('Execute command {}'.format(command))
 
         answer = os.popen(command).read()
         if answer:
             self.logger.info('Answer from cluster received')
             # self.logger.info(answer)
+            self.logger.info('Parsing results')
             if re.search(r'\w*/{} created'.format(self.pod_name), answer):
                 self.logger.info('Pod {} is created'.format(self.pod_name))
             else:
@@ -37,12 +38,13 @@ class PodSetup:
         command = 'kubectl delete pod {}'.format(self.pod_name)
 
         self.logger.info('Attempt to delete pod {}'.format(self.pod_name))
-        self.logger.debug(command)
+        self.logger.info('Execute command {}'.format(command))
 
         answer = os.popen(command).read()
         if answer:
             self.logger.info('Answer from cluster received')
             self.logger.debug(answer)
+            self.logger.info('Parsing results')
             if re.search(r'pod "{}" deleted'.format(self.pod_name), answer):
                 self.logger.info('Pod {} is deleted'.format(self.pod_name))
             else:
@@ -54,13 +56,16 @@ class PodSetup:
     def get_pod_ip(self):
         command = 'kubectl describe pod {}'.format(self.pod_name)
 
-        self.logger.info('Attempt to get pod info {}'.format(self.pod_name))
-        self.logger.debug(command)
+        self.logger.info('Attempt to get pod {} info'.format(self.pod_name))
+        self.logger.info('Execute command {}'.format(command))
         self.logger.info('Waiting pod {}'.format(self.pod_name))
+
         if self.check_readyness('pod', self.pod_name):
             answer = os.popen(command).read()
+
             self.logger.info('Answer from cluster received')
-            # self.logger.info(answer)
+            self.logger.debug(answer)
+            self.logger.info('Parsing results')
             match = re.findall(r'IP:\s+(\d{2,3}.\d{2,3}.\d{2,3}.\d{2,3})', answer)
             if match:
                 self.logger.info('Ip address found: {}'.format(match[0]))
