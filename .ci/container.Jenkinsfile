@@ -25,7 +25,7 @@ pipeline {
 
                 container('docker') {
                     sh 'python3 -m pip install -r ./server/test/image_setup/requirements.txt'
-                    sh 'python3 ./server/test/push_images.py $DOCKER_REGISTRY_USR $DOCKER_REGISTRY_PSW'
+                    sh 'python3 ./server/test/image_setup/push_images.py $DOCKER_REGISTRY_USR $DOCKER_REGISTRY_PSW'
 
                 }
             }
