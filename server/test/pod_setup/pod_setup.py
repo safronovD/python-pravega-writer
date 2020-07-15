@@ -22,7 +22,7 @@ class PodSetup:
         command = 'kubectl run {} --image={} --port=666 --hostport=666 --wait=true'.format(self.pod_name, self.image_name)
 
         self.logger.info('Attempt to create pod {}'.format(self.pod_name))
-        self.logger.info(command)
+        self.logger.debug(command)
 
         answer = os.popen(command).read()
         if answer:
@@ -37,33 +37,38 @@ class PodSetup:
         command = 'kubectl delete pod {}'.format(self.pod_name)
 
         self.logger.info('Attempt to delete pod {}'.format(self.pod_name))
-        self.logger.info(command)
+        self.logger.debug(command)
 
         answer = os.popen(command).read()
         if answer:
             self.logger.info('Answer from cluster received')
-            # self.logger.info(answer)
+            self.logger.debug(answer)
             if re.search(r'pod "{}" deleted'.format(self.pod_name), answer):
-                self.logger.warning('Pod {} is deleted'.format(self.pod_name))
+                self.logger.info('Pod {} is deleted'.format(self.pod_name))
             else:
                 self.logger.error('Something went wrong. Pod {} is not deleted'.format(self.pod_name))
+        else:
+            self.logger.error('Answer from cluster not received')
+            self.logger.error('check that command {} is correct'.format(command))
 
     def get_pod_ip(self):
         command = 'kubectl describe pod {}'.format(self.pod_name)
 
         self.logger.info('Attempt to get pod info {}'.format(self.pod_name))
-        self.logger.info(command)
+        self.logger.debug(command)
         self.logger.info('Waiting pod {}'.format(self.pod_name))
-        if self.wait_readyness('pod', self.pod_name):
+        if self.check_readyness('pod', self.pod_name):
             answer = os.popen(command).read()
             self.logger.info('Answer from cluster received')
             # self.logger.info(answer)
             match = re.findall(r'IP:\s+(\d{2,3}.\d{2,3}.\d{2,3}.\d{2,3})', answer)
             if match:
-                self.logger.warning('Ip address found: {}'.format(match[0]))
+                self.logger.info('Ip address found: {}'.format(match[0]))
                 return match[0]
+            else:
+                self.logger.error('Ip address not found')
 
-    def wait_readyness(self, resource_type, resource_name):
+    def check_readyness(self, resource_type, resource_name):
         def get_status(resource_type, answer):
             if resource_type == 'pod':
                 match = re.findall(r'Status:\s+(\w+)', answer)
@@ -89,8 +94,8 @@ class PodSetup:
         for _ in range(20):
             self.logger.info('Checking status № {}'.format(_ + 1))
             if get_status(resource_type, os.popen(command).read()):
-                self.logger.warning('{} {} is ready'.format(resource_type, resource_name))
+                self.logger.info('{} {} is ready'.format(resource_type, resource_name))
                 return True
-            self.logger.info('{} {} is not ready'.format(resource_type, resource_name))
+            self.logger.warning('{} {} is not ready'.format(resource_type, resource_name))
             time.sleep(5)
         return False

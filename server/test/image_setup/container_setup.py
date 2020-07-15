@@ -64,9 +64,7 @@ class ContainerSetup:
             self.logger.error('Dockerfile not found')
             self.logger.exception('Image {} is not created'.format(image_name))
         else:
-            self.logger.warning('Image {} is created'.format(image_name))
-        #     return 1
-        # return 0
+            self.logger.info('Image {} is created'.format(image_name))
 
     def run_container(self, name):
         container_name = self.get_container_full_name(name)
@@ -81,7 +79,7 @@ class ContainerSetup:
             self.logger.exception('Container {} already exists'.format(container_name))
             self.remove_container(name)
         else:
-            self.logger.warning('Container {} is created'.format(container.name))
+            self.logger.info('Container {} is created'.format(container.name))
 
     def remove_container(self, name):
         container_name = self.get_container_full_name(name)
@@ -92,7 +90,7 @@ class ContainerSetup:
         except NotFound:
             self.logger.exception('Container {} not found'.format(container_name))
         else:
-            self.logger.warning("Container {} is removed".format(container.name))
+            self.logger.info("Container {} is removed".format(container.name))
 
     def remove_image(self, name):
         image_name = self.get_image_full_name(name)
@@ -107,7 +105,7 @@ class ContainerSetup:
             self.remove_image(name)
 
         else:
-            self.logger.warning("Image {} is removed".format(tag))
+            self.logger.info("Image {} is removed".format(tag))
 
     def push_image(self, name):
         image_name = self.get_image_full_name(name)
@@ -116,10 +114,8 @@ class ContainerSetup:
             self.client.images.push('{}'.format(image_name), auth_config={'username': self.username,
                                                                           'password': self.password})
         except AttributeError:
-            # self.logger.exception('Username or password not found')
             self.logger.exception('Image {} is not pushed'.format(image_name))
         except NotFound:
-            # self.logger.error('Image {} not found'.format(image_name))
             self.logger.exception('Image {} is not pushed'.format(image_name))
 
             self.build_image(name)
@@ -127,4 +123,4 @@ class ContainerSetup:
         except APIError:
             self.logger.exception('Image {} is not pushed'.format(image_name))
         else:
-            self.logger.warning("Image {} is pushed".format(image_name))
+            self.logger.info("Image {} is pushed".format(image_name))
