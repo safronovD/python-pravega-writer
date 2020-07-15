@@ -29,7 +29,7 @@ class PodSetup:
             self.logger.info('Answer from cluster received')
             # self.logger.info(answer)
             if re.search(r'\w*/{} created'.format(self.pod_name), answer):
-                self.logger.warning('Pod {} is created'.format(self.pod_name))
+                self.logger.info('Pod {} is created'.format(self.pod_name))
             else:
                 self.logger.error('Something went wrong. Pod {} is not created'.format(self.pod_name))
 

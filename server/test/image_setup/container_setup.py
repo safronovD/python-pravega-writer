@@ -51,7 +51,7 @@ class ContainerSetup:
             try:
                 self.client.containers.get(self.get_container_full_name(name))
             except NotFound:
-                self.logger.info('Container {} not found'.format(container_name))
+                self.logger.exception('Container {} not found'.format(container_name))
             else:
                 self.logger.info('Old container {} removed'.format(container_name))
             self.remove_image(name)
