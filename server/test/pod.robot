@@ -13,11 +13,11 @@ Check connection to pod
 
 *** Keywords ***
 Create connection
-    obj.run_pod         server
-    ${pod_ip}           obj.get_pod_ip      server
+    obj.run_pod
+    ${pod_ip}           obj.get_pod_ip
     Create session      conn     http://${pod_ip}:666     max_retries=10
 
 Close connection
     Delete all sessions
-    obj.delete_pod      server
+    obj.delete_pod     
     
