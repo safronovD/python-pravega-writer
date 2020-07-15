@@ -46,7 +46,7 @@ class PodSetup:
             if re.search(r'pod "{} deleted'.format(self.pod_name), answer):
                 self.logger.warning('Pod {} is deleted')
             else:
-                self.logger.error('Something went wrong. Pod {} is not deleted'.format(pod_name))
+                self.logger.error('Something went wrong. Pod {} is not deleted'.format(self.pod_name))
 
     def get_pod_ip(self):
         command = 'kubectl describe pod {}'.format(self.pod_name)

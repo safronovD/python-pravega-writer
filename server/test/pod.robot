@@ -19,5 +19,5 @@ Create connection
 
 Close connection
     Delete all sessions
-    obj.delete_pod     
+    obj.delete_pod
     
