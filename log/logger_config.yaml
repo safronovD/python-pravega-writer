@@ -13,7 +13,7 @@ handlers:
     class: logging.StreamHandler
     level: WARNING
     formatter: simple
-    stream: ext://sys.stdout
+    stream: ext://sys.__stdout__
 
   file:
     class: logging.FileHandler
