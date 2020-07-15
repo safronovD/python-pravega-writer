@@ -1,6 +1,6 @@
 import os
 import sys
-from server.test.container_setup import ContainerSetup
+from server.test.image_setup.container_setup import ContainerSetup
 
 if __name__ == "__main__":
     username = sys.argv[1]
@@ -11,10 +11,10 @@ if __name__ == "__main__":
     obj.push_image('server')
     obj.remove_image('server')
 
-    # obj.build_image('connector')
-    # obj.push_image('connector')
-    # obj.remove_image('connector')
-    #
-    # obj.build_image('ml-controller')
-    # obj.push_image('ml-controller')
-    # obj.remove_image('ml-controller')
+    obj.build_image('connector')
+    obj.push_image('connector')
+    obj.remove_image('connector')
+
+    obj.build_image('ml-controller')
+    obj.push_image('ml-controller')
+    obj.remove_image('ml-controller')

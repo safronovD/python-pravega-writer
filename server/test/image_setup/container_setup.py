@@ -1,9 +1,6 @@
 import docker
 from docker.errors import NotFound, APIError, ImageNotFound
 from log.logger import init_logger
-import os
-import re
-import time
 
 
 class ContainerSetup:
@@ -29,7 +26,7 @@ class ContainerSetup:
             self.username = kwargs['username']
             self.password = kwargs['password']
 
-        self.logger.info('Object initialization is complete')
+        self.logger.info('Object initialization is completed')
 
     def get_image_full_name(self, name):
         return {
@@ -131,80 +128,3 @@ class ContainerSetup:
             self.logger.exception('Image {} is not pushed'.format(image_name))
         else:
             self.logger.warning("Image {} is pushed".format(image_name))
-
-    def run_pod(self, name):
-        pod_name = self.get_container_full_name(name)
-        image_name = self.get_image_full_name(name)
-        command = 'kubectl run {} --image={} --port=666 --hostport=666 --wait=true'.format(pod_name, image_name)
-        self.logger.warning(command)
-
-        answer = os.popen(command).read()
-        self.logger.warning(answer)
-        self.logger.warning('Pod {} is created')
-
-    def delete_pod(self, name):
-        command = 'kubectl delete pod {}'.format(self.get_container_full_name(name))
-        self.logger.warning(command)
-        answer = os.popen(command).read()
-        self.logger.warning(answer)
-
-    def get_pod_ip(self, name):
-        command = 'kubectl describe pod {}'.format(self.get_container_full_name(name))
-        self.logger.warning(command)
-
-        if self.wait_readyness('pod', self.get_container_full_name(name)):
-            answer = os.popen(command).read()
-
-            self.logger.warning(answer)
-            match = re.findall(r'IP:\s+(\d{2,3}.\d{2,3}.\d{2,3}.\d{2,3})', answer)
-            if match:
-                self.logger.warning(match[0])
-                return match[0]
-
-    def get_pod(self, name):
-        command = 'kubectl get pod {}'.format(self.get_container_full_name(name))
-        self.logger.warning(os.popen(command).read())
-
-    def wait_readyness(self, resource_type, resource_name):
-        def get_status(answer):
-            template = r'Status:\s+(\w+)'
-            match = re.findall(template, answer)
-            if len(match) > 1:
-                return match[0][0]
-            return match[0]
-        # with open('./server/test/answer.txt', 'r') as file:
-        #     answer = file.read()
-        command = 'kubectl describe {} {}'.format(resource_type, resource_name)
-        for _ in range(1000000):
-            self.logger.warning('Checking status № {}'.format(_ + 1))
-            answer = os.popen(command).read()
-            if get_status(answer) == 'Running':
-                self.logger.warning('{} {} is ready'.format(resource_type, resource_name))
-                return True
-            self.logger.warning('{} {} is not ready'.format(resource_type, resource_name))
-        return False
-
-
-if __name__ == "__main__":
-    obj = ContainerSetup(os.environ["GIT_COMMIT"])
-    # obj = ContainerSetup(123)
-    # obj.build_image('server')
-    # obj.push_image('server')
-    # obj.run_container('server')
-    # obj.remove_container('server')
-    obj.run_pod('server')
-    # obj.wait_readyness('pod', 'podik')
-    # time.sleep(20)
-    obj.get_pod_ip('server')
-    obj.delete_pod('server')
-    # obj.remove_image('server')
-    #
-    # obj.build_image('connector')
-    # # obj.push_image('connector')
-    # obj.remove_image('connector')
-    #
-    # obj.build_image('ml-controller')
-    # obj.run_container('ml-controller')
-    #
-    # # obj.push_image('ml-controller')
-    # obj.remove_image('ml-controller')
