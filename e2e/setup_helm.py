@@ -91,7 +91,7 @@ class HelmSetup:
 
 
 if __name__ == "__main__":
-    obj = Setup(sys.argv[1])
+    obj = HelmSetup(sys.argv[1])
     obj.install_helm_chart()
     obj.get_node_ip()
     obj.get_node_port()
