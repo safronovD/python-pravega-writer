@@ -19,7 +19,7 @@ class PodSetup:
         self.logger.info('Object initialization is completed')
 
     def run_pod(self):
-        command = 'kubectl run {} --image={} --port=666 --hostport=666 --wait=true'.format(self.pod_name, self.image_name)
+        command = 'kubectl run {} --image={} --port=666 --hostport=666 --wait=true --namespace=test-container'.format(self.pod_name, self.image_name)
 
         self.logger.info('Attempt to create pod {}'.format(self.pod_name))
         self.logger.info('Execute command {}'.format(command))
@@ -35,7 +35,7 @@ class PodSetup:
                 self.logger.error('Something went wrong. Pod {} is not created'.format(self.pod_name))
 
     def delete_pod(self):
-        command = 'kubectl delete pod {}'.format(self.pod_name)
+        command = 'kubectl delete pod {} -n test-container'.format(self.pod_name)
 
         self.logger.info('Attempt to delete pod {}'.format(self.pod_name))
         self.logger.info('Execute command {}'.format(command))
@@ -54,7 +54,7 @@ class PodSetup:
             self.logger.error('check that command {} is correct'.format(command))
 
     def get_pod_ip(self):
-        command = 'kubectl describe pod {}'.format(self.pod_name)
+        command = 'kubectl describe pod {} -n test-container'.format(self.pod_name)
 
         self.logger.info('Attempt to get pod {} info'.format(self.pod_name))
         self.logger.info('Execute command {}'.format(command))
@@ -94,7 +94,7 @@ class PodSetup:
                 # if re.findall(r'Name\s+{}'.format, answer)
             return False
 
-        command = 'kubectl describe {} {}'.format(resource_type, resource_name)
+        command = 'kubectl describe {} {} -n test-container'.format(resource_type, resource_name)
 
         for _ in range(20):
             self.logger.info('Checking status № {}'.format(_ + 1))
