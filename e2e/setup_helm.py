@@ -33,7 +33,7 @@ class HelmSetup:
         self.logger.info('Attempt to get node ip')
 
         json_path = '{.items[0].status.addresses[0].address}'
-        command = "kubectl get nodes --namespace test -o jsonpath={}".format(json_path)
+        command = "kubectl get nodes -o jsonpath={}".format(json_path)
 
         self.logger.info('Execute command {}'.format(command))
 
@@ -119,6 +119,7 @@ class HelmSetup:
 
             if re.search(r'Error: uninstall: Release not loaded: (.*): release: not found', answer):
                 self.logger.error('Chart {} doesn\'t exist'.format(self.chart_name))
+                self.install_helm_chart()
             else:
                 self.logger.info('Chart {} is deleted'.format(self.chart_name))
 
