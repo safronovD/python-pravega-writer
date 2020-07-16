@@ -5,7 +5,13 @@ pipeline {
             yamlFile '.ci/pod-templates/pod-python.yaml'
         }
     }
-
+    options {
+         buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
+         timestamps()
+    }
+    environment {
+        PYTHONPATH = "${WORKSPACE}"
+    }
     stages {
         stage('Preparation') {
             steps {

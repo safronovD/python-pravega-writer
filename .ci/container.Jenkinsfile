@@ -2,7 +2,7 @@ pipeline {
     agent {
         kubernetes {
             label 'container-pod'
-            yamlFile '.ci/pod-templates/pod-python.yaml'
+            yamlFile '.ci/pod-templates/pod-python-docker-kubectl-helm.yaml'
         }
      }
 
@@ -13,26 +13,30 @@ pipeline {
 
     environment {
         DOCKER_REGISTRY = credentials('Jenkins-docker-registry')
+        PYTHONPATH = "${WORKSPACE}"
     }
     stages {
         stage ('Preparation') {
             steps {
-                container('docker') {
-//                    sh 'python3 --version'
-//                    sh 'docker --version'
+                container('kube') {
                     sh 'mkdir -p reports'
-                    sh 'python3 -m pip install -r ./server/test/requirements.txt'
-//                    sh 'printenv'
-//                    sh 'docker ps'
+                    sh 'python3 -m pip install -r ./server/test/pod_setup/requirements.txt'
+                }
+
+                container('docker') {
+                    sh 'python3 -m pip install -r ./server/test/image_setup/requirements.txt'
+                    sh 'python3 ./server/test/image_setup/push_images.py $DOCKER_REGISTRY_USR $DOCKER_REGISTRY_PSW'
+
                 }
             }
 
        }
        stage('Test') {
             steps {
-                container('docker') {
-                    script{
-                        sh 'python3 -m robot.run  --outputdir reports --variable tag:${GIT_COMMIT} ./server/test/container_test.robot'
+                container('kube') {
+                    script {
+                        sh 'python3 -m robot.run  --outputdir reports ./server/test/pod.robot'
+//                        sh 'python3 ./server/test/container_setup.py'
                     }
                 }
             }
@@ -51,11 +55,5 @@ pipeline {
             }
 
         }
-        success{
-            container('docker') {
-                sh 'python3 ./server/test/push_containers.py $DOCKER_REGISTRY_USR $DOCKER_REGISTRY_PSW'
-            }
-        }
-
 	}
 }

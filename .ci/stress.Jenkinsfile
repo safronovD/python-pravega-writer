@@ -5,10 +5,10 @@ pipeline {
             yamlFile '.ci/pod-templates/python-kubectl-helm-pod.yaml'
         }
     }
+    
     options {
          timestamps()
          buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
-
     }
     environment {
         PYTHONPATH = "${WORKSPACE}"
@@ -23,21 +23,19 @@ pipeline {
                        curl https://gettaurus.org/builds/bzt-1.14.2.13904-py2.py3-none-any.whl -o bzt-1.14.2.13904-py2.py3-none-any.whl
                        python3 -m pip install -r ./stress-test/requirements.txt
                     '''
-                    //curl https://gettaurus.org/builds/bzt-1.14.2.13904-py2.py3-none-any.whl -o bzt-1.14.2.13904-py2.py3-none-any.whl
                 }
             }
-       }
-       stage('Stress test') {
+        }
+        stage('Stress test') {
             steps {
                 container('common') {
                     script {
                         sh 'python3 ./stress-test/setup_stress.py st-${GIT_COMMIT}'
-                        //sh 'bzt ./stress-test/stress-test.yml -report'
                     }
                   }
              }
         }
-   }
+    }
     post {
         always {
             script {

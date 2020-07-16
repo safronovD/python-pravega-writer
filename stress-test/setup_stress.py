@@ -1,10 +1,10 @@
 import os
 import sys
 
-from e2e.setup_helm import Setup
+from e2e.setup_helm import HelmSetup
 
 if __name__ == "__main__":
-    obj = Setup(sys.argv[1])
+    obj = HelmSetup(sys.argv[1])
     obj.install_helm_chart()
     
     nodeIP = obj.get_node_ip()
