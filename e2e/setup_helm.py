@@ -7,7 +7,7 @@ from log.logger import init_logger
 # TODO добавит логи в случае фейла
 
 
-class Setup:
+class HelmSetup:
     def __init__(self, name):
         self.chart_name = name
         self.logger = init_logger()
