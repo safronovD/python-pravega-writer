@@ -12,21 +12,25 @@ formatters:
     datefmt: "%d.%m.%Y %H:%M:%S"
 
 handlers:
-  ci-console:
+
+ ci-console:
     class: logging.StreamHandler
     level: INFO
     formatter: ci
     stream: ext://sys.__stdout__
+
   ci-stdout:
     class: logging.StreamHandler
       level: INFO
       formatter: ci
       stream: ext://sys.stdout
+
   ci-stderr:
     class: logging.StreamHandler
       level: INFO
       formatter: ci
       stream: ext://sys.stderr
+
   app-console:
     class: logging.StreamHandler
     level: INFO
@@ -45,6 +49,6 @@ loggers:
     handlers: [file, app-console]
   ci:
     level: INFO
-    handlers: [file, ci-console, ci-stdout, ci-stderr]
+    handlers: [file, ci-stderr]
 root:
   handlers: []
