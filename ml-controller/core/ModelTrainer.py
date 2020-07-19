@@ -29,22 +29,23 @@ class ModelTrainer:
 
         self.logger.info('Attempt to create dataset')
 
-        try:
-            dataset = read_csv(os.path.join(common_dir, data_set_file),
-                               encoding="ISO-8859-1",
-                               engine='python',
-                               header=None)
-        except Exception:
-            self.logger.exception('Dataset is not loaded')
-        else:
-            self.logger.info('Dataset is loaded')
-            self.logger.info('Dataset len: %d', len(dataset))
+        dataset = read_csv(os.path.join(common_dir, data_set_file),
+                           encoding="ISO-8859-1",
+                           engine='python',
+                           header=None)
 
-            dataset_train, dataset_test = train_test_split(dataset, test_size=test_size)
-            self.data_train = dataset_train.iloc[:, data_col]
-            self.data_test = dataset_test.iloc[:, data_col]
-            self.label_train = dataset_train.iloc[:, label_col]
-            self.label_test = dataset_test.iloc[:, label_col]
+        self.logger.info('Dataset is loaded')
+        self.logger.info('Dataset len: %d', len(dataset))
+
+        self.logger.info('Start dataset splitting')
+        dataset_train, dataset_test = train_test_split(dataset, test_size=test_size)
+
+        self.data_train = dataset_train.iloc[:, data_col]
+        self.data_test = dataset_test.iloc[:, data_col]
+        self.label_train = dataset_train.iloc[:, label_col]
+        self.label_test = dataset_test.iloc[:, label_col]
+
+        self.logger.info('End of dataset splitting')
 
     def train(self, common_dir, model_file, max_df=0.8, min_count=5, max_iter=10000):
         """Train model."""
