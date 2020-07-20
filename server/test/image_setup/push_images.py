@@ -10,7 +10,7 @@ if __name__ == "__main__":
     obj.build_image('server')
     obj.push_image('server')
     obj.remove_image('server')
-    print('hello world')
+
     obj.build_image('connector')
     obj.push_image('connector')
     obj.remove_image('connector')

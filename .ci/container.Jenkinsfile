@@ -19,11 +19,13 @@ pipeline {
         stage ('Preparation') {
             steps {
                 container('kube') {
+                    sh 'echo kube test'
                     sh 'mkdir -p reports'
                     sh 'python3 -m pip install -r ./server/test/pod_setup/requirements.txt'
                 }
 
                 container('docker') {
+                     sh 'echo docker test'
                     sh 'python3 -m pip install -r ./server/test/image_setup/requirements.txt'
                     sh 'python3 ./server/test/image_setup/push_images.py $DOCKER_REGISTRY_USR $DOCKER_REGISTRY_PSW'
 
