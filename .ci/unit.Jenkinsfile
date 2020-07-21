@@ -35,8 +35,8 @@ pipeline {
         stage('Lint') {
             steps {
                 container('python') {
-                    sh 'pylint --rcfile=pylint.cfg --exit-zero server/ connector/ ml-controller/ --msg-template="{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}" > reports/pylint.log'
-                    sh 'pycodestyle --max-line-length=100 ./src/ml-controller ./src/server ./src/connector > reports/pep8.log | exit 0'
+                    sh 'pylint --rcfile=pylint.cfg --exit-zero src/ --msg-template="{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}" > reports/pylint.log'
+                    sh 'pycodestyle --max-line-length=100 ./src > reports/pep8.log | exit 0'
 
                     recordIssues(
                         tool: pyLint(pattern: 'reports/pylint.log'),
