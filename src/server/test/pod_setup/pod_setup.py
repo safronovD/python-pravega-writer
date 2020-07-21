@@ -1,4 +1,4 @@
-from log.logger import init_logger
+from src.common.log.logger import init_logger
 import os
 import re
 import time

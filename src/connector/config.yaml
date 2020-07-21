@@ -1,0 +1,5 @@
+common_dir: data
+link: https://docs.google.com/uc?export=download&id=1WNVIOqLsigAZCYQR8hWk7dGeP8MRJu-Q
+dataset_file: dataset.csv
+news_credentials:
+  api_key:

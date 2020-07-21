@@ -1,6 +1,6 @@
 import os
 import re
-from log.logger import init_logger
+from src.common.log.logger import init_logger
 
 
 class HelmSetup:

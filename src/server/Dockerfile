@@ -4,9 +4,10 @@ ENV ROOT=/usr/src/app
 
 WORKDIR ${ROOT}
 
-ADD config.yaml ${ROOT}
-ADD main.py ${ROOT}
-ADD requirements.txt ${ROOT}
+COPY common/log ${ROOT}/log
+ADD server/config.yaml ${ROOT}
+ADD server/main.py ${ROOT}
+ADD server/requirements.txt ${ROOT}
 
 RUN pip --no-cache-dir install -r requirements.txt
 RUN mkdir data

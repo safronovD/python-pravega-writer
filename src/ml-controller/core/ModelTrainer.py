@@ -58,15 +58,15 @@ class ModelTrainer:
 
         self.logger.info('Starting regressor training')
         sklearn_pipeline.fit(self.data_train, self.label_train)
-        self.logger.warning('Regressor is trained')
+        self.logger.info('Regressor is trained')
 
         self.logger.info('Starting regressor predictions on train dataset')
         sklearn_train_pred = sklearn_pipeline.predict(self.data_train)
         sklearn_train_loss = log_loss(self.label_train, sklearn_train_pred)
         self.logger.info('Prediction is completed')
 
-        self.logger.warning('Train log_less: %f', float(sklearn_train_loss))
-        self.logger.warning('Train f1: %f', f1_score(self.label_train, sklearn_train_pred, pos_label=0))
+        self.logger.info('Train log_less: %f', float(sklearn_train_loss))
+        self.logger.info('Train f1: %f', f1_score(self.label_train, sklearn_train_pred, pos_label=0))
 
         self.logger.info('Starting regressor predictions on test dataset')
         sklearn_test_pred = sklearn_pipeline.predict(self.data_test)
@@ -79,3 +79,4 @@ class ModelTrainer:
         self.logger.info('Predict for [i hate everyone]: %d', sklearn_pipeline.predict(['i hate you']))
 
         pickle.dump(sklearn_pipeline, open(os.path.join(common_dir, model_file), 'wb'))
+        self.logger.info('Model is saved in %s', os.path.join(common_dir, model_file))
