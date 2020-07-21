@@ -1,4 +1,0 @@
-2020-07-06 17:14:19 - INFO     - setup.install_helm_chart - Attempt to install helm chart
-2020-07-06 17:14:19 - ERROR    - setup.install_helm_chart - Chart is not installed: Resource service "test-chart" in namespace "test" already exists
-2020-07-06 17:14:19 - INFO     - setup.install_helm_chart - Attempt to delete Service test-chart
-2020-07-06 17:14:19 - ERROR    - setup.install_helm_chart - Service test-chart is not deleted

@@ -9,6 +9,7 @@ service:
 common:
   image_repository: dxd360
   image_pullPolicy: Always
+  image_pullSecretName:
 
 server:
   image_name: ppw-server

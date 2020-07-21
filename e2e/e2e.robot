@@ -1,14 +1,14 @@
 *** Settings ***
 Library             RequestsLibrary
-Library             e2e.setup_helm.HelmSetup     ${chartId}      WITH NAME   helm
+Library             e2e.setup_helm.Setup     ${tag}     WITH NAME   helm
 Test Setup          Install chart
 Test Teardown       Uninstall chart
 
 *** Variables ***
-${chartId}
+${tag}
 
 *** Test Cases ***
-Check connection to NodePort
+Check connection to NodePort by RequestsLibrary
     ${nodeIP}           helm.get_node_ip
     ${nodePort}         helm.get_node_port
     Create Session      connection              http://${nodeIP}:${nodePort}       max_retries=15

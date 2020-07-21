@@ -26,7 +26,7 @@ class ContainerSetup:
             self.username = kwargs['username']
             self.password = kwargs['password']
 
-        self.logger.info('Object initialization is completed')
+        self.logger.info('Object initialization is complete')
 
     def get_image_full_name(self, name):
         return {
@@ -51,7 +51,7 @@ class ContainerSetup:
             try:
                 self.client.containers.get(self.get_container_full_name(name))
             except NotFound:
-                self.logger.exception('Container {} not found'.format(container_name))
+                self.logger.info('Container {} not found'.format(container_name))
             else:
                 self.logger.info('Old container {} removed'.format(container_name))
             self.remove_image(name)
@@ -64,7 +64,7 @@ class ContainerSetup:
             self.logger.error('Dockerfile not found')
             self.logger.exception('Image {} is not created'.format(image_name))
         else:
-            self.logger.info('Image {} is created'.format(image_name))
+            self.logger.warning('Image {} is created'.format(image_name))
 
     def run_container(self, name):
         container_name = self.get_container_full_name(name)
@@ -79,7 +79,7 @@ class ContainerSetup:
             self.logger.exception('Container {} already exists'.format(container_name))
             self.remove_container(name)
         else:
-            self.logger.info('Container {} is created'.format(container.name))
+            self.logger.warning('Container {} is created'.format(container.name))
 
     def remove_container(self, name):
         container_name = self.get_container_full_name(name)
@@ -90,7 +90,7 @@ class ContainerSetup:
         except NotFound:
             self.logger.exception('Container {} not found'.format(container_name))
         else:
-            self.logger.info("Container {} is removed".format(container.name))
+            self.logger.warning("Container {} is removed".format(container.name))
 
     def remove_image(self, name):
         image_name = self.get_image_full_name(name)
@@ -105,7 +105,7 @@ class ContainerSetup:
             self.remove_image(name)
 
         else:
-            self.logger.info("Image {} is removed".format(tag))
+            self.logger.warning("Image {} is removed".format(tag))
 
     def push_image(self, name):
         image_name = self.get_image_full_name(name)
@@ -114,8 +114,10 @@ class ContainerSetup:
             self.client.images.push('{}'.format(image_name), auth_config={'username': self.username,
                                                                           'password': self.password})
         except AttributeError:
+            # self.logger.exception('Username or password not found')
             self.logger.exception('Image {} is not pushed'.format(image_name))
         except NotFound:
+            # self.logger.error('Image {} not found'.format(image_name))
             self.logger.exception('Image {} is not pushed'.format(image_name))
 
             self.build_image(name)
@@ -123,4 +125,24 @@ class ContainerSetup:
         except APIError:
             self.logger.exception('Image {} is not pushed'.format(image_name))
         else:
-            self.logger.info("Image {} is pushed".format(image_name))
+            self.logger.warning("Image {} is pushed".format(image_name))
+
+
+if __name__ == "__main__":
+
+    obj = ContainerSetup(123)
+    obj.build_image('server')
+    # obj.push_image('server')
+    obj.run_container('server')
+    obj.remove_container('server')
+    obj.remove_image('server')
+    #
+    # obj.build_image('connector')
+    # # obj.push_image('connector')
+    # obj.remove_image('connector')
+    #
+    # obj.build_image('ml-controller')
+    # obj.run_container('ml-controller')
+    #
+    # # obj.push_image('ml-controller')
+    # obj.remove_image('ml-controller')

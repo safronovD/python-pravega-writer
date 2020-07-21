@@ -17,6 +17,8 @@ spec:
         - mountPath: {{ .Values.volume.mountPath }}
           name: {{ .Values.volume.name }}
       restartPolicy: Never
+      imagePullSecrets:
+        - name: {{ .Values.common.image_pullSecretName }}
 ---
 apiVersion: batch/v1
 kind: Job
@@ -37,3 +39,5 @@ spec:
         - mountPath: {{ .Values.volume.mountPath }}
           name: {{ .Values.volume.name }}
       restartPolicy: Never
+      imagePullSecrets:
+        - name: {{ .Values.common.image_pullSecretName }}

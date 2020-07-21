@@ -5,12 +5,13 @@ pipeline {
          buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
          timestamps()
     }
+
     stages {
 
        stage('Unit tests') {
            steps {
                echo 'Unit tests are running...'
-//               build 'Unit'
+               build 'Unit'
            }
         }
        stage('Container tests') {
@@ -22,7 +23,7 @@ pipeline {
        stage('E2E tests') {
             steps {
                 echo 'E2E is running...'
-//                build 'e2e'
+                build 'e2e'
             }
         }
 
@@ -40,12 +41,12 @@ pipeline {
             }
         }
     }
-//    post {
-//        always {
-//            script {
-//                def publish_result = load(".ci/publish_result.groovy")
-//                publish_result.setBuildStatus("Build", currentBuild.result);
-//            }
-//        }
-//	}
+    post {
+        always {
+            script {
+                def publish_result = load(".ci/publish_result.groovy")
+                publish_result.setBuildStatus("All", currentBuild.result);
+            }
+        }
+	}
 }

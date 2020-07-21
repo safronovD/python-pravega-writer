@@ -2,7 +2,7 @@ pipeline {
     agent {
         kubernetes {
             label 'jenkins-pod-kubectl'
-            yamlFile '.ci/pod-templates/python-kubectl-helm-pod.yaml'
+            yamlFile '.ci/pod-templates/pod-python-kubectl-helm.yaml'
         }
     }
     
@@ -10,9 +10,11 @@ pipeline {
          timestamps()
          buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
     }
+    
     environment {
         PYTHONPATH = "${WORKSPACE}"
     }
+    
    stages {
        stage('Preparation') {
             steps {
