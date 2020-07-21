@@ -5,16 +5,16 @@
 To build the image:
 
 ```bash
-docker build ./connector -t ppw-connector
-docker build ./ml-controller -t ppw-ml
-docker build ./server -t ppw-server
+docker build -t ppw-connector -f ./src/connector/Dockerfile ./src
+docker build -t ppw-ml-controller -f ./src/ml-controller/Dockerfile ./src
+docker build -t ppw-server -f ./src/server/Dockerfile ./src
 ```
 
 To run the container:
 
 ```bash
 docker run -v ${Path_to_your_dir}:/usr/src/app/data/ ppw-connector
-docker run -v ${Path_to_your_dir}:/usr/src/app/data/ ppw-ml
+docker run -v ${Path_to_your_dir}:/usr/src/app/data/ ppw-ml-controller
 docker run -v ${Path_to_your_dir}:/usr/src/app/data/ -p 666:666 ppw-server
 ```
 
