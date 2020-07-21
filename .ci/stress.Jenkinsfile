@@ -23,7 +23,7 @@ pipeline {
                        echo Stress tests
                        mkdir -p reports
                        curl https://gettaurus.org/builds/bzt-1.14.2.13904-py2.py3-none-any.whl -o bzt-1.14.2.13904-py2.py3-none-any.whl
-                       python3 -m pip install -r ./stress-test/requirements.txt
+                       python3 -m pip install -r ./test/stress-test/requirements.txt
                     '''
                 }
             }
@@ -32,7 +32,7 @@ pipeline {
             steps {
                 container('common') {
                     script {
-                        sh 'python3 ./stress-test/setup_stress.py st-${GIT_COMMIT}'
+                        sh 'python3 ./test/stress-test/setup_stress.py st-${GIT_COMMIT}'
                     }
                   }
              }

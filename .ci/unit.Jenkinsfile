@@ -18,12 +18,12 @@ pipeline {
                 container('python'){
                     sh 'pip3 install pylint'
                     sh 'pip3 install pycodestyle'
-                    sh 'pip3 install -r ./connector/requirements.txt'
-                    sh 'pip3 install -r ./server/requirements.txt'
-                    sh 'pip3 install -r ./ml-controller/requirements.txt'
-                    sh 'pip3 install -r ./connector/test/requirements.txt'
-                    sh 'pip3 install -r ./server/test/requirements.txt'
-                    sh 'pip3 install -r ./ml-controller/test/requirements.txt'
+                    sh 'pip3 install -r ./src/connector/requirements.txt'
+                    sh 'pip3 install -r ./src/server/requirements.txt'
+                    sh 'pip3 install -r ./src/ml-controller/requirements.txt'
+                    sh 'pip3 install -r ./src/connector/test/requirements.txt'
+                    sh 'pip3 install -r ./src/server/test/requirements.txt'
+                    sh 'pip3 install -r ./src/ml-controller/test/requirements.txt'
                     sh 'mkdir -p reports'
                     sh 'mkdir -p reports/connector'
                     sh 'mkdir -p reports/server'
@@ -36,7 +36,7 @@ pipeline {
             steps {
                 container('python') {
                     sh 'pylint --rcfile=pylint.cfg --exit-zero server/ connector/ ml-controller/ --msg-template="{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}" > reports/pylint.log'
-                    sh 'pycodestyle --max-line-length=100 ./ml-controller ./server ./connector > reports/pep8.log | exit 0'
+                    sh 'pycodestyle --max-line-length=100 ./src/ml-controller ./src/server ./src/connector > reports/pep8.log | exit 0'
 
                     recordIssues(
                         tool: pyLint(pattern: 'reports/pylint.log'),
@@ -53,7 +53,7 @@ pipeline {
         stage('connector unit') {
             steps {
                 container('python'){
-                    sh 'python3 -m robot.run  --outputdir reports/connector ./connector/test/unit.robot'
+                    sh 'python3 -m robot.run  --outputdir reports/connector ./src/connector/test/unit.robot'
                 }
             }
         }
@@ -61,7 +61,7 @@ pipeline {
         stage('ml-controller unit') {
             steps {
                 container('python'){
-                    sh 'python3 -m robot.run  --outputdir reports/ml-controller ./ml-controller/test/unit.robot'
+                    sh 'python3 -m robot.run  --outputdir reports/ml-controller ./src/ml-controller/test/unit.robot'
                 }
             }
         }
@@ -69,7 +69,7 @@ pipeline {
         stage('server unit') {
             steps {
                 container('python'){
-                    sh 'python3 -m robot.run  --outputdir reports/server ./server/test/unit.robot'
+                    sh 'python3 -m robot.run  --outputdir reports/server ./src/server/test/unit.robot'
                 }
             }
         }
