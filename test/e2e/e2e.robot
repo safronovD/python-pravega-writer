@@ -1,6 +1,6 @@
 *** Settings ***
 Library             RequestsLibrary
-Library             e2e.setup_helm.Setup     ${tag}     WITH NAME   helm
+Library             test.e2e.helm_setup.HelmSetup     ${tag}     WITH NAME   helm
 Test Setup          Install chart
 Test Teardown       Uninstall chart
 

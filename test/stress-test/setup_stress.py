@@ -1,7 +1,7 @@
 import os
 import sys
 
-from e2e.setup_helm import HelmSetup
+from test.e2e.helm_setup import HelmSetup
 
 if __name__ == "__main__":
     obj = HelmSetup(sys.argv[1])

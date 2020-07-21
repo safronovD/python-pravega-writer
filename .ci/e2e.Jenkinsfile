@@ -21,7 +21,7 @@ pipeline {
                     sh '''
                        echo End-to-end tests
                        mkdir -p reports
-                       python3 -m pip install -r ./e2e/requirements.txt
+                       python3 -m pip install -r ./test/e2e/requirements.txt
                     '''
                 }
             }
@@ -29,7 +29,7 @@ pipeline {
         stage('End-to-End test') {
             steps {
                 container('common') {
-                    sh 'python3 -m robot.run --outputdir reports --variable tag:${GIT_COMMIT} ./e2e/e2e.robot'
+                    sh 'python3 -m robot.run --outputdir reports --variable tag:${GIT_COMMIT} ./test/e2e/e2e.robot'
                   }
              }
         }

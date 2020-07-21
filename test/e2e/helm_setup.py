@@ -85,6 +85,7 @@ class HelmSetup:
 
         if re.search(r'Error: uninstall: Release not loaded: (.*): release: not found', answer):
             self.logger.error('Chart {} doesn\'t exist'.format(self.chart_name))
+            self.install_helm_chart()
         else:
             self.logger.warning('Chart {} is deleted'.format(self.chart_name))
 
