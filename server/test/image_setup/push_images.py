@@ -1,6 +1,6 @@
 import os
 import sys
-from server.test.container_setup import ContainerSetup
+from server.test.image_setup.container_setup import ContainerSetup
 
 if __name__ == "__main__":
     username = sys.argv[1]
