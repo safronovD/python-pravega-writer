@@ -1,6 +1,6 @@
 # python-pravega-writer
 
-## Usage
+## Standalone run
 
 To build the image:
 
@@ -18,7 +18,11 @@ docker run -v ${Path_to_your_dir}:/usr/src/app/data/ ppw-ml
 docker run -v ${Path_to_your_dir}:/usr/src/app/data/ -p 666:666 ppw-server
 ```
 
-To deploy in k8s:
+## Deploy in k8s
+
+!!! Please, check all manifests and values.yaml first.
+
+With kubectl:
 
 ```bash
 kubectl install -f /deploy
@@ -30,12 +34,12 @@ With helm:
 helm install ppw /ppw-chart
 ```
 
-##Code-style
+## Code-style
 
 Code-style standard - PEP 8. Link: https://www.python.org/dev/peps/pep-0008/
 
 Linter - PyLint
 
-##Other Links
+## Other Links
 
 Dataset for ML training: https://www.kaggle.com/kazanova/sentiment140
