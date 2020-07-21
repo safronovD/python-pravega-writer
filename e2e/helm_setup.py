@@ -7,7 +7,7 @@ class HelmSetup:
     def __init__(self, tag):
         self.tag = tag
         self.chart_name = ''.join(['et-', tag])
-        self.logger = init_logger('dev')
+        self.logger = init_logger('ci')
 
     def get_node_port(self):
         self.logger.info('Attempt to get node port')

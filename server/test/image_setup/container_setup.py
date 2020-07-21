@@ -6,7 +6,7 @@ from log.logger import init_logger
 class ContainerSetup:
     def __init__(self, tag, **kwargs):
 
-        self.logger = init_logger('dev')
+        self.logger = init_logger('ci')
 
         self.logger.info('Object initialization is started')
 

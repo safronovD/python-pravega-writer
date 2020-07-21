@@ -6,7 +6,7 @@ import time
 
 class PodSetup:
     def __init__(self):
-        self.logger = init_logger('dev')
+        self.logger = init_logger('ci')
         self.logger.info('\n')
         self.logger.info('Object initialization is started')
 
@@ -27,12 +27,13 @@ class PodSetup:
         answer = os.popen(command).read()
         if answer:
             self.logger.info('Answer from cluster received')
-            # self.logger.info(answer)
+            self.logger.debug(answer)
             self.logger.info('Parsing results')
             if re.search(r'\w*/{} created'.format(self.pod_name), answer):
                 self.logger.info('Pod {} is created'.format(self.pod_name))
             else:
                 self.logger.error('Something went wrong. Pod {} is not created'.format(self.pod_name))
+                self.logger.error(answer)
 
     def delete_pod(self):
         command = 'kubectl delete pod {}'.format(self.pod_name)
@@ -49,9 +50,10 @@ class PodSetup:
                 self.logger.info('Pod {} is deleted'.format(self.pod_name))
             else:
                 self.logger.error('Something went wrong. Pod {} is not deleted'.format(self.pod_name))
+                self.logger.error(answer)
         else:
             self.logger.error('Answer from cluster not received')
-            self.logger.error('check that command {} is correct'.format(command))
+            self.logger.error('Check that command {} is correct'.format(command))
 
     def get_pod_ip(self):
         command = 'kubectl describe pod {}'.format(self.pod_name)
@@ -72,6 +74,7 @@ class PodSetup:
                 return match[0]
             else:
                 self.logger.error('Ip address not found')
+                self.logger.error(answer)
 
     def check_readyness(self, resource_type, resource_name):
         def get_status(resource_type, answer):
