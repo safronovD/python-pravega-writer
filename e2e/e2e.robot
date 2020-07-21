@@ -1,11 +1,11 @@
 *** Settings ***
 Library             RequestsLibrary
-Library             e2e.helm_setup.Setup     ${chartId}      WITH NAME   helm
+Library             e2e.setup_helm.Setup     ${tag}     WITH NAME   helm
 Test Setup          Install chart
 Test Teardown       Uninstall chart
 
 *** Variables ***
-${chartId}
+${tag}
 
 *** Test Cases ***
 Check connection to NodePort by RequestsLibrary

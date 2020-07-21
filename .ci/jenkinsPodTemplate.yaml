@@ -1,8 +1,0 @@
-spec:
-  containers:
-  - name: helm
-    image: lachlanevenson/k8s-helm
-    imagePullPolicy: IfNotPresent
-    command:
-    - cat
-    tty: true

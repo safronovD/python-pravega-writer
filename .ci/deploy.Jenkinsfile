@@ -47,12 +47,12 @@ pipeline {
 
                     sh 'echo Deploy'
 
-                    //helmDeploy(
-                    //    dry_run       : false,
-                    //    name          : 'ppw',
-                    //    chart_dir     : 'ppw-chart',
-                    //    replicas      : 1
-                    //)
+                    helmDeploy(
+                        dry_run       : false,
+                        name          : 'ppw',
+                        chart_dir     : 'ppw-chart',
+                        replicas      : 1
+                    )
                 }
             }
         }

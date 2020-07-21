@@ -1,16 +1,16 @@
 execution:
 - executor: locust
-  concurrency: 100
-  rump-up: 20s
+  concurrency: 10000
+  ramp-up: 30s
   hold-for: 2m
   scenario: performance
 
 scenarios:
   performance:
-    default-address: http://192.168.70.211:30841
+    default-address: 
     script: request.py
 
 reporting:
 - module: console
 - module: final-stats
-  dump-csv: result.csv
+  dump-xml: result.xml

@@ -1,7 +1,7 @@
 spec:
   containers:
   - name: python
-    image: dxd360/python-helm-kubectl:3.8
+    image: python:3.8
     imagePullPolicy: IfNotPresent
     command:
     - cat
