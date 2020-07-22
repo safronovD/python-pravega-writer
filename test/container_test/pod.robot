@@ -1,6 +1,6 @@
 *** Settings ***
 Library             RequestsLibrary
-Library             server.test.pod_setup.pod_setup.PodSetup    WITH NAME    obj
+Library             test.container_test.pod_setup.pod_setup.PodSetup    WITH NAME    obj
 
 Test Setup          Create connection
 Test Teardown       Close connection
