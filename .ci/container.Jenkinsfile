@@ -2,7 +2,7 @@ pipeline {
     agent {
         kubernetes {
             label 'container-pod'
-            yamlFile '.ci/pod-templates/pod-python-docker.yaml'
+            yamlFile '.ci/pod-templates/pod-python-docker-kubectl-helm.yaml'
         }
      }
 
@@ -18,7 +18,7 @@ pipeline {
     stages {
         stage ('Preparation') {
             steps {
-                container('kube') {
+                container('python') {
                     sh 'echo kube test'
                     sh 'mkdir -p reports'
                     sh 'python3 -m pip install -r ./test/container_test/pod_setup/requirements.txt'
@@ -33,9 +33,9 @@ pipeline {
        }
        stage('Test') {
             steps {
-                container('docker') {
+                container('python') {
                     script{
-                         sh 'python3 -m robot.run  --outputdir reports --variable tag:${GIT_COMMIT} ./test/container_test/pod.robot'
+                         sh 'python3 -m robot.run  --outputdir reports ./test/container_test/pod.robot'
                     }
                 }
             }

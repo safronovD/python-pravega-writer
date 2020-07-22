@@ -7,6 +7,7 @@ import string
 from flask import Flask, jsonify, request
 import eli5
 import yaml
+from log.logger import init_logger
 
 CONFIG_FILE = 'config.yaml'
 config_data = None
@@ -90,6 +91,8 @@ def get_result(message_id):
 
 
 def main():
+    logger = init_logger('app')
+    logger.log.warning('Hello from server')
     """Load config and run flask app."""
 
     global model
