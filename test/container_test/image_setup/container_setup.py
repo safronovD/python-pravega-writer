@@ -111,8 +111,8 @@ class ContainerSetup:
     def show_all_containers(self):
 
         if self.client.containers.list():
-            for c in self.client.containers.list():
-                print(c.name)
+            for id, item in enumerate(self.client.containers.list()):
+                print('{}-{}'.format(id, item.name))
         else:
             print('The list of containers is empty')
 
