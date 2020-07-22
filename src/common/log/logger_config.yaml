@@ -22,17 +22,17 @@ handlers:
     level: INFO
     formatter: app
     stream: ext://sys.__stdout__
-  file:
-    class: logging.FileHandler
-    level: INFO
-    filename: src/common/log/logging.log
-    formatter: file
+#  file:
+#    class: logging.FileHandler
+#    level: INFO
+#    filename: src/common/log/logging.log
+#    formatter: file
 loggers:
   app:
     level: INFO
-    handlers: [file, app-console]
+    handlers: [app-console]
   ci:
     level: INFO
-    handlers: [file, ci-console]
+    handlers: [ci-console]
 root:
   handlers: []
