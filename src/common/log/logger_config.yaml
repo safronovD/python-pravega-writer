@@ -25,7 +25,7 @@ handlers:
   file:
     class: logging.FileHandler
     level: INFO
-    filename: log/logging.log
+    filename: src/common/log/logging.log
     formatter: file
 loggers:
   app:
