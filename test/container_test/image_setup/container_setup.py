@@ -1,7 +1,7 @@
 import docker
 from docker.errors import NotFound, APIError, ImageNotFound
 from src.common.log.logger import init_logger
-
+import os
 
 class ContainerSetup:
     def __init__(self, tag, **kwargs):
@@ -45,7 +45,8 @@ class ContainerSetup:
     def build_image(self, name):
         image_name = self.get_image_full_name(name)
         container_name = self.get_container_full_name(name)
-
+        print(os.listdir(path="./src"))
+        
         if self.client.images.list(name=image_name):
             self.logger.warning('Image {} already exists'.format(image_name))
             try:
