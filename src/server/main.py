@@ -92,7 +92,7 @@ def get_result(message_id):
 
 def main():
     logger = init_logger('app')
-    logger.log.warning('Hello from server')
+    logger.warning('Hello from server')
     """Load config and run flask app."""
 
     global model
