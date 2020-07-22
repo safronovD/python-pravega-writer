@@ -19,3 +19,5 @@ spec:
   - name: docker
     hostPath:
       path: /var/run/docker.sock
+  serviceAccount: my-jenkins
+  serviceAccountName: my-jenkins
