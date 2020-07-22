@@ -5,7 +5,8 @@ import os
 
 
 def init_logger(*args):
-    print(os.getcwd())
+
+    print(os.listdir(path="."))
     with open('./log/logger_config.yaml', 'r') as f:
         log_cfg = yaml.safe_load(f.read())
     logging.config.dictConfig(log_cfg)
