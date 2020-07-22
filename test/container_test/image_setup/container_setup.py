@@ -102,11 +102,19 @@ class ContainerSetup:
             self.client.containers.prune()
         except APIError:
             self.logger.exception('Image {} is not removed'.format(image_name))
-            self.remove_container(name)
-            self.remove_image(name)
+            # self.remove_container(name)
+            # self.remove_image(name)
 
         else:
             self.logger.warning("Image {} is removed".format(tag))
+
+    def show_all_containers(self):
+
+        if self.client.containers.list():
+            for c in self.client.containers.list():
+                print(c.name)
+        else:
+            print('The list of containers is empty')
 
     def push_image(self, name):
         image_name = self.get_image_full_name(name)
@@ -126,7 +134,7 @@ class ContainerSetup:
         except APIError:
             self.logger.exception('Image {} is not pushed'.format(image_name))
         else:
-            self.logger.warning("Image {} is pushed".format(image_name))
+            self.logger.info("Image {} is pushed".format(image_name))
 
 
 if __name__ == "__main__":
