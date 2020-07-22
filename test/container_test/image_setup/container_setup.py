@@ -57,14 +57,15 @@ class ContainerSetup:
             self.remove_image(name)
             self.logger.info('Old image {} removed'.format(image_name))
 
-        try:
-            self.logger.info('Attempt to create image {}'.format(image_name))
-            self.client.images.build(path='./src/{}/'.format(name), tag=image_name, custom_context=True, fileobj='./src/')
-        except NotFound:
-            self.logger.error('Dockerfile not found')
-            self.logger.exception('Image {} is not created'.format(image_name))
-        else:
-            self.logger.warning('Image {} is created'.format(image_name))
+        # try:
+        self.logger.info('Attempt to create image {}'.format(image_name))
+            # self.client.images.build(path='./src/{}/'.format(name), tag=image_name, custom_context=True, fileobj='./src/')
+        os.popen(' docker build -t {} -f ./src/{}/Dockerfile ./src'.format(image_name, name))
+        # except NotFound:
+        #     self.logger.error('Dockerfile not found')
+        #     self.logger.exception('Image {} is not created'.format(image_name))
+        # else:
+        #     self.logger.warning('Image {} is created'.format(image_name))
 
     def run_container(self, name):
         container_name = self.get_container_full_name(name)
