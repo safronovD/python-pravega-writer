@@ -59,7 +59,7 @@ class ContainerSetup:
 
         try:
             self.logger.info('Attempt to create image {}'.format(image_name))
-            self.client.images.build(path='./{}/'.format(name), tag=image_name)
+            self.client.images.build(path='./src/{}/'.format(name), tag=image_name)
         except NotFound:
             self.logger.error('Dockerfile not found')
             self.logger.exception('Image {} is not created'.format(image_name))
