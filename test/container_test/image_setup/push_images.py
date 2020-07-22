@@ -10,7 +10,7 @@ if __name__ == "__main__":
     obj.show_all_containers()
     obj.build_image('server')
     obj.show_all_containers()
-    obj.push_image('server')
+    # obj.push_image('server')
     obj.show_all_containers()
     obj.remove_image('server')
     obj.show_all_containers()

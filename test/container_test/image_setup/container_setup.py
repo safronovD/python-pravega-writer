@@ -45,7 +45,6 @@ class ContainerSetup:
     def build_image(self, name):
         image_name = self.get_image_full_name(name)
         container_name = self.get_container_full_name(name)
-        # print(os.listdir(path="./src"))
         if self.client.images.list(name=image_name):
             self.logger.warning('Image {} already exists'.format(image_name))
             try:
@@ -59,15 +58,14 @@ class ContainerSetup:
 
         try:
             self.logger.info('Attempt to create image {}'.format(image_name))
-            self.client.images.build(path='./src', tag=image_name, custom_context=True, fileobj='./src/{}/Dockerfile'.format(name))
-        # os.popen(' docker build -t {} -f ./src/{}/Dockerfile ./src'.format(image_name, name))
+            self.client.images.build(path='./src'.format(name), tag=image_name, dockerfile='./{}/Dockerfile'.format(name))
         except NotFound:
             self.logger.error('Dockerfile not found')
             self.logger.exception('Image {} is not created'.format(image_name))
         except TypeError:
             self.logger.exception('Error!')
         else:
-            self.logger.warning('Image {} is created'.format(image_name))
+            self.logger.info('Image {} is created'.format(image_name))
 
     def run_container(self, name):
         container_name = self.get_container_full_name(name)
@@ -82,7 +80,7 @@ class ContainerSetup:
             self.logger.exception('Container {} already exists'.format(container_name))
             self.remove_container(name)
         else:
-            self.logger.warning('Container {} is created'.format(container.name))
+            self.logger.info('Container {} is created'.format(container.name))
 
     def remove_container(self, name):
         container_name = self.get_container_full_name(name)
@@ -93,7 +91,7 @@ class ContainerSetup:
         except NotFound:
             self.logger.exception('Container {} not found'.format(container_name))
         else:
-            self.logger.warning("Container {} is removed".format(container.name))
+            self.logger.info("Container {} is removed".format(container.name))
 
     def remove_image(self, name):
         image_name = self.get_image_full_name(name)
@@ -108,7 +106,7 @@ class ContainerSetup:
             # self.remove_image(name)
 
         else:
-            self.logger.warning("Image {} is removed".format(tag))
+            self.logger.info("Image {} is removed".format(tag))
 
     def show_all_containers(self):
 
