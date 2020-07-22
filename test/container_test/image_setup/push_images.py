@@ -7,6 +7,7 @@ if __name__ == "__main__":
     password = sys.argv[2]
 
     obj = ContainerSetup(os.environ["GIT_COMMIT"], username=username, password=password)
+    obj.show_all_containers()
     obj.build_image('server')
     obj.show_all_containers()
     obj.push_image('server')
