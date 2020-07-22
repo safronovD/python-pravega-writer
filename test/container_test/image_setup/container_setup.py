@@ -45,8 +45,7 @@ class ContainerSetup:
     def build_image(self, name):
         image_name = self.get_image_full_name(name)
         container_name = self.get_container_full_name(name)
-        print(os.listdir(path="./src"))
-        
+        # print(os.listdir(path="./src"))
         if self.client.images.list(name=image_name):
             self.logger.warning('Image {} already exists'.format(image_name))
             try:
@@ -60,7 +59,7 @@ class ContainerSetup:
 
         try:
             self.logger.info('Attempt to create image {}'.format(image_name))
-            self.client.images.build(path='./src/{}/'.format(name), tag=image_name)
+            self.client.images.build(path='./src/{}/'.format(name), tag=image_name, custom_context=True, fileobj='./src')
         except NotFound:
             self.logger.error('Dockerfile not found')
             self.logger.exception('Image {} is not created'.format(image_name))
