@@ -24,7 +24,7 @@ JSON template:
 
 ```json
 {
-    'id': '',
-    'text': ''
+    "id": "...",
+    "text": "..."
 }
 ```
