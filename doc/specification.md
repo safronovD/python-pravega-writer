@@ -9,3 +9,17 @@ and returns a result, when it is ready.
 - ML-Controller - collecting dataset, training and saving ML model to Common PVC.
 - ML-Trainer - resource for parallel training.
 - App-operator - controller for custom resource.
+
+## Libraries and other
+
+- Flask - server
+- sk-learn - ML
+- eli5 - interpreting a result
+- pandas - manage data
+- pyyaml - config-files
+
+ML-pipeline:
+- Tokenization - req-exps (in progress)
+- Lemmatization - Word-Net (in progress)
+- Vectorization - TF-IDF
+- Classification - logistic regression
