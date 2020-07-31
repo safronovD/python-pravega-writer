@@ -20,12 +20,12 @@ docker run -v ${Path_to_your_dir}:/usr/src/app/data/ -p 666:666 ppw-server
 
 ## Deploy in k8s
 
-!!! Please, check all manifests and values.yaml first.
+!!! Please, specify pvc.yaml or StorageClassName in values.yaml first.
 
 With kubectl:
 
 ```bash
-kubectl install -f /deploy
+kubectl apply -f /deploy
 ```
 
 With helm:
@@ -33,6 +33,10 @@ With helm:
 ```bash
 helm install ppw /ppw-chart
 ```
+
+## Operator
+
+https://github.com/safronovD/ppw-operator (In progress!!)
 
 ## Code-style
 
