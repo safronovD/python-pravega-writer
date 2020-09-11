@@ -4,10 +4,11 @@ import os
 import pickle
 import random
 import string
-from flask import Flask, jsonify, request
+
 import eli5
-import yaml
+from flask import Flask, jsonify, request
 from log.logger import init_logger
+import yaml
 
 CONFIG_FILE = 'config.yaml'
 config_data = None

@@ -1,5 +1,6 @@
 import os
 import re
+
 from src.common.log.logger import init_logger
 
 
@@ -45,7 +46,12 @@ class HelmSetup:
                   "--set common.image_pullSecretName={2} " \
                   "--set server.image_name={3} " \
                   "--set jobs.connector_image={4} " \
-                  "--set jobs.ml_controller_image={5}".format(self.chart_name, registry, secret, server_image, connector_image, ml_controller_image)
+                  "--set jobs.ml_controller_image={5}".format(self.chart_name,
+                                                              registry,
+                                                              secret,
+                                                              server_image,
+                                                              connector_image,
+                                                              ml_controller_image)
         answer = os.popen(command).read()
 
         if re.search('Error: cannot re-use a name that is still in use', answer):

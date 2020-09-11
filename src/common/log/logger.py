@@ -1,15 +1,16 @@
 import logging
 import logging.config
-import yaml
 import os
+
+import yaml
 
 
 def init_logger(*args):
     name = 'logger_config.yaml'
     path_to_config_file = find_path(name, '.')
 
-    with open(path_to_config_file, 'r') as f:
-        log_cfg = yaml.safe_load(f.read())
+    with open(path_to_config_file, 'r') as file:
+        log_cfg = yaml.safe_load(file.read())
     logging.config.dictConfig(log_cfg)
 
     if args:

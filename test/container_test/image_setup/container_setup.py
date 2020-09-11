@@ -1,7 +1,8 @@
 import docker
-from docker.errors import NotFound, APIError, ImageNotFound
+from docker.errors import APIError, ImageNotFound, NotFound
+
 from src.common.log.logger import init_logger
-import os
+
 
 class ContainerSetup:
     def __init__(self, tag, **kwargs):
@@ -58,7 +59,7 @@ class ContainerSetup:
 
         try:
             self.logger.info('Attempt to create image {}'.format(image_name))
-            self.client.images.build(path='./src'.format(name), tag=image_name, dockerfile='./{}/Dockerfile'.format(name))
+            self.client.images.build(path='./src', tag=image_name, dockerfile='./{}/Dockerfile'.format(name))
         except NotFound:
             self.logger.error('Dockerfile not found')
             self.logger.exception('Image {} is not created'.format(image_name))

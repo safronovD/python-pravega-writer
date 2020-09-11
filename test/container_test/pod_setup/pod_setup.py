@@ -1,7 +1,8 @@
-from src.common.log.logger import init_logger
 import os
 import re
 import time
+
+from src.common.log.logger import init_logger
 
 
 class PodSetup:
@@ -19,7 +20,8 @@ class PodSetup:
         self.logger.info('Object initialization is completed')
 
     def run_pod(self):
-        command = 'kubectl run {} --image={} --port=666 --hostport=666 --wait=true'.format(self.pod_name, self.image_name)
+        command = 'kubectl run {} --image={} --port=666 --hostport=666 --wait=true'.format(self.pod_name,
+                                                                                           self.image_name)
 
         self.logger.info('Attempt to create pod {}'.format(self.pod_name))
         self.logger.info('Execute command {}'.format(command))

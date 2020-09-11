@@ -1,9 +1,10 @@
 """Module for train and save ml-model."""
 
 import logging
-import yaml
 import os
 import time
+
+import yaml
 from core.ModelTrainer import ModelTrainer
 
 CONFIG_FILE = 'config.yaml'
