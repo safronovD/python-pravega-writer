@@ -45,7 +45,7 @@ jobs:
       
     - name: Lint with PyLint
       run:  |
-        pylint --rcfile=.ci/linter-configs/pylint.cfg src/ --msg-template="{path}:{line}:[{msg_id}({symbol}), {obj}] {msg}" > linting_pylint.txt
+        pylint --rcfile=.ci/linter-configs/pylint.cfg --exit-zero src/ --msg-template="{path}:{line}:[{msg_id}({symbol}), {obj}] {msg}" > linting_pylint.txt
         cat linting_pylint.txt
    
     - name: Upload PyLint8 results
