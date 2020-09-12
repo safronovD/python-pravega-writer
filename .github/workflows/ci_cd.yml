@@ -28,7 +28,6 @@ jobs:
       run: |
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --config=.ci/linter-configs/flake8.cfg > linting_flake8.txt
-        flake8 . --count
         cat linting_flake8.txt
         
     - name: Upload flake8 results
