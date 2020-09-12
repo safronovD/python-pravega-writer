@@ -30,7 +30,7 @@ jobs:
         flake8 . --config=.ci/linter-configs/flake8.cfg --exit-zero > linting_flake8.txt
         cat linting_flake8.txt
 
-        total_errors="$(tail -1 file.txt)"
+        total_errors="$(tail -1 linting_flake8.txt)"
         if [[ $total_errors > 10 ]];
         then
           echo "Too many errors"
