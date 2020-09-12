@@ -2,7 +2,7 @@ name: Python_CI_CD
 
 on:
   push:
-    branches: [ master ]
+    branches: [ develop ]
 jobs:
   build:
 
@@ -26,15 +26,22 @@ jobs:
         pip install -r ./src/connector/test/requirements.txt
         pip install -r ./src/server/test/requirements.txt
         pip install -r ./src/ml-controller/test/requirements.txt
-            
-    - name: Lint with PyLint
-      run:  pylint --rcfile=pylint.cfg --exit-zero src/ --msg-template="{path}:{line}:[{msg_id}({symbol}), {obj}] {msg}"
       
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics > linting_flake8.txt
+        
+    - name: Upload flake8 results
+      uses: actions/upload-artifact@v2
+      with:
+        name: linting_flake8
+        path: linting_flake8.txt
+      
+    - name: Lint with PyLint
+      run:  pylint --rcfile=pylint.cfg --exit-zero src/ --msg-template="{path}:{line}:[{msg_id}({symbol}), {obj}] {msg}" > linting_pylint.txt
+    
     - name: Lint with PEP8
-      run: pycodestyle --max-line-length=100 ./src | exit 0
+      run: pycodestyle --max-line-length=100 ./src > linting_pep8.txt | exit 0
