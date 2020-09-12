@@ -17,19 +17,20 @@ jobs:
         pip install flake8
         pip install pylint
         pip install pycodestyle
-        pip install -r ./src/connector/requirements.txt
-        pip install -r ./src/server/requirements.txt
-        pip install -r ./src/ml-controller/requirements.txt
-        pip install -r ./src/connector/test/requirements.txt
-        pip install -r ./src/server/test/requirements.txt
-        pip install -r ./src/ml-controller/test/requirements.txt
+#        pip install -r ./src/connector/requirements.txt
+#        pip install -r ./src/server/requirements.txt
+#        pip install -r ./src/ml-controller/requirements.txt
+#        pip install -r ./src/connector/test/requirements.txt
+#        pip install -r ./src/server/test/requirements.txt
+#        pip install -r ./src/ml-controller/test/requirements.txt
       
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics > linting_flake8.txt
+        flake8 . --config=.ci/linter-configs/flake8.cfg > linting_flake8.txt
+#          --count --select=E9,F63,F7,F82 --show-source --statistics
+#        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count
         cat linting_flake8.txt
         
     - name: Upload flake8 results
@@ -51,7 +52,7 @@ jobs:
       
     - name: Lint with PEP8
       run: |
-        pycodestyle --max-line-length=100 ./src > linting_pep8.txt | exit 0
+        pycodestyle --max-line-length=127 ./src > linting_pep8.txt | exit 0
         cat linting_pep8.txt
           
     - name: Upload PEP8 results
