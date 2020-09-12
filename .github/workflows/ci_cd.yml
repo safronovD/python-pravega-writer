@@ -27,8 +27,7 @@ jobs:
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
-        flake8 . --config=.ci/linter-configs/flake8.cfg > linting_flake8.txt
-        cat linting_flake8.txt
+        flake8 . --config=.ci/linter-configs/flake8.cfg
         
     - name: Upload flake8 results
       uses: actions/upload-artifact@v2
