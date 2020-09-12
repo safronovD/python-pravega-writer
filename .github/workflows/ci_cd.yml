@@ -29,7 +29,14 @@ jobs:
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --config=.ci/linter-configs/flake8.cfg --exit-zero > linting_flake8.txt
         cat linting_flake8.txt
-        tail -1 linting_flake8.txt
+
+        total_errors="$(tail -1 file.txt)"
+        if [[ $total_errors > 10 ]];
+        then
+          echo "Too many errors"
+          exit 1
+        fi
+
     - name: Upload flake8 results
       uses: actions/upload-artifact@v2
       with:
