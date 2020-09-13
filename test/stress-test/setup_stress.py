@@ -1,6 +1,5 @@
 import os
 import sys
-
 from test.e2e.helm_setup import HelmSetup
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 import docker
-from docker.errors import NotFound, APIError, ImageNotFound
+from docker.errors import APIError, ImageNotFound, NotFound
+
 from src.common.log.logger import init_logger
 
 

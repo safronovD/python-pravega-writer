@@ -1,4 +1,4 @@
-from locust import HttpUser, TaskSet, task, between
+from locust import between, HttpUser,  TaskSet
 
 
 def index(self):

@@ -1,7 +1,8 @@
-import os
-import yaml
 import logging
 import logging.config
+import os
+
+import yaml
 
 
 def init_logger(*args):
