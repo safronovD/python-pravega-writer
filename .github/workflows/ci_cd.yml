@@ -29,10 +29,12 @@ jobs:
         cat linting_flake8.txt
 
         total_errors="$(tail -1 linting_flake8.txt)"
-        if [[ $total_errors > 10 ]];
+        threshold=10
+
+        if [[  $total_errors -gt $threshold ]];
         then
-          echo "Too many errors"
-          exit 1
+            echo "Too many errors"
+            exit 1
         fi
 
     - name: Upload flake8 results
