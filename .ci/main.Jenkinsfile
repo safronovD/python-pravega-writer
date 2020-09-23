@@ -23,7 +23,7 @@ pipeline {
        stage('E2E tests') {
             steps {
                 echo 'E2E is running...'
-                build 'e2e'
+                // build 'e2e'
             }
         }
 
