@@ -1,7 +1,10 @@
 name: Trigger
 
 on:
-  pull_request: { branches: [master] }
+  pull_request:
+  push:
+    branches:
+      - master
 jobs:
   linting:
     runs-on: ubuntu-latest
