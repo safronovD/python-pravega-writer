@@ -1,0 +1,10 @@
+name: Trigger
+
+on: [ pull_request ]
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+  - name: Jenkins trigger
+    run: |
+      curl -I -u ${{ secrets.jenkins_user }}:${{ secrets.jenkins_token }} ${{ secrets.jenkins_url }}/job/Main/build?token=${{ secrets.jenkins_token }}
