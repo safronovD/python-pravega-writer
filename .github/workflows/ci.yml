@@ -1,4 +1,4 @@
-name: Python linting
+name: Python linting and tests
 
 on: [ push ]
 jobs:
@@ -60,7 +60,7 @@ jobs:
 
   tests:
       runs-on: ubuntu-latest
-      needs: Python linting
+      needs: linting
       steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.8
