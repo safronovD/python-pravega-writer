@@ -63,3 +63,10 @@ jobs:
       with:
         name: linting_pep8
         path: linting_pep8.txt
+
+    - name: Webhook
+      uses: joelwmale/webhook-action@master
+      with:
+        url: https://b53535ca2a93.ngrok.io/github-webhook/
+        headers: '{"repository": "safronovD/python-pravega-writer"}'
+        body: '{"event": "deployment", "repository": "safronovD/python-pravega-writer"}'
