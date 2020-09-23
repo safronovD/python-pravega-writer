@@ -59,7 +59,7 @@ jobs:
         path: linting_pep8.txt
 
     - name: trigger
-      run |
+      run: |
         curl -I -u ${{ secrets.jenkins_user }}:${{ secrets.jenkins_token }} ${{ secrets.jenkins_url }}/job/Container/build?token=${{ secrets.jenkins_token }}
 
   tests:
