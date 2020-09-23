@@ -67,7 +67,7 @@ jobs:
     - name: Trigger jenkins Job
       uses: appleboy/jenkins-action@master
       with:
-        url: "https://b53535ca2a93.ngrok.io"
-        user: "admin"
-        token: "11ef68c32d68f204b55918fecf147fbfb9"
-        job: "Container"
+        url: ${{ secrets.jenkins_url }}
+        user: ${{ secrets.jenkins_user }}
+        token: ${{ secrets.jenkins_token }}
+        job: "Unit"
