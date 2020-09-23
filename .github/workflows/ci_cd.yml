@@ -64,7 +64,7 @@ jobs:
         name: linting_pep8
         path: linting_pep8.txt
 
-    - name: Webhook
+    - name: Webhook2
       uses: joelwmale/webhook-action@master
       with:
         url: https://b53535ca2a93.ngrok.io/github-webhook/
