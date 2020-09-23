@@ -70,4 +70,4 @@ jobs:
         url: ${{ secrets.jenkins_url }}
         user: ${{ secrets.jenkins_user }}
         token: ${{ secrets.jenkins_token }}
-        job: "Unit"
+        job: "Container"
