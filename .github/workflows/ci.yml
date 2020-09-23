@@ -98,7 +98,7 @@ jobs:
           python3 -m robot.run  --outputdir reports/server ./src/server/test/unit.robot
 
       - name: Upload tests results
-          uses: actions/upload-artifact@v2
-          with:
-            name: test_report
-            path: reports
+        uses: actions/upload-artifact@v2
+        with:
+          name: test_report
+          path: reports
