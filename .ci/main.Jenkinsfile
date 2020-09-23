@@ -8,12 +8,6 @@ pipeline {
 
     stages {
 
-       stage('Unit tests') {
-           steps {
-               echo 'Unit tests are running...'
-               build 'Unit'
-           }
-        }
        stage('Container tests') {
            steps {
                echo 'Container tests are running...'
@@ -23,21 +17,21 @@ pipeline {
        stage('E2E tests') {
             steps {
                 echo 'E2E is running...'
-                // build 'e2e'
+                build 'e2e'
             }
         }
 
         stage('Perfomance tests') {
             steps {
                 echo 'Perfomance tests are running...'
-//                build 'Stress'
+                build 'Stress'
             }
         }
 
         stage('Deploy') {
             steps {
                 echo 'Deploy is running...'
-//                build 'Deploy'
+                build 'Deploy'
             }
         }
     }
