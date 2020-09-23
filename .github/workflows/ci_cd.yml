@@ -64,7 +64,7 @@ jobs:
         name: linting_pep8
         path: linting_pep8.txt
 
-    - name: trigger jenkins Job
+    - name: Trigger jenkins Job
       uses: appleboy/jenkins-action@master
       with:
         url: "https://b53535ca2a93.ngrok.io"
