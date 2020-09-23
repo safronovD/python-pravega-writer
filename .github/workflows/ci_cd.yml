@@ -24,7 +24,6 @@ jobs:
       
     - name: Lint with Flake8
       run: |
-        # stop the build if there are Python syntax errors or undefined names
         flake8 ./src --config=.ci/linter-configs/flake8.cfg --exit-zero > linting_flake8.txt
         cat linting_flake8.txt
 
