@@ -1,5 +1,0 @@
-common_dir: data
-link: http://dl.dropboxusercontent.com/s/86e95b39ltrmghu/dataset.zip?dl=0
-dataset_file: dataset.csv
-news_credentials:
-  api_key:
