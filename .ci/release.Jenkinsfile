@@ -12,18 +12,18 @@ pipeline {
     }
 
     environment {
-        DOCKER_REGISTRY = credentials('github-jenkins-token')
+        GIT_TOKEN = credentials('github-jenkins-token')
         PYTHONPATH = "${WORKSPACE}"
     }
     stages {
         stage ('Preparation') {
             steps {
                 container('docker') {
-                    sh 'echo $DOCKER_REGISTRY'
-                    sh 'docker login docker.pkg.github.com -u REGIORGIO -p $DOCKER_REGISTRY'
+//                    sh 'echo $DOCKER_REGISTRY'
+//                    sh 'docker login docker.pkg.github.com -u REGIORGIO -p $DOCKER_REGISTRY'
 //                    sh 'echo docker test'
 //                    sh 'python3 -m pip install -r ./test/container_test/image_setup/requirements.txt'
-//                    sh 'python3 ./test/container_test/image_setup/push_images.py $DOCKER_REGISTRY_USR $DOCKER_REGISTRY_PSW'
+                    sh 'python3 ./test/container_test/image_setup/push_images.py REGIORGIO $GIT_TOKEN docker.pkg.github.com/safronovd/python-pravega-writer'
                 }
             }
        }

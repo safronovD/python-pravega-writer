@@ -5,20 +5,19 @@ from src.common.log.logger import init_logger
 
 
 class ContainerSetup:
-    def __init__(self, tag, **kwargs):
+    def __init__(self, tag, repo,  **kwargs):
 
         self.logger = init_logger('ci')
 
         self.logger.info('Object initialization is started')
 
-        self.repo = '192.168.70.210:5000'
-        self.image_name_server = '{}/ppw-server:{}'.format(self.repo, tag)
+        self.image_name_server = '{}/ppw-server:{}'.format(repo, tag)
         self.container_name_server = 'ppw-server-{}'.format(tag)
 
-        self.image_name_connector = '{}/ppw-connector:{}'.format(self.repo, tag)
+        self.image_name_connector = '{}/ppw-connector:{}'.format(repo, tag)
         self.container_name_connector = 'ppw-connector-{}'.format(tag)
 
-        self.image_name_ml_controller = '{}/ppw-ml-controller:{}'.format(self.repo, tag)
+        self.image_name_ml_controller = '{}/ppw-ml-controller:{}'.format(repo, tag)
         self.container_name_ml_controller = 'ppw-ml-controller-{}'.format(tag)
 
         self.client = docker.from_env()
