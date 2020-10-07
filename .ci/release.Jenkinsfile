@@ -12,7 +12,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_REGISTRY = credentials('github-jenkins-token)
+        DOCKER_REGISTRY = credentials('github-jenkins-token')
         PYTHONPATH = "${WORKSPACE}"
     }
     stages {
