@@ -20,7 +20,7 @@ pipeline {
             steps {
                 container('docker') {
                     sh 'echo $DOCKER_REGISTRY'
-                    sh 'docker login docker.pkg.github.com -u REGIORGIO -p ff840c5fe3307a9249df27'
+                    sh 'docker login docker.pkg.github.com -u REGIORGIO -p $DOCKER_REGISTRY'
 //                    sh 'echo docker test'
 //                    sh 'python3 -m pip install -r ./test/container_test/image_setup/requirements.txt'
 //                    sh 'python3 ./test/container_test/image_setup/push_images.py $DOCKER_REGISTRY_USR $DOCKER_REGISTRY_PSW'
