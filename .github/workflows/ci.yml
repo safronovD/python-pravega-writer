@@ -106,9 +106,10 @@ jobs:
 
   jenkins:
     runs-on: ubuntu-latest
-      needs: tests
-      - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: |
-          curl -I -u ${{ secrets.jenkins_user }}:${{ secrets.jenkins_token }} ${{ secrets.jenkins_url }}/job/Release/build?token=${{ secrets.jenkins_token }}
+    needs: tests
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        curl -I -u ${{ secrets.jenkins_user }}:${{ secrets.jenkins_token }} ${{ secrets.jenkins_url }}/job/Release/build?token=${{ secrets.jenkins_token }}
 
