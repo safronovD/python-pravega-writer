@@ -12,14 +12,14 @@ pipeline {
     }
 
     environment {
-        DOCKER_REGISTRY = credentials('github-jenkins-token')
+        DOCKER_REGISTRY = credentials('github-jenkins-token)
         PYTHONPATH = "${WORKSPACE}"
     }
     stages {
         stage ('Preparation') {
             steps {
                 container('docker') {
-                    echo $DOCKER_REGISTRY
+                    sh 'echo $DOCKER_REGISTRY'
                     sh 'docker login docker.pkg.github.com -u REGIORGIO'
 //                    sh 'echo docker test'
 //                    sh 'python3 -m pip install -r ./test/container_test/image_setup/requirements.txt'
