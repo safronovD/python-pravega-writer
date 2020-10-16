@@ -9,15 +9,13 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import f1_score, log_loss
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
-from log.logger import init_logger
 
 
 class ModelTrainer:
     """Train and save ml-model. Using tf-idf + logistic regression."""
 
-    def __init__(self):
-        self.logger = init_logger('app')
-        self.logger.info('Object initialization is started')
+    def __init__(self, logger):
+        self.logger = logger
 
         self.data_train = []
         self.data_test = []
@@ -26,7 +24,7 @@ class ModelTrainer:
 
         self.logger.info('Object initialization is completed')
 
-    def get_data_set(self, common_dir, data_set_file, data_col, label_col, test_size=0.05):
+    def prepare_data_set(self, common_dir, data_set_file, data_col=1, label_col=0, test_size=0.05):
         """Read dataset created by Connector module."""
 
         self.logger.info('Attempt to create dataset')
