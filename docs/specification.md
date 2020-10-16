@@ -10,6 +10,10 @@ and returns a result, when it is ready.
 - ML-Trainer - resource for parallel training.
 - App-operator - controller for custom resource.
 
+## Kafka concepts
+
+![Screenshot](kafka_conc.png)
+
 ## Libraries and other
 
 - Flask - server

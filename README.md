@@ -5,17 +5,17 @@
 To build the image:
 
 ```bash
-docker build -t ppw-connector -f ./src/connector/Dockerfile ./src
 docker build -t ppw-ml-controller -f ./src/ml-controller/Dockerfile ./src
+docker build -t ppw-processor -f ./src/processor/Dockerfile ./src
 docker build -t ppw-server -f ./src/server/Dockerfile ./src
 ```
 
 To run the container:
 
 ```bash
-docker run -v ${Path_to_your_dir}:/usr/src/app/data/ ppw-connector
 docker run -v ${Path_to_your_dir}:/usr/src/app/data/ ppw-ml-controller
-docker run -v ${Path_to_your_dir}:/usr/src/app/data/ -p 666:666 ppw-server
+docker run -v ${Path_to_your_dir}:/usr/src/app/data/ ppw-processor
+docker run -p 666:666 ppw-server
 ```
 
 ## Deploy in k8s

@@ -1,21 +1,20 @@
 """Flask server"""
 
-import os
-import pickle
 import random
 import string
 
-import eli5
 from flask import Flask, jsonify, request
-from log.logger import init_logger
 import yaml
+from kafka import KafkaConsumer, KafkaProducer
+
+from log.logger import init_logger
+
 
 CONFIG_FILE = 'config.yaml'
-config_data = None
 app = Flask(__name__)
-model = None
-message_id_dict = {}
-id_expl_dict = {}
+config_data = None
+producer = None
+new_issues_topic = None
 
 
 def id_generator(size=10, chars=string.ascii_letters + string.digits):
@@ -48,14 +47,15 @@ def json_template():
 @app.route('/v1/p', methods=["POST"])
 def add_message():
     """Return new id."""
-    content = request.get_json()
 
-    if content['text'] in message_id_dict:
-        content['id'] = message_id_dict[content['text']]
-    else:
-        new_id = id_generator()
-        message_id_dict[content['text']] = new_id
-        content['id'] = new_id
+    content = request.get_json(force=True)
+    if content is None:
+        return 'Empty request', 400
+
+    new_id = id_generator()
+    content['id'] = new_id
+
+    producer.send(new_issues_topic, key=new_id, value=content['text'])
 
     return content
 
@@ -64,29 +64,20 @@ def add_message():
 def get_result(message_id):
     """Create HTML page with ML-model result."""
 
-    # Until no operator
-    global model
+    # TODO: refactor: one initialization
+    consumer = KafkaConsumer(config_data['processed_issues_topic'],
+                             auto_offset_reset='earliest',
+                             bootstrap_servers=[config_data['kafka_server']],
+                             # value_deserializer=lambda x: loads(x.decode('utf-8')),
+                             key_deserializer=lambda x: x.decode('utf-8'),
+                             consumer_timeout_ms=300
+                             )
 
-    if model is None:
-        if os.path.exists(os.path.join(config_data['common_dir'], config_data['model_name'])):
-            model = pickle.load(open(os.path.join(config_data['common_dir'], config_data['model_name']), 'rb'))
-
-    html_page = None
-
-    if message_id in id_expl_dict:
-        html_page = eli5.formatters.html.format_as_html(id_expl_dict[message_id])
-    else:
-        for message, search_id in message_id_dict.items():
-            if search_id == message_id:
-                if model is not None:
-                    id_expl_dict[message_id] = eli5.sklearn.explain_prediction_linear_regressor(model['cls'],
-                                                                                                message,
-                                                                                                model['vec'])
-                    html_page = eli5.formatters.html.format_as_html(id_expl_dict[message_id])
-                break
-
-    if html_page is not None:
-        return html_page
+    for msg in consumer:
+        print(msg.value)
+        if msg.key == message_id:
+            return msg.value
+    consumer.close()
 
     return 'Id not found', 400
 
@@ -96,14 +87,19 @@ def main():
     logger.warning('Hello from server')
     """Load config and run flask app."""
 
-    global model
+    global producer
+    global new_issues_topic
     global config_data
 
     with open(CONFIG_FILE) as file:
         config_data = yaml.load(file, Loader=yaml.FullLoader)
 
-    if os.path.exists(os.path.join(config_data['common_dir'], config_data['model_name'])):
-        model = pickle.load(open(os.path.join(config_data['common_dir'], config_data['model_name']), 'rb'))
+    producer = KafkaProducer(bootstrap_servers=[config_data['kafka_server']],
+                             value_serializer=lambda x: x.encode('utf-8'),
+                             key_serializer=lambda x: x.encode('utf-8')
+                             )
+
+    new_issues_topic = config_data['new_issues_topic']
 
     app.run(debug=True, host='0.0.0.0', port=config_data['port'])
 

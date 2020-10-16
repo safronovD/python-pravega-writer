@@ -13,6 +13,7 @@ spec:
       containers:
       - name: ppw-connector
         image: dxd360/ppw-ml-controller
+        imagePullPolicy: IfNotPresent
         volumeMounts:
         - mountPath: /usr/src/app/data
           name: data-volume
