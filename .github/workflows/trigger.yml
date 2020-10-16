@@ -2,11 +2,12 @@ name: Trigger
 
 on:
   pull_request:
+    types: [assigned, opened, synchronize, reopened]
   push:
     branches:
       - master
 jobs:
-  linting:
+  Jenkins trigger:
     runs-on: ubuntu-latest
     steps:
     - name: Jenkins trigger
