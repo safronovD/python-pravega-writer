@@ -32,6 +32,7 @@
             "@semantic-release/exec", 
             {
                 "prepareCmd": "echo ${nextRelease.version}",
-    }],
+            }
+        ],
     ]
 }
