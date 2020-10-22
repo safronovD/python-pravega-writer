@@ -14,17 +14,15 @@ jobs:
 #     - name: Jenkins trigger
 #       run: |
 #         curl -I -u ${{ secrets.jenkins_user }}:${{ secrets.jenkins_token }} ${{ secrets.jenkins_url }}/job/Main/build?token=${{ secrets.jenkins_token }}
-  release:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-
-    - name: Python Semantic Release
-      uses: relekang/python-semantic-release@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-#         pypi_token: ${{ secrets.PYPI_TOKEN }}
+  Release:
+   runs-on: ubuntu-16.04
+   steps:
+   - uses: actions/checkout@v2
+   - uses: actions/setup-node@v1
+     with:
+       node-version: '12'
+   - run: | 
+       npm install -g semantic-release-cli
+       export GITHUB_TOKEN=ff840c5fe3307a9249df27b8f7e3535da7e4e6a0
+       semantic-release 
        
