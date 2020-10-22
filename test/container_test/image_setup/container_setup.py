@@ -14,8 +14,8 @@ class ContainerSetup:
         self.image_name_server = '{}/ppw-server:{}'.format(repo, tag)
         self.container_name_server = 'ppw-server-{}'.format(tag)
 
-        self.image_name_connector = '{}/ppw-connector:{}'.format(repo, tag)
-        self.container_name_connector = 'ppw-connector-{}'.format(tag)
+        self.image_name_processor = '{}/ppw-processor:{}'.format(repo, tag)
+        self.container_name_processor = 'ppw-processor-{}'.format(tag)
 
         self.image_name_ml_controller = '{}/ppw-ml-controller:{}'.format(repo, tag)
         self.container_name_ml_controller = 'ppw-ml-controller-{}'.format(tag)
@@ -31,14 +31,14 @@ class ContainerSetup:
     def get_image_full_name(self, name):
         return {
             'server': self.image_name_server,
-            'connector': self.image_name_connector,
+            'processor': self.image_name_processor,
             'ml-controller': self.image_name_ml_controller,
         }.get(name, lambda: None)
 
     def get_container_full_name(self, name):
         return {
             'server': self.container_name_server,
-            'connector': self.container_name_connector,
+            'processor': self.container_name_processor,
             'ml-controller': self.container_name_ml_controller,
         }.get(name, lambda: None)
 
