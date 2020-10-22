@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.1.0](https://github.com/safronovD/python-pravega-writer/compare/v1.0.3...v1.1.0) (2020-10-22)
+
+
+### Features
+
+* **.releaserc:** Add  version printing ([192b625](https://github.com/safronovD/python-pravega-writer/commit/192b625b08d8b43da65c60e181595df4a21d8201))
+
 ## [1.0.3](https://github.com/safronovD/python-pravega-writer/compare/v1.0.2...v1.0.3) (2020-10-22)
 
 
