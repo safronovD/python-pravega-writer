@@ -1,5 +1,14 @@
 # Semantic Versioning Changelog
 
+## [1.0.2](https://github.com/safronovD/python-pravega-writer/compare/v1.0.1...v1.0.2) (2020-10-22)
+
+
+### Bug Fixes
+
+* fix branches ([2f3d599](https://github.com/safronovD/python-pravega-writer/commit/2f3d5998890ed0bb279f10fbbc666ce3314437c4))
+* fix Release Mode ([f9d200f](https://github.com/safronovD/python-pravega-writer/commit/f9d200fce601f5beee1aa0b3ebd2ed6937e4779a))
+* Small fixes ([6b89e86](https://github.com/safronovD/python-pravega-writer/commit/6b89e86f1a7991676437583727d440240a764b36))
+
 ## [1.0.1](https://github.com/safronovD/python-pravega-writer/compare/v1.0.0...v1.0.1) (2020-10-22)
 
 
