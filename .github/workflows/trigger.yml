@@ -23,6 +23,6 @@ jobs:
        node-version: '12'
    - run: | 
        npm install -g semantic-release @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/exec @semantic-release/git @semantic-release/release-notes-generator
-       export GITHUB_TOKEN=ff840c5fe3307a9249df27b8f7e3535da7e4e6a0
+       export GH_TOKEN=a35eca82c0c721b6540358457b7f87345c8044b3
        semantic-release --debug --branches develop
        
