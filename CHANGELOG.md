@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.0.1](https://github.com/safronovD/python-pravega-writer/compare/v1.0.0...v1.0.1) (2020-10-22)
+
+
+### Bug Fixes
+
+* fix GH token ([5902df8](https://github.com/safronovD/python-pravega-writer/commit/5902df88529b238fe9d68a461fd946379cc11485))
+
 # 1.0.0 (2020-10-22)
 
 
