@@ -23,7 +23,7 @@ jobs:
        node-version: '12'
    - run: | 
        export GITHUB_TOKEN=ff840c5fe3307a9249df27b8f7e3535da7e4e6a0 
-       npx semantic-release
+       npm install -g semantic-release
        
      
        
