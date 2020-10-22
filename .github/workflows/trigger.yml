@@ -24,5 +24,5 @@ jobs:
    - run: | 
        npm install -g semantic-release @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/exec @semantic-release/git @semantic-release/release-notes-generator
        export GH_TOKEN=a35eca82c0c721b6540358457b7f87345c8044b3
-       semantic-release  --branches
+       semantic-release --branches
        
