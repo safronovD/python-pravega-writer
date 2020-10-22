@@ -21,5 +21,8 @@ jobs:
    - uses: actions/setup-node@v1
      with:
        node-version: '12'
-   - run: npx semantic-release
+   - run: | 
+       npx semantic-release
+       semantic-release 
+     
        
