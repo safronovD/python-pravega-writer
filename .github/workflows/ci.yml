@@ -82,7 +82,7 @@ jobs:
 
       - name: Connector unit tests
         run: |
-          pytest --cov-report xml:reports/cov.xml --cov=./src/server --cov=./src/processor --cov./src/ml-controller --cov=./src/common ./src/test/ > reports/unit_tests.out
+          pytest --cov-report xml:reports/cov.xml --cov=./src/server --cov=./src/processor --cov=./src/ml-controller --cov=./src/common ./src/test/ > reports/unit_tests.out
 
       - name: Upload tests results
         uses: actions/upload-artifact@v2
