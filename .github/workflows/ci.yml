@@ -80,7 +80,7 @@ jobs:
 
           mkdir -p reports/
 
-      - name: Connector unit tests
+      - name: Perform tests
         run: |
           pytest --cov-report xml:reports/cov.xml --cov=./src/server --cov=./src/processor --cov=./src/ml-controller --cov=./src/common ./src/test/ > reports/unit_tests.out
 
@@ -89,12 +89,3 @@ jobs:
         with:
           name: test_report
           path: reports
-
-  jenkins:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Install dependencies
-      run: |
-        curl -I -u ${{ secrets.jenkins_user }}:${{ secrets.jenkins_token }} ${{ secrets.jenkins_url }}/job/Release/build?token=${{ secrets.jenkins_token }}
-
