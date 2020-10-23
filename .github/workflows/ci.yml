@@ -22,7 +22,7 @@ jobs:
         cat linting_flake8.txt
 
         total_errors="$(tail -1 linting_flake8.txt)"
-        threshold=10
+        threshold=100
 
         if [[  $total_errors -gt $threshold ]];
         then
@@ -76,27 +76,13 @@ jobs:
           pip install -r ./src/server/requirements.txt
           pip install -r ./src/ml-controller/requirements.txt
 
-          pip install -r ./src/connector/test/requirements.txt
-          pip install -r ./src/server/test/requirements.txt
-          pip install -r ./src/ml-controller/test/requirements.txt
+          pip install -r ./src/test/requirements.txt
 
-          mkdir -p reports/connector
-          mkdir -p reports/ml-controller
-          mkdir -p reports/server
-
+          mkdir -p reports/
 
       - name: Connector unit tests
         run: |
-          python3 -m robot.run  --outputdir reports/connector ./src/connector/test/unit.robot
-
-
-      - name: ML-controller unit tests
-        run: |
-          python3 -m robot.run  --outputdir reports/ml-controller ./src/ml-controller/test/unit.robot
-
-      - name: Server unit tests
-        run: |
-          python3 -m robot.run  --outputdir reports/server ./src/server/test/unit.robot
+          pytest --cov-report xml:reports/cov.xml --cov=./src/server --cov=./src/processor --cov./src/ml-controller --cov=./src/common ./src/test/ > reports/unit_tests.out
 
       - name: Upload tests results
         uses: actions/upload-artifact@v2

@@ -1,4 +1,0 @@
-robotframework
-docker
-robotframework-requests
-pyyaml
