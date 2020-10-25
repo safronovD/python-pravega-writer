@@ -3,6 +3,18 @@
 # [1.3.0](https://github.com/safronovD/python-pravega-writer/compare/v1.2.0...v1.3.0) (2020-10-25)
 
 
+### Bug Fixes
+
+* **release:** Fix image push ([0082469](https://github.com/safronovD/python-pravega-writer/commit/0082469d2e12488bd6c62562a13346be652895b9))
+
+
+### Features
+
+* images pushing ([65f4844](https://github.com/safronovD/python-pravega-writer/commit/65f484429e64b1447360ae1a8ae58f3467d70652))
+
+# [1.3.0](https://github.com/safronovD/python-pravega-writer/compare/v1.2.0...v1.3.0) (2020-10-25)
+
+
 ### Features
 
 * images pushing ([65f4844](https://github.com/safronovD/python-pravega-writer/commit/65f484429e64b1447360ae1a8ae58f3467d70652))
