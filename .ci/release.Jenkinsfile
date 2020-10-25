@@ -14,21 +14,22 @@ pipeline {
     environment {
         GH_TOKEN = credentials('github-jenkins-token')
         PYTHONPATH = "${WORKSPACE}"
+        V = "${VERSION}"
     }
     stages {
         stage ('Pushing') {
             steps {
-                container('node') {
-                    sh 'npm install -g semantic-release @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/exec @semantic-release/git @semantic-release/release-notes-generator'
-#                   sh 'semantic-release'
-                }
-
+//                container('node') {
+//                    sh 'npm install -g semantic-release @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/exec @semantic-release/git @semantic-release/release-notes-generator'
+//                    sh 'semantic-release'
+//                }
                 container('docker') {
+                    sh 'echo $V'
 //                    sh 'echo $DOCKER_REGISTRY'
 //                    sh 'docker login docker.pkg.github.com -u REGIORGIO -p $DOCKER_REGISTRY'
 //                    sh 'echo docker test'
                     sh 'python3 -m pip install -r ./test/container_test/image_setup/requirements.txt'
-                    sh 'python3 ./test/container_test/image_setup/push_images.py REGIORGIO $GH_TOKEN docker.pkg.github.com/safronovd/python-pravega-writer'
+                    sh 'python3 ./test/container_test/image_setup/push_images.py REGIORGIO $GH_TOKEN $V docker.pkg.github.com/safronovd/python-pravega-writer '
                 }
             }
        }

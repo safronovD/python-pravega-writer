@@ -5,12 +5,13 @@ from test.container_test.image_setup.container_setup import ContainerSetup
 if __name__ == "__main__":
     username = sys.argv[1]
     password = sys.argv[2]
-    if sys.argv[3]:
+    tag = sys.argv[3]
+    if sys.argv[4]:
         repo = sys.argv[3]
     else:
         repo = '192.168.70.210:5000'
     # os.environ["GIT_COMMIT"] tag
-    obj = ContainerSetup('latest', username=username, password=password, repo=repo)
+    obj = ContainerSetup(tag, username=username, password=password, repo=repo)
 
     obj.build_image('server')
     obj.push_image('server')

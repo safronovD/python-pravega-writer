@@ -110,5 +110,5 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install dependencies
       run: |
-        curl -I -u ${{ secrets.jenkins_user }}:${{ secrets.jenkins_token }} ${{ secrets.jenkins_url }}/job/Release/build?token=${{ secrets.jenkins_token }}
+        curl -I -u ${{ secrets.jenkins_user }}:${{ secrets.jenkins_token }} ${{ secrets.jenkins_url }}/job/Release/build?token=${{ secrets.jenkins_token }&VERSION=1.2.0}
 
