@@ -10,15 +10,15 @@ if __name__ == "__main__":
     else:
         repo = '192.168.70.210:5000'
     # os.environ["GIT_COMMIT"] tag
-    obj = ContainerSetup(os.environ["GIT_COMMIT"], username=username, password=password, repo=repo)
+    obj = ContainerSetup('latest', username=username, password=password, repo=repo)
 
     obj.build_image('server')
     obj.push_image('server')
     obj.remove_image('server')
 
-    obj.build_image('connector')
-    obj.push_image('connector')
-    obj.remove_image('connector')
+    obj.build_image('processor')
+    obj.push_image('processor')
+    obj.remove_image('processor')
 
     obj.build_image('ml-controller')
     obj.push_image('ml-controller')
