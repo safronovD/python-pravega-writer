@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.2.0](https://github.com/safronovD/python-pravega-writer/compare/v1.1.0...v1.2.0) (2020-10-25)
+
+
+### Features
+
+* **release:** add python in node js container ([f2aa831](https://github.com/safronovD/python-pravega-writer/commit/f2aa831648db2793b7813406bb42f0d10990b966))
+
 # [1.1.0](https://github.com/safronovD/python-pravega-writer/compare/v1.0.3...v1.1.0) (2020-10-22)
 
 
