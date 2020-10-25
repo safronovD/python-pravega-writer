@@ -108,7 +108,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Install dependencies
+    - name: Trigger release
       run: |
-        curl -I -u admin:11ef68c32d68f204b55918fecf147fbfb9 https://b53535ca2a93.ngrok.io/job/Release/buildWithParameters?token=11ef68c32d68f204b55918fecf147fbfb9&VERSION=1.2.0
+        curl -I -u admin:11ef68c32d68f204b55918fecf147fbfb9 "https://b53535ca2a93.ngrok.io/job/Release/buildWithParameters?token=11ef68c32d68f204b55918fecf147fbfb9&VERSION=latest"
 

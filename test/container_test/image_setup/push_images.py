@@ -7,7 +7,7 @@ if __name__ == "__main__":
     password = sys.argv[2]
     tag = sys.argv[3]
     if sys.argv[4]:
-        repo = sys.argv[3]
+        repo = sys.argv[4]
     else:
         repo = '192.168.70.210:5000'
     # os.environ["GIT_COMMIT"] tag
