@@ -1,6 +1,9 @@
 import docker
 from docker.errors import APIError, ImageNotFound, NotFound
+
 import sys
+sys.path.insert(0, ".")
+
 from src.common.log.logger import init_logger
 
 
