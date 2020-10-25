@@ -34,6 +34,11 @@ pipeline {
                 build 'Deploy'
             }
         }
+        stage('Release') {
+            steps {
+                echo 'Release is running...'
+//                build 'Release'
+            }
     }
     post {
         always {

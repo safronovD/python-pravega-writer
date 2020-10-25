@@ -3,9 +3,9 @@ name: Trigger
 on:
 #   pull_request:
 #     types: [assigned, opened, synchronize, reopened]
-  push:
-    branches:
-      - master
+   push:
+     branches:
+#      - master
       - develop
 jobs:
 #   Jenkins trigger:
@@ -14,15 +14,14 @@ jobs:
 #     - name: Jenkins trigger
 #       run: |
 #         curl -I -u ${{ secrets.jenkins_user }}:${{ secrets.jenkins_token }} ${{ secrets.jenkins_url }}/job/Main/build?token=${{ secrets.jenkins_token }}
-  Release:
-   runs-on: ubuntu-16.04
-   steps:
-   - uses: actions/checkout@v2
-   - uses: actions/setup-node@v1
-     with:
-       node-version: '12'
-   - run: | 
-       npm install -g semantic-release @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/exec @semantic-release/git @semantic-release/release-notes-generator
-       export GH_TOKEN=${{ secrets.GH_RELEASE }}
-       semantic-release --branches develop
-       
+   Release:
+     runs-on: ubuntu-16.04
+     steps:
+     - uses: actions/checkout@v2
+     - uses: actions/setup-node@v1
+       with:
+         node-version: '12'
+     - run: |
+         npm install -g semantic-release @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/exec @semantic-release/git @semantic-release/release-notes-generator
+         export GH_TOKEN=${{ secrets.GH_RELEASE }}
+         semantic-release --branches develop

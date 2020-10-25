@@ -31,7 +31,8 @@
         [
             "@semantic-release/exec", 
             {
-                "prepareCmd": "echo ${nextRelease.version}",
+                "prepareCmd": "export GH_TAG=${nextRelease.version}",
+                "prepareCmd": "echo ${GH_TAG}",
             }
         ],
     ]
