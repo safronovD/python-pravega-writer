@@ -1,6 +1,6 @@
 import docker
 from docker.errors import APIError, ImageNotFound, NotFound
-
+import sys
 from src.common.log.logger import init_logger
 
 
@@ -139,19 +139,23 @@ class ContainerSetup:
 
 if __name__ == "__main__":
 
-    obj = ContainerSetup(123)
+    username = sys.argv[1]
+    password = sys.argv[2]
+    if sys.argv[3]:
+        repo = sys.argv[3]
+    else:
+        repo = '192.168.70.210:5000'
+    # os.environ["GIT_COMMIT"] tag
+    obj = ContainerSetup('latest', username=username, password=password, repo=repo)
+
     obj.build_image('server')
-    # obj.push_image('server')
-    obj.run_container('server')
-    obj.remove_container('server')
+    obj.push_image('server')
     obj.remove_image('server')
-    #
-    # obj.build_image('connector')
-    # # obj.push_image('connector')
-    # obj.remove_image('connector')
-    #
-    # obj.build_image('ml-controller')
-    # obj.run_container('ml-controller')
-    #
-    # # obj.push_image('ml-controller')
-    # obj.remove_image('ml-controller')
+
+    obj.build_image('processor')
+    obj.push_image('processor')
+    obj.remove_image('processor')
+
+    obj.build_image('ml-controller')
+    obj.push_image('ml-controller')
+    obj.remove_image('ml-controller')
