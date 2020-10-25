@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.3.0](https://github.com/safronovD/python-pravega-writer/compare/v1.2.0...v1.3.0) (2020-10-25)
+
+
+### Features
+
+* images pushing ([65f4844](https://github.com/safronovD/python-pravega-writer/commit/65f484429e64b1447360ae1a8ae58f3467d70652))
+
 # [1.2.0](https://github.com/safronovD/python-pravega-writer/compare/v1.1.0...v1.2.0) (2020-10-25)
 
 
