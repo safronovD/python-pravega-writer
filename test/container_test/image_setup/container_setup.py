@@ -1,14 +1,11 @@
 import docker
 from docker.errors import APIError, ImageNotFound, NotFound
 
-import sys
-sys.path.insert(0, ".")
-
 from src.common.log.logger import init_logger
 
 
 class ContainerSetup:
-    def __init__(self, tag, repo,  **kwargs):
+    def __init__(self, tag, repo, username, password):
 
         self.logger = init_logger('ci')
 
@@ -25,9 +22,8 @@ class ContainerSetup:
 
         self.client = docker.from_env()
 
-        if kwargs:
-            self.username = kwargs['username']
-            self.password = kwargs['password']
+        self.username = username
+        self.password = password
 
         self.logger.info('Object initialization is complete')
 
@@ -138,27 +134,3 @@ class ContainerSetup:
             self.logger.exception('Image {} is not pushed'.format(image_name))
         else:
             self.logger.info("Image {} is pushed".format(image_name))
-
-
-if __name__ == "__main__":
-
-    username = sys.argv[1]
-    password = sys.argv[2]
-    if sys.argv[3]:
-        repo = sys.argv[3]
-    else:
-        repo = '192.168.70.210:5000'
-    # os.environ["GIT_COMMIT"] tag
-    obj = ContainerSetup('latest', username=username, password=password, repo=repo)
-
-    obj.build_image('server')
-    obj.push_image('server')
-    obj.remove_image('server')
-
-    obj.build_image('processor')
-    obj.push_image('processor')
-    obj.remove_image('processor')
-
-    obj.build_image('ml-controller')
-    obj.push_image('ml-controller')
-    obj.remove_image('ml-controller')
