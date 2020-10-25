@@ -21,6 +21,10 @@ jobs:
      - uses: actions/setup-node@v1
        with:
          node-version: '12'
+     - name: Set up Python 3.8
+       uses: actions/setup-python@v2
+       with:
+           python-version: 3.8
      - run: |
          npm install -g semantic-release @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/exec @semantic-release/git @semantic-release/release-notes-generator
          export GH_TOKEN=${{ secrets.GH_RELEASE }}

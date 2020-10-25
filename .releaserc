@@ -31,8 +31,7 @@
         [
             "@semantic-release/exec", 
             {
-                "prepareCmd": "export GH_TAG=${nextRelease.version}",
-                "prepareCmd": "echo ${GH_TAG}",
+                "prepareCmd": "python3 -m pip install -r ./test/container_test/image_setup/requirements.txt;export GH_TAG=${nextRelease.version}",
             }
         ],
     ]
