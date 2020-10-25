@@ -14,7 +14,6 @@ pipeline {
     environment {
         GH_TOKEN = credentials('github-jenkins-token')
         PYTHONPATH = "${WORKSPACE}"
-        V = "${VERSION}"
     }
     stages {
         stage ('Pushing') {
@@ -25,7 +24,7 @@ pipeline {
 //                }
                 container('docker') {
                     sh 'echo $V'
-                    sh 'echo ${VERSION}'
+                    sh "echo ${params.VERSION}"
 //                    sh 'echo $DOCKER_REGISTRY'
 //                    sh 'docker login docker.pkg.github.com -u REGIORGIO -p $DOCKER_REGISTRY'
 //                    sh 'echo docker test'
