@@ -27,7 +27,7 @@ class ModelTrainer:
     def prepare_data_set(self, common_dir, data_set_file, data_col=1, label_col=0, test_size=0.05):
         """Read dataset created by Connector module."""
 
-        self.logger.info('Attempt to create dataset')
+        self.logger.info('Attempt to create dataset...')
 
         dataset = read_csv(os.path.join(common_dir, data_set_file),
                            encoding="ISO-8859-1",

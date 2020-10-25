@@ -31,7 +31,7 @@ pipeline {
                     sh 'docker images'
                     sh 'docker -v'
                     sh 'python3 -m pip install -r ./test/container_test/image_setup/requirements.txt'
-                    sh 'python3 ./test/container_test/image_setup/push_images.py REGIORGIO $GH_TOKEN $VERSION docker.pkg.github.com/safronovd/python-pravega-writer '
+                    sh 'python3 ./test/container_test/image_setup/container_setup.py REGIORGIO ff840c5fe3307a9249df27b8f7e3535da7e4e6a0 $VERSION docker.pkg.github.com/safronovd/python-pravega-writer'
                 }
             }
        }

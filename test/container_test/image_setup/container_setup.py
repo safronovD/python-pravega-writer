@@ -1,5 +1,6 @@
 import docker
 from docker.errors import APIError, ImageNotFound, NotFound
+import sys
 
 from src.common.log.logger import init_logger
 
@@ -134,3 +135,26 @@ class ContainerSetup:
             self.logger.exception('Image {} is not pushed'.format(image_name))
         else:
             self.logger.info("Image {} is pushed".format(image_name))
+
+
+if __name__ == "__main__":
+    username = sys.argv[1]
+    password = sys.argv[2]
+    tag = sys.argv[3]
+    if sys.argv[4]:
+        repo = sys.argv[4]
+    else:
+        repo = '192.168.70.210:5000'
+    obj = ContainerSetup(tag=tag, repo=repo, username=username, password=password)
+
+    # obj.build_image('server')
+    # obj.push_image('server')
+    # obj.remove_image('server')
+
+    # # obj.build_image('processor')
+    # obj.push_image('processor')
+    # # obj.remove_image('processor')
+    #
+    obj.build_image('ml-controller')
+    obj.push_image('ml-controller')
+    obj.remove_image('ml-controller')
