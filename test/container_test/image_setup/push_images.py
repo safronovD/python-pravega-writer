@@ -1,6 +1,10 @@
 import os
 import sys
+# print(sys.path)
+# sys.path.insert(0, "/Users/georgy/Dell/jenkins/python-pravega-writer")
+# print(sys.path)
 from test.container_test.image_setup.container_setup import ContainerSetup
+
 
 if __name__ == "__main__":
     username = sys.argv[1]
@@ -10,17 +14,16 @@ if __name__ == "__main__":
         repo = sys.argv[4]
     else:
         repo = '192.168.70.210:5000'
-    # os.environ["GIT_COMMIT"] tag
-    obj = ContainerSetup(tag, repo=repo, username=username, password=password)
+    obj = ContainerSetup(tag=tag, repo=repo, username=username, password=password)
 
     obj.build_image('server')
     obj.push_image('server')
     obj.remove_image('server')
 
-    obj.build_image('processor')
-    obj.push_image('processor')
-    obj.remove_image('processor')
-
-    obj.build_image('ml-controller')
-    obj.push_image('ml-controller')
-    obj.remove_image('ml-controller')
+    # obj.build_image('processor')
+    # obj.push_image('processor')
+    # obj.remove_image('processor')
+    #
+    # obj.build_image('ml-controller')
+    # obj.push_image('ml-controller')
+    # obj.remove_image('ml-controller')
