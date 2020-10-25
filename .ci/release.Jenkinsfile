@@ -14,6 +14,7 @@ pipeline {
     environment {
         GH_TOKEN = credentials('github-jenkins-token')
         PYTHONPATH = "${WORKSPACE}"
+        VERSION = "${params.VERSION}"
     }
     stages {
         stage ('Pushing') {
@@ -23,13 +24,13 @@ pipeline {
 //                    sh 'semantic-release'
 //                }
                 container('docker') {
-                    sh 'echo $V'
-                    sh "echo ${params.VERSION}"
+                    sh 'echo $VERSION'
+//                    sh "echo ${params.VERSION}"
 //                    sh 'echo $DOCKER_REGISTRY'
 //                    sh 'docker login docker.pkg.github.com -u REGIORGIO -p $DOCKER_REGISTRY'
 //                    sh 'echo docker test'
-//                    sh 'python3 -m pip install -r ./test/container_test/image_setup/requirements.txt'
-//                    sh 'python3 ./test/container_test/image_setup/push_images.py REGIORGIO $GH_TOKEN $V docker.pkg.github.com/safronovd/python-pravega-writer '
+                    sh 'python3 -m pip install -r ./test/container_test/image_setup/requirements.txt'
+                    sh 'python3 ./test/container_test/image_setup/push_images.py REGIORGIO $GH_TOKEN $VERSION docker.pkg.github.com/safronovd/python-pravega-writer '
                 }
             }
        }
