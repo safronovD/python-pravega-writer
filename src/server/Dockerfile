@@ -10,7 +10,6 @@ ADD server/main.py ${ROOT}
 ADD server/requirements.txt ${ROOT}
 
 RUN pip --no-cache-dir install -r requirements.txt
-RUN mkdir data
 
 EXPOSE 666
 

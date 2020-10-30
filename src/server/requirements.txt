@@ -1,4 +1,3 @@
 flask
-eli5
 pyyaml
-requests
+kafka-python
