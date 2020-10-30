@@ -1,7 +1,6 @@
 """Flask server"""
 from core.server import server_init, server_start
 from log.logger import init_logger
-
 import yaml
 
 CONFIG_FILE = 'config.yaml'

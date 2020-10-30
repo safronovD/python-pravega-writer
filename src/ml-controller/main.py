@@ -1,9 +1,9 @@
 """Module for train and save ml-model."""
-from core.ModelTrainer import ModelTrainer
-from core.DataSetLoader import CSVDataSetLoader
-from log.logger import init_logger
-
 import os
+
+from core.DataSetLoader import CSVDataSetLoader
+from core.ModelTrainer import ModelTrainer
+from log.logger import init_logger
 import yaml
 
 CONFIG_FILE = 'config.yaml'

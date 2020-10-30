@@ -1,8 +1,9 @@
 import os
 from pickle import load as pickle_load
+from json import dumps
+
 import eli5
 import yaml
-from json import dumps
 from kafka import KafkaConsumer, KafkaProducer
 
 CONFIG_FILE = 'config.yaml'
