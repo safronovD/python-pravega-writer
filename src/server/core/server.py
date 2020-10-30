@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from kafka import KafkaConsumer, KafkaProducer
+from redis import Redis
 
 from .util import id_generator
 
@@ -7,17 +8,20 @@ app = Flask(__name__)
 
 config_data = None
 producer = None
+redis_inst = None
 
 
 def server_init(config):
     global config_data
     global producer
+    global redis_inst
 
     config_data = config
-    producer = KafkaProducer(bootstrap_servers=[config_data['kafka_server']],
-                             value_serializer=lambda x: x.encode('utf-8'),
-                             key_serializer=lambda x: x.encode('utf-8')
-                             )
+    producer = KafkaProducer(
+        bootstrap_servers=[config_data['kafka_server']],
+        value_serializer=lambda x: x.encode('utf-8'),
+        key_serializer=lambda x: x.encode('utf-8'))
+    redis_inst = Redis(host=config_data['redis_host'], port=config_data['redis_port'], db=0)
 
 
 def server_start():
@@ -57,7 +61,7 @@ def add_message():
     new_id = id_generator()
     content['id'] = new_id
 
-    producer.send(config_data['new_issues_topic'], key=new_id, value=content['text'])
+    producer.send(config_data['kafka_topic'], key=new_id, value=content['text'])
 
     return content
 
@@ -65,20 +69,9 @@ def add_message():
 @app.route('/v1/p/<message_id>', methods=["GET"])
 def get_result(message_id):
     """Create HTML page with ML-model result."""
+    res = redis_inst.get(message_id)
 
-    # TODO: refactor: one initialization
-    consumer = KafkaConsumer(config_data['processed_issues_topic'],
-                             auto_offset_reset='earliest',
-                             bootstrap_servers=[config_data['kafka_server']],
-                             # value_deserializer=lambda x: loads(x.decode('utf-8')),
-                             key_deserializer=lambda x: x.decode('utf-8'),
-                             consumer_timeout_ms=300
-                             )
-
-    for msg in consumer:
-        print(msg.value)
-        if msg.key == message_id:
-            return msg.value
-    consumer.close()
-
-    return 'Id not found', 400
+    if res is not None:
+        return res
+    else:
+        return 'Id not found', 400
