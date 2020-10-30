@@ -72,7 +72,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r ./src/connector/requirements.txt
+          pip install -r ./src/processor/requirements.txt
           pip install -r ./src/server/requirements.txt
           pip install -r ./src/ml-controller/requirements.txt
 
