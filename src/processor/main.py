@@ -1,10 +1,10 @@
 import os
-from pickle import load as pickle_load
 from json import dumps
+from pickle import load as pickle_load
 
 import eli5
-import yaml
 from kafka import KafkaConsumer, KafkaProducer
+import yaml
 
 CONFIG_FILE = 'config.yaml'
 
@@ -16,14 +16,16 @@ def main():
     if os.path.exists(os.path.join(config_data['common_dir'], config_data['model_name'])):
         model = pickle_load(open(os.path.join(config_data['common_dir'], config_data['model_name']), 'rb'))
 
-    consumer = KafkaConsumer(config_data['new_issues_topic'], auto_offset_reset='latest',
-                             bootstrap_servers=[config_data['kafka_server']],
-                             value_deserializer=lambda x:
-                             x.decode('utf-8', 'ignore'))
+    consumer = KafkaConsumer(
+        config_data['new_issues_topic'],
+        auto_offset_reset='latest',
+        bootstrap_servers=[config_data['kafka_server']],
+        value_deserializer=lambda x: x.decode('utf-8', 'ignore'))
 
-    producer = KafkaProducer(bootstrap_servers=[config_data['kafka_server']],
-                             value_serializer=lambda x:
-                             dumps(x).encode('utf-8'))
+    producer = KafkaProducer(
+        bootstrap_servers=[config_data['kafka_server']],
+        value_serializer=lambda x:
+        dumps(x).encode('utf-8'))
 
     for msg in consumer:
         expl = eli5.sklearn.explain_prediction_linear_regressor(model['cls'],
