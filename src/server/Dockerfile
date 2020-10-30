@@ -5,6 +5,7 @@ ENV ROOT=/usr/src/app
 WORKDIR ${ROOT}
 
 COPY common/log ${ROOT}/log
+COPY server/core ${ROOT}/core
 ADD server/config.yaml ${ROOT}
 ADD server/main.py ${ROOT}
 ADD server/requirements.txt ${ROOT}

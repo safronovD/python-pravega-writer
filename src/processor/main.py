@@ -3,7 +3,8 @@ from json import dumps
 from pickle import load as pickle_load
 
 import eli5
-from kafka import KafkaConsumer, KafkaProducer
+from kafka import KafkaConsumer
+from redis import Redis
 import yaml
 
 CONFIG_FILE = 'config.yaml'
@@ -17,15 +18,12 @@ def main():
         model = pickle_load(open(os.path.join(config_data['common_dir'], config_data['model_name']), 'rb'))
 
     consumer = KafkaConsumer(
-        config_data['new_issues_topic'],
+        config_data['kafka_topic'],
         auto_offset_reset='latest',
         bootstrap_servers=[config_data['kafka_server']],
         value_deserializer=lambda x: x.decode('utf-8', 'ignore'))
 
-    producer = KafkaProducer(
-        bootstrap_servers=[config_data['kafka_server']],
-        value_serializer=lambda x:
-        dumps(x).encode('utf-8'))
+    redis_inst = Redis(host=config_data['redis_host'], port=config_data['redis_port'], db=0)
 
     for msg in consumer:
         expl = eli5.sklearn.explain_prediction_linear_regressor(model['cls'],
@@ -35,7 +33,7 @@ def main():
 
         print(response)
 
-        producer.send(config_data['processed_issues_topic'], key=msg.key, value=response)
+        redis_inst.set(msg.key, dumps(response))
 
     consumer.close()
 

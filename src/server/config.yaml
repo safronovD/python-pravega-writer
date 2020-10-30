@@ -1,5 +1,7 @@
 kafka_server: 195.208.115.76:9092
-new_issues_topic: issues
-processed_issues_topic: processed2
+kafka_topic: issues
+
+redis_host: 195.208.115.76
+redis_port: 6379
 
 port: 666
