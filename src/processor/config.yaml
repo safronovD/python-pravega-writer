@@ -1,0 +1,6 @@
+kafka_server: 195.208.115.76:9092
+new_issues_topic: issues
+processed_issues_topic: processed2
+
+common_dir: data
+model_name: pipe.zip

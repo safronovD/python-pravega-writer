@@ -1,13 +1,10 @@
 """Module for train and save ml-model."""
-
-import logging
-import os
-import time
-import yaml
-
 from core.ModelTrainer import ModelTrainer
 from core.DataSetLoader import CSVDataSetLoader
 from log.logger import init_logger
+
+import os
+import yaml
 
 CONFIG_FILE = 'config.yaml'
 
@@ -27,7 +24,7 @@ def load(config_data, logger):
 def train(config_data, logger):
     """Load config. Start trainer."""
 
-    if (os.path.exists(os.path.join(config_data['common_dir'], config_data['dataset']['file_name'])) is not True):
+    if os.path.exists(os.path.join(config_data['common_dir'], config_data['dataset']['file_name'])) is not True:
         logger.error("Dataset is not found")
     else:
         trainer = ModelTrainer(logger)

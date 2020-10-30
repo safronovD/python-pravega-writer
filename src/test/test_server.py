@@ -2,8 +2,6 @@ import sys
 
 sys.path.append("./src/server/core")
 
-from json import loads
-
 from util import id_generator
 
 
