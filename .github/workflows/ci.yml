@@ -89,3 +89,10 @@ jobs:
         with:
           name: test_report
           path: reports
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          file: reports/cov.xml
+          env_vars: GITHUB_RUN_ID
+          verbose: true
