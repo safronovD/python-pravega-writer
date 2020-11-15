@@ -95,4 +95,3 @@ jobs:
         with:
           file: reports/cov.xml
           env_vars: GITHUB_RUN_ID
-          verbose: true
