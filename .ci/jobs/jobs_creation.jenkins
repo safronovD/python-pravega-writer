@@ -1,0 +1,175 @@
+#!/usr/bin/env groovy
+
+pipelineJob('main') {
+    displayName('Main')
+
+    logRotator {
+        numToKeep(10)
+        daysToKeep(30)
+    }
+
+    configure { project ->
+        project / 'properties' / 'org.jenkinsci.plugins.workflow.job.properties.DurabilityHintJobProperty' {
+            hint('PERFORMANCE_OPTIMIZED')
+        }
+    }
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        url('https://github.com/safronovD/python-pravega-writer.git')
+                    }
+                    branches('jenkins')
+                }
+            }
+            scriptPath('.ci/main.Jenkinsfile')
+        }
+    }
+}
+
+pipelineJob('Unit tests') {
+    displayName('Unit tests')
+
+    logRotator {
+        numToKeep(10)
+        daysToKeep(30)
+    }
+
+    configure { project ->
+        project / 'properties' / 'org.jenkinsci.plugins.workflow.job.properties.DurabilityHintJobProperty' {
+            hint('PERFORMANCE_OPTIMIZED')
+        }
+    }
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        url('https://github.com/safronovD/python-pravega-writer.git')
+                    }
+                    branches('jenkins')
+                }
+            }
+            scriptPath('.ci/unit.Jenkinsfile')
+        }
+    }
+}
+
+pipelineJob('Integragion tests') {
+    displayName('Integragion tests')
+
+    logRotator {
+        numToKeep(10)
+        daysToKeep(30)
+    }
+
+    configure { project ->
+        project / 'properties' / 'org.jenkinsci.plugins.workflow.job.properties.DurabilityHintJobProperty' {
+            hint('PERFORMANCE_OPTIMIZED')
+        }
+    }
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        url('https://github.com/safronovD/python-pravega-writer.git')
+                    }
+                    branches('jenkins')
+                }
+            }
+            scriptPath('.ci/integration.Jenkinsfile')
+        }
+    }
+}
+
+pipelineJob('E2E tests') {
+    displayName('E2E tests')
+
+    logRotator {
+        numToKeep(10)
+        daysToKeep(30)
+    }
+
+    configure { project ->
+        project / 'properties' / 'org.jenkinsci.plugins.workflow.job.properties.DurabilityHintJobProperty' {
+            hint('PERFORMANCE_OPTIMIZED')
+        }
+    }
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        url('https://github.com/safronovD/python-pravega-writer.git')
+                    }
+                    branches('jenkins')
+                }
+            }
+            scriptPath('.ci/e2e.Jenkinsfile')
+        }
+    }
+}
+
+pipelineJob('Perfomance tests') {
+    displayName('Perfomance tests')
+
+    logRotator {
+        numToKeep(10)
+        daysToKeep(30)
+    }
+
+    configure { project ->
+        project / 'properties' / 'org.jenkinsci.plugins.workflow.job.properties.DurabilityHintJobProperty' {
+            hint('PERFORMANCE_OPTIMIZED')
+        }
+    }
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        url('https://github.com/safronovD/python-pravega-writer.git')
+                    }
+                    branches('jenkins')
+                }
+            }
+            scriptPath('.ci/perfomance.Jenkinsfile')
+        }
+    }
+}
+
+pipelineJob('Release') {
+    displayName('Release')
+
+    logRotator {
+        numToKeep(10)
+        daysToKeep(30)
+    }
+
+    configure { project ->
+        project / 'properties' / 'org.jenkinsci.plugins.workflow.job.properties.DurabilityHintJobProperty' {
+            hint('PERFORMANCE_OPTIMIZED')
+        }
+    }
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        url('https://github.com/safronovD/python-pravega-writer.git')
+                    }
+                    branches('jenkins')
+                }
+            }
+            scriptPath('.ci/release.Jenkinsfile')
+        }
+    }
+}
