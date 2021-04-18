@@ -7,17 +7,23 @@ pipeline {
     }
 
     stages {
+       stage('Unit tests') {
+           steps {
+               echo 'Unit tests are running...'
+               build 'Unit tests'
+           }
+        }
 
-       stage('Container tests') {
+       stage('Integration tests') {
            steps {
                echo 'Container tests are running...'
-//               build 'Container'
+               build 'Integration tests'
            }
         }
        stage('E2E tests') {
             steps {
                 echo 'E2E is running...'
-//                build 'e2e'
+                build 'E2E tests'
             }
         }
 

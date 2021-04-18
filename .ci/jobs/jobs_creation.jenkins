@@ -83,7 +83,7 @@ pipelineJob('Integragion tests') {
                     branches('jenkins')
                 }
             }
-            scriptPath('.ci/integration.Jenkinsfile')
+            scriptPath('.ci/unit.Jenkinsfile'')
         }
     }
 }
@@ -112,7 +112,7 @@ pipelineJob('E2E tests') {
                     branches('jenkins')
                 }
             }
-            scriptPath('.ci/e2e.Jenkinsfile')
+            scriptPath('.ci/unit.Jenkinsfile'')
         }
     }
 }
