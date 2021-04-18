@@ -59,8 +59,8 @@ pipelineJob('Unit tests') {
     }
 }
 
-pipelineJob('Integragion tests') {
-    displayName('Integragion tests')
+pipelineJob('Integration tests') {
+    displayName('Integration tests')
 
     logRotator {
         numToKeep(10)

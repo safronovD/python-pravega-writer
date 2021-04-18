@@ -16,7 +16,7 @@ pipeline {
 
        stage('Integration tests') {
            steps {
-               echo 'Container tests are running...'
+               echo 'Integration tests are running...'
                build 'Integration tests'
            }
         }
