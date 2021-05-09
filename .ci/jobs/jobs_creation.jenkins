@@ -48,8 +48,8 @@ pipelineJob('Unit tests') {
             scm {
                 git {
                     remote {
-                        url('https://github.com/safronovD/python-pravega-writer.git')
-                        credentials('k8s-user-pass')
+                        url('git@github.com:safronovD/python-pravega-writer.git')
+                        credentials('k8s-ssh)
                     }
                     branches('jenkins')
                 }
