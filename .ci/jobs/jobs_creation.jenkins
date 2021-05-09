@@ -49,7 +49,6 @@ pipelineJob('Unit tests') {
                 git {
                     remote {
                         url('git@github.com:safronovD/python-pravega-writer.git')
-                        credentials('k8s-ssh)
                     }
                     branches('jenkins')
                 }
