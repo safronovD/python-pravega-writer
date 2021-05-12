@@ -49,6 +49,7 @@ pipelineJob('Unit tests') {
                 git {
                     remote {
                         url('https://github.com/safronovD/python-pravega-writer.git')
+                        credentials('k8s-user-pass')
                     }
                     branches('jenkins')
                 }
@@ -145,31 +146,3 @@ pipelineJob('Perfomance tests') {
     }
 }
 
-pipelineJob('Release') {
-    displayName('Release')
-
-    logRotator {
-        numToKeep(10)
-        daysToKeep(30)
-    }
-
-    configure { project ->
-        project / 'properties' / 'org.jenkinsci.plugins.workflow.job.properties.DurabilityHintJobProperty' {
-            hint('PERFORMANCE_OPTIMIZED')
-        }
-    }
-
-    definition {
-        cpsScm {
-            scm {
-                git {
-                    remote {
-                        url('https://github.com/safronovD/python-pravega-writer.git')
-                    }
-                    branches('jenkins')
-                }
-            }
-            scriptPath('.ci/release.Jenkinsfile')
-        }
-    }
-}

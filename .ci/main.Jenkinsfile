@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     options {
-         buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
          timestamps()
     }
 
@@ -31,15 +30,16 @@ pipeline {
             steps {
                 echo 'Perfomance tests are running...'
 //                build 'Stress'
+                build 'Unit tests'
             }
         }
 
-        stage('Deploy') {
-            steps {
-                echo 'Deploy is running...'
+//        stage('Deploy') {
+//            steps {
+//                echo 'Deploy is running...'
 //                build 'Deploy'
-            }
-        }
+//            }
+//        }
     }
     post {
         always {
