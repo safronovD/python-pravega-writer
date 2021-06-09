@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+    id "com.github.johnrengelman.shadow" version "6.0.0"
+}
+
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
+group 'org.pravega-connector'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    pravegaVersion='0.8.0'
+    pravegaKeycloakVersion='0.8.0'
+    commonsCLIVersion = '1.4'
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile "io.pravega:pravega-client:${pravegaVersion}",
+            "io.pravega:pravega-common:${pravegaVersion}",
+            "io.pravega:pravega-keycloak-client:${pravegaKeycloakVersion}",
+            "commons-cli:commons-cli:${commonsCLIVersion}"
+
+    compile "org.slf4j:slf4j-api:1.7.14"
+    compile "ch.qos.logback:logback-classic:1.1.7"
+    compile 'org.apache.httpcomponents:httpclient:4.5.13'
+    compile "com.googlecode.json-simple:json-simple:1.1.1"
+}
+
+task writerJar(type: ShadowJar) {
+    archiveClassifier  = 'writer'
+    from sourceSets.main.output
+    configurations = [project.configurations.compile]
+    manifest {
+        attributes(
+                'Main-Class': 'pravega.connector.WriterHttpServer'
+        )
+    }
+}
+
+task readerJar(type: ShadowJar) {
+    archiveClassifier  = 'reader'
+    from sourceSets.main.output
+    configurations = [project.configurations.compile]
+    manifest {
+        attributes(
+                'Main-Class': 'pravega.connector.ReaderHttpServer'
+        )
+    }
+}
